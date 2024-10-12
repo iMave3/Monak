@@ -1,0 +1,11 @@
+html, body{
+    background-color: gray;
+    height: 100%;
+}
+
+.body-container{
+    display: grid;
+    place-items: center;
+    height: 100%;
+    color: var(--color-white)
+}
