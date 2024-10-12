@@ -38,16 +38,28 @@ class LoadInitialDataCommand extends Command
 
         // priklad:
 
-        // $io = new SymfonyStyle($input, $output);
+        $io = new SymfonyStyle($input, $output);
 
-        // $user = new User();
-        // $user->setName("asa");
-        // //....
-        // $this->entityManager->persist($user);
-        // $this->entityManager->flush();
+        if ($this->entityManager->getRepository(User::class)->findOneBy(['username' => 'mave']) !== null) {
+            $io->error("Nejakej uzivatel uz existuje.");
+            return Command::FAILURE;
+        }
 
-        // $io->success("Byly nahrány úvodní data.");
+        $user = new User(
+            'mave',
+            'plihal.marek@seznam.cz',
+            'Marek',
+            'Plíhal'
+        );
+        $user->isVerified(true);
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
 
-        // return Command::SUCCESS;
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        $io->success("Byly nahrány úvodní data.");
+
+        return Command::SUCCESS;
     }
 }
