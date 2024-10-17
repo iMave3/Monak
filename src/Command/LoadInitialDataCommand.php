@@ -54,6 +54,7 @@ class LoadInitialDataCommand extends Command
         $user->isVerified(true);
         $user->setRoles(['ROLE_ADMIN']);
         $user->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
+        $user->setLastVisit(new Date('now'))
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();

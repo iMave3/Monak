@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -44,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $lastVisit = null;
 
     public function __construct(string $username, string $email, string $firstName, string $lastName)
     {
@@ -172,6 +176,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastName(string $lastName): static
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getLastVisit(): ?\DateTimeInterface
+    {
+        return $this->lastVisit;
+    }
+
+    public function setLastVisit(\DateTimeInterface $lastVisit): static
+    {
+        $this->lastVisit = $lastVisit;
 
         return $this;
     }
