@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		    <link rel="icon" type="image/x-icon" href="{{ asset('img/favLogo.png') }}">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
 			{% block title %}Monak
@@ -20,15 +21,15 @@
 			{# odkomentuj pro stylovani messages #}
 
 			{# <div class="popup">
-							{% include 'svg/close.html.twig' %}
-							{% include 'svg/info.html.twig' %}
-							Akce se povedla yey, nejaka dlouha zprava hihi
-						</div>
-						<div class="popup error">
-							{% include 'svg/close.html.twig' %}
-							{% include 'svg/error.html.twig' %}
-							Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
-						</div> #}
+																			{% include 'svg/close.html.twig' %}
+																			{% include 'svg/info.html.twig' %}
+																			Akce se povedla yey, nejaka dlouha zprava hihi
+																		</div>
+																		<div class="popup error">
+																			{% include 'svg/close.html.twig' %}
+																			{% include 'svg/error.html.twig' %}
+																			Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
+																		</div> #}
 				{% for message in app.flashes('notice') %}
 					<div class="popup"> {% include 'svg/close.html.twig' %}
 					{% include 'svg/info.html.twig' %}
@@ -45,23 +46,42 @@
 		</div>
 
 		{% block header %}
-			<nav>
-				<div><img src="" alt="logo"></div>
-				<div>
-					<div id="middleNav">
-						<a href="{{ path('main') }}">Úvod</a>
-						<a href="{{ path('menu') }}">Nabídka</a>
-						<a href="{{ path('contact') }}">Kontakt</a>
+			<header>
+				<nav id="top-headerPC">
+					<a href="{{ path('main') }}"><img src="{{ asset('img/logo.png') }}" alt="logo" class="logo"></a>
+					<div id="middleDiv">
+						<a href="https://goo.gl/maps/YCYKFq3zehTT9tZi8"  target="blank">
+							<span id="location"></span>&nbsp;Poloha</a>
+						<div id="middleNav">
+							<a href="{{ path('main') }}">Úvod</a>
+							<a href="{{ path('menu') }}">Nabídka</a>
+							<a href="{{ path('contact') }}">Kontakt</a>
+						</div>
 					</div>
+
+					<div id="no-logo">
+						{% if app.user %}
+							{#<div id="credentials" style="width: fit-content;">{{ app.user.firstName }}</div>#}
+							<img src="{{ asset('img/figureIcon.png') }}" alt="">
+						{% else %}
+							<div id="rightLoginNav">
+								<a href="{{ path('app_login') }}"><img src="" alt="login"></a>
+							</div>
+						{% endif %}
+					</div>
+				</nav>
+
+				<div id="main-header">
+					<div id="mainTextDiv">
+						<h1 class="mainT1"></h1>
+						<h1 class="mainT2"></h1>
+					</div>
+
+					<div id="main-headerIMG"></div>
 				</div>
-				{% if app.user %}
-					<div id="credentials">{{ app.user.firstName }}</div>
-				{% else %}
-					<div id="rightLoginNav">
-						<a href="{{ path('app_login') }}"><img src="" alt="login"></a>
-					</div>
-				{% endif %}
-			</nav>
+
+				<h2 id="info">KOMPLETNÍ SORTIMENT PRO KAMENOPRŮMYSL A STAVEBNICTVÍ</h2>
+			</header>
 		{% endblock %}
 
 		<div class="body-container"> {% block body %}{% endblock %}
