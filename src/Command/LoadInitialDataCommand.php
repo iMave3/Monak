@@ -2,11 +2,9 @@
 
 namespace App\Command;
 
-use App\Entity\Classroom;
-use App\Entity\Test;
-use App\Entity\TestUser;
 use App\Entity\User;
 use DateTime;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -51,10 +49,10 @@ class LoadInitialDataCommand extends Command
             'Marek',
             'Plíhal'
         );
-        $user->isVerified(true);
+        $user->setVerified(true);
         $user->setRoles(['ROLE_ADMIN']);
         $user->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
-        $user->setLastVisit(new Date('now'))
+        $user->setLastVisit(new DateTime('now', new DateTimeZone('Europe/Prague')));
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();

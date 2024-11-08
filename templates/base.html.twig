@@ -5,9 +5,10 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
-			{% block title %}Monak{% endblock %}
+			{% block title %}Monak
+			{% endblock %}
 		</title>
-		
+
 		<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 		<script src="{{ asset('js/main.js') }}"></script>
 
@@ -19,18 +20,17 @@
 			{# odkomentuj pro stylovani messages #}
 
 			{# <div class="popup">
-				{% include 'svg/close.html.twig' %}
-				{% include 'svg/info.html.twig' %}
-				Akce se povedla yey, nejaka dlouha zprava hihi
-			</div>
-			<div class="popup error">
-				{% include 'svg/close.html.twig' %}
-				{% include 'svg/error.html.twig' %}
-				Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
-			</div> #}
-			{% for message in app.flashes('notice') %}
-				<div class="popup">
-					{% include 'svg/close.html.twig' %}
+							{% include 'svg/close.html.twig' %}
+							{% include 'svg/info.html.twig' %}
+							Akce se povedla yey, nejaka dlouha zprava hihi
+						</div>
+						<div class="popup error">
+							{% include 'svg/close.html.twig' %}
+							{% include 'svg/error.html.twig' %}
+							Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
+						</div> #}
+				{% for message in app.flashes('notice') %}
+					<div class="popup"> {% include 'svg/close.html.twig' %}
 					{% include 'svg/info.html.twig' %}
 					{{ message }}
 				</div>
@@ -44,12 +44,29 @@
 			{% endfor %}
 		</div>
 
-		{% block header %}{% endblock %}
+		{% block header %}
+			<nav>
+				<div><img src="" alt="logo"></div>
+				<div>
+					<div id="middleNav">
+						<a href="{{ path('main') }}">Úvod</a>
+						<a href="{{ path('menu') }}">Nabídka</a>
+						<a href="{{ path('contact') }}">Kontakt</a>
+					</div>
+				</div>
+				{% if app.user %}
+					<div id="credentials">{{ app.user.firstName }}</div>
+				{% else %}
+					<div id="rightLoginNav">
+						<a href="{{ path('app_login') }}"><img src="" alt="login"></a>
+					</div>
+				{% endif %}
+			</nav>
+		{% endblock %}
 
-		<div class="body-container">
-			{% block body %}{% endblock %}
-		</div>
+		<div class="body-container"> {% block body %}{% endblock %}
+			</div>
 
-		{% block footer %}{% endblock %}
-	</body>
-</html>
+			{% block footer %}{% endblock %}
+		</body>
+	</html>

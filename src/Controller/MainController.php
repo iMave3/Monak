@@ -9,9 +9,23 @@ class MainController extends AbstractController
 {
     
     #[Route("/", name:"main")]
-    public function index(): Response
+    public function main(): Response
     {
         return $this->render('main.html.twig', [
+        ]);
+    }
+
+    #[Route("/menu", name:"menu")]
+    public function menu(): Response
+    {
+        return $this->render('menu.html.twig', [
+        ]);
+    }
+
+    #[Route("/contact", name:"contact")]
+    public function contact(): Response
+    {
+        return $this->render('contact.html.twig', [
         ]);
     }
 }
