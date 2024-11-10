@@ -3,14 +3,14 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		    <link rel="icon" type="image/x-icon" href="{{ asset('img/favLogo.png') }}">
+		<link rel="icon" type="image/x-icon" href="{{ asset('img/favLogo.png') }}">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>
 			{% block title %}Monak
 			{% endblock %}
 		</title>
 
-		<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+		<link rel="stylesheet" href="{{ asset('css/base.css') }}">
 		<script src="{{ asset('js/main.js') }}"></script>
 
 		{% block stylesheets %}{% endblock %}
@@ -21,15 +21,15 @@
 			{# odkomentuj pro stylovani messages #}
 
 			{# <div class="popup">
-																			{% include 'svg/close.html.twig' %}
-																			{% include 'svg/info.html.twig' %}
-																			Akce se povedla yey, nejaka dlouha zprava hihi
-																		</div>
-																		<div class="popup error">
-																			{% include 'svg/close.html.twig' %}
-																			{% include 'svg/error.html.twig' %}
-																			Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
-																		</div> #}
+																{% include 'svg/close.html.twig' %}
+																{% include 'svg/info.html.twig' %}
+																Akce se povedla yey, nejaka dlouha zprava hihi
+																</div>
+																<div class="popup error">
+																{% include 'svg/close.html.twig' %}
+																{% include 'svg/error.html.twig' %}
+																Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
+												</div> #}
 				{% for message in app.flashes('notice') %}
 					<div class="popup"> {% include 'svg/close.html.twig' %}
 					{% include 'svg/info.html.twig' %}
@@ -50,7 +50,7 @@
 				<nav id="top-headerPC">
 					<a href="{{ path('main') }}"><img src="{{ asset('img/logo.png') }}" alt="logo" class="logo"></a>
 					<div id="middleDiv">
-						<a href="https://goo.gl/maps/YCYKFq3zehTT9tZi8"  target="blank">
+						<a href="https://goo.gl/maps/YCYKFq3zehTT9tZi8" target="blank">
 							<span id="location"></span>&nbsp;Poloha</a>
 						<div id="middleNav">
 							<a href="{{ path('main') }}">Úvod</a>
@@ -59,10 +59,12 @@
 						</div>
 					</div>
 
-					<div id="no-logo">
+					<div id="userOptionsRightDiv">
+						<a href=""><img src="{{ asset('img/shopCartIcon.png') }}" alt="shopCart" id="shopCartIcon"></a>
+						<div class="border"></div>
 						{% if app.user %}
 							{#<div id="credentials" style="width: fit-content;">{{ app.user.firstName }}</div>#}
-							<img src="{{ asset('img/figureIcon.png') }}" alt="">
+							<img src="{{ asset('img/figureIcon.png') }}" alt="figureIcon" id="figureIcon">
 						{% else %}
 							<div id="rightLoginNav">
 								<a href="{{ path('app_login') }}"><img src="" alt="login"></a>
@@ -84,9 +86,58 @@
 			</header>
 		{% endblock %}
 
-		<div class="body-container"> {% block body %}{% endblock %}
-			</div>
+		{% block body %}
+			<main>
+				<div id="leftOffer">
+					<a href="../php/diaTech.php" class="m1">Diamantová technika</a>
+					<a href="../php/brusKartace.php" class="m2">Brusné kartáče</a>
+					<a href="../pdf/katalog/Katalog výrobů - MONAK.pdf" class="m3">Katalog výrobků</a>
+					<a href="../pdf/bavaria/BAVARIA katalog - MONAK.pdf" class="m4">Nářadí BAVARIA</a>
+					<a href="../php/gravirace.php" class="m5">Plastiky a gravírace</a>
+					<a href="../pdf/zulove/Katalog žulové rotační výrobky - MONAK.pdf" class="m6">Žulové rotační výrobky</a>
+					<a href="../php/zlato.php" class="m7">Zlato</a>
+					<a href="../php/prisavky.php" class="m8">Přísavky na kámen</a>
+					<a href="../php/chemie.php" class="m9">Chemie na kámen</a>
+				</div>
+			</main>
+		{% endblock %}
 
-			{% block footer %}{% endblock %}
-		</body>
-	</html>
+		{% block footer %}
+			<footer>
+				<div id="footerForFHD">
+					<img src="{{ asset('img/logo.png') }}" alt="logo" class="logo">
+					<div id="middleFooterInformation">
+						<div>
+							<h2>Kontaktní&nbsp;adresa</h2>
+							<p>Milan&nbsp;Plíhal&nbsp;-&nbsp;MONAK</p>
+							<p>Na&nbsp;Nivách&nbsp;570</p>
+							<p>351&nbsp;37 Luby&nbsp;u&nbsp;Chebu</p>
+							<p>IČ:&nbsp;64180174, DIČ:&nbsp;CZ7001131808</p>
+						</div>
+
+						<div>
+							<h2>Provozovna</h2>
+							<p>Chebská&nbsp;5</p>
+							<p>351&nbsp;37 Luby&nbsp;u&nbsp;Chebu</p>
+						</div>
+
+						<div>
+							<h2>Kontaktní&nbsp;adresa</h2>
+							<p>E-mail:&nbsp;<a href="mailto:info@monak.cz">info@monak.cz</a>
+							</p>
+							<br>
+							<p>Milan&nbsp;Plíhal</p>
+							<p>-&nbsp;mobil:&nbsp;<a href="tel:+420602108155">602&nbsp;108&nbsp;155</a>
+							</p>
+							<p>Obchodní&nbsp;zástupce</p>
+							<p>-&nbsp;mobil:&nbsp;<a href="tel:+420602108156">602&nbsp;108&nbsp;156</a>
+							</p>
+
+						</div>
+					</div>
+					<img src="" alt="" class="logo" style="visibility: hidden;">
+				</div>
+			</footer>
+		{% endblock %}
+	</body>
+</html>

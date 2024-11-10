@@ -1,0 +1,659 @@
+:root {
+    --color-white: white;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.closeTopRight {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.popups {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.popup {
+    background-color: var(--color-white);
+    padding: 1.5em 2em;
+    width: fit-content;
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 1em;
+    border-radius: 1em;
+    position: relative;
+    z-index: 100;
+}
+
+.popup>div,
+.popup>svg:not(.close) {
+    flex-shrink: 0;
+}
+
+.popup svg:not(.close) {
+    width: 45px;
+    height: 45px;
+}
+
+/* -------------------------------- OTHERS -------------------------------- */
+h1,
+h2,
+h3 {
+    font-family: 'Rubik', sans-serif;
+}
+
+/* scrollbar */
+::-webkit-scrollbar {
+    width: 17px;
+    border: solid 3px transparent;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(255, 0, 0, 0);
+    border: solid 3px white;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 20px;
+    border: solid 3px white;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: RGB(60, 61, 64);
+}
+
+/* ----------------------------- Offer PHONE slider ----------------------------- */
+#offers-headerPHONE {
+    overflow-y: scroll;
+    display: none;
+    right: -300px;
+    z-index: 999;
+    position: fixed;
+    width: 330px;
+    height: 100%;
+    background-image: linear-gradient(to right, rgb(70, 70, 70), rgb(51, 51, 51));
+    box-shadow: 5px 5px 15px rgb(43, 43, 43), 20px 20px 60px rgb(49, 49, 49) inset;
+    border-left: 1px solid rgb(184, 184, 184);
+}
+
+#offers-headerPHONE a:not(#locationPHONE) {
+    color: RGB(175, 174, 175);
+    letter-spacing: 2px;
+    margin: 0 auto;
+}
+
+#offers-headerPHONE #location {
+    content: url("../img/location.png");
+    width: 23px;
+}
+
+#closeBurger {
+    width: 30px;
+    height: 21px;
+    position: relative;
+    cursor: pointer;
+    margin: 20px 20px 0px auto;
+}
+
+.cBar1 {
+    position: absolute;
+    width: 28px;
+    height: 3px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    top: 8px;
+    transform: rotate(45deg);
+}
+
+.cBar1::before {
+    content: "";
+    position: absolute;
+    width: 28px;
+    height: 3px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    top: 0px;
+    transform: rotate(-90deg)
+}
+
+#locationPHONE {
+    color: #FFF;
+    font-size: 26px;
+    text-decoration: none;
+    padding: 15px;
+    width: fit-content;
+    text-align: center;
+}
+
+#locationPHONE h3 {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+#headerMainTextPHONE {
+    display: block;
+    margin: 0 auto;
+    padding: 20px 0;
+    width: 90%;
+    border-top: 1px solid #9e9e9e;
+    border-bottom: 1px solid #9e9e9e;
+}
+
+#headerMainTextPHONE>* {
+    font-size: 20px;
+    display: block;
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto;
+    text-decoration: none;
+}
+
+#headerMainTextPHONE>a {
+    padding: 10px;
+}
+
+#headerOfferPHONE {
+    padding-bottom: 50px;
+}
+
+#headerOfferPHONE>a {
+    display: block;
+    width: 95%;
+    margin: 0 auto;
+    text-decoration: none;
+}
+
+#headerOfferPHONE>*:not(h1) {
+    font-size: 18px;
+    line-height: 2.2;
+}
+
+#headerOfferPHONE h1 {
+    padding: 20px 10px;
+    width: fit-content;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* ----------------------------- PHONE header ----------------------------- */
+#top-headerPHONE {
+    display: none;
+    justify-content: space-between;
+    padding: 30px 10%;
+    align-items: center;
+    border-bottom: 1px solid #9e9e9e;
+}
+
+#burgerMenuPHONE {
+    width: 30px;
+    height: 21px;
+    position: relative;
+    cursor: pointer;
+}
+
+.bar1 {
+    position: absolute;
+    width: 28px;
+    height: 3px;
+    background-color: #FFF;
+    border-radius: 2px;
+    top: 8px;
+}
+
+.bar1::before,
+.bar1::after {
+    content: "";
+    position: absolute;
+    width: 28px;
+    height: 3px;
+    background-color: #FFF;
+    border-radius: 2px;
+    top: -8px;
+}
+
+.bar1::after {
+    top: 8px;
+}
+
+/* ----------------------------- PC header ----------------------------- */
+#top-headerPC {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10% 0 10%;
+    width: 95%;
+    margin: 0 auto;
+}
+
+#middleDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: RGB(33, 33, 33);
+    box-shadow: 5px 5px 15px RGB(20, 20, 20), 25px 25px 60px RGB(16, 16, 16) inset;
+    padding: 20px 30px;
+    width: 550px;
+    border-radius: 70px;
+}
+
+#top-headerPC #location {
+    content: url("../img/location.png");
+    width: 17px;
+    position: relative;
+    top: 2px;
+    transition: .2s all ease-in-out;
+}
+
+#middleDiv > a:hover #location
+{
+    filter: drop-shadow(1px 1px 3px #fff);
+}
+
+#middleNav {
+    display: flex;
+    justify-content: space-between;
+    width: 270px;
+}
+
+/* ------------------------------------ WHOLE header ------------------------------------ */
+header {
+    background-image: linear-gradient(to bottom, RGB(40, 40, 40), RGB(20, 20, 20));
+}
+
+header a {
+    font-family: 'Rubik', sans-serif;
+    text-decoration: none;
+    color: RGB(245, 244, 245);
+    font-size: 17px;
+    transition: .2s all ease-in-out;
+}
+
+header a:hover {
+    text-shadow: 0 0 1px #fff, 0 0 1px #fff, 0 0 1px #FFF, 0 0 1px #FFF, 0 0 1px #FFF, 0 0 1px #FFF, 0 0 1px #fff;
+}
+
+.logo {
+    width: 120px;
+}
+
+#userOptionsRightDiv {
+    background-color: RGB(33, 33, 33);
+    box-shadow: 5px 5px 15px RGB(20, 20, 20), 25px 25px 60px RGB(16, 16, 16) inset;
+    padding: 7px 9px;
+    border-radius: 25px;
+    place-items: center center;
+    margin-left: 62px;
+    /* změnit*/
+    display: flex;
+    width: fit-content;
+}
+
+#figureIcon,
+#shopCartIcon {
+    width: 44px;
+    transition: .2s all ease-in-out;
+}
+
+#figureIcon:hover,
+#shopCartIcon:hover {
+    filter: drop-shadow(1px 1px 3px #7e7e7e);
+}
+
+.border {
+    width: 1px;
+    height: 35px;
+    background-color: rgb(109, 109, 109);
+    margin: 0 3px;
+}
+
+/* -------------------------------------------------------- */
+#main-header {
+    padding: 50px 13%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#mainTextDiv {
+    letter-spacing: 2px;
+    width: fit-content;
+    padding: 0 20px;
+}
+
+#mainTextDiv>* {
+    width: fit-content;
+}
+
+#main-headerIMG {
+    filter: drop-shadow(3px 3px 9px rgb(85, 85, 85));
+    border-radius: 50px;
+    width: 550px;
+    aspect-ratio: 71/72;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.mainT1 {
+    padding-right: 50px;
+    font-size: 90px;
+    color: RGB(245, 244, 245);
+    text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #FFF, 0 0 2px #FFF, 0 0 2px #FFF, 0 0 2px #FFF, 0 0 2px #fff;
+}
+
+.mainT2 {
+    font-size: 29px;
+    color: RGB(245, 244, 245);
+}
+
+#info {
+    width: fit-content;
+    margin: 0 auto;
+    font-size: 32px;
+    text-align: center;
+    padding: 0 40px;
+    padding-bottom: 50px;
+    color: RGB(245, 244, 245);
+}
+
+/* -------------------------------------- MAIN -------------------------------------- */
+main {
+    display: flex;
+    justify-content: space-between;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 50px 0;
+}
+
+/* -------------------------------------------------------- */
+/* left */
+#leftOffer {
+    box-shadow: 10px 10px 17px #e6e6e6, 10px 10px 17px #e6e6e6 inset;
+    border-radius: 20px;
+    height: fit-content;
+    width: fit-content;
+    padding: 18px 35px;
+    border-radius: 20px;
+    margin-right: 50px;
+}
+
+#leftOffer a {
+    display: block;
+    font-size: 17px;
+    width: fit-content;
+    text-decoration: none;
+    color: RGB(175, 174, 175);
+    margin: 18px 0;
+    transition: .2s all ease-in-out;
+}
+
+#leftOffer a:hover {
+    color: black;
+}
+
+/* -------------------------------------- FOOTER -------------------------------------- */
+footer {
+    background-image: linear-gradient(to bottom, RGB(40, 40, 40), RGB(20, 20, 20));
+    color: RGB(245, 244, 245);
+    box-shadow: 40px 40px 100px RGB(16, 16, 16) inset;
+}
+
+#footerForFHD {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 8%;
+    margin: 0 auto;
+}
+
+.logo {
+    height: 60px;
+}
+
+#middleFooterInformation {
+    display: flex;
+    justify-content: space-between;
+    width: 800px;
+    margin: 0 20px;
+}
+
+footer h2 {
+    margin-bottom: 20px;
+}
+
+footer p {
+    line-height: 1.5;
+}
+
+footer a {
+    color: RGB(245, 244, 245);
+}
+
+footer a:hover {
+    color:#bdbdbd;
+}
+
+/* ------------------------------- RESPONSIBILITY ------------------------------- */
+/* -------------------- Bigger than FHD --------------------*/
+@media (min-width: 1921px) {
+    #top-headerPC {
+        width: 1440px;
+        margin: 0 auto;
+        padding: 30px 0 0 0;
+    }
+
+    #main-header {
+        width: 1420px;
+        margin: 0 auto;
+        padding: 50px 0;
+    }
+
+    #footerForFHD {
+        width: 1612px;
+        padding: 50px 0;
+    }
+}
+
+/* -------------------- <1600px --------------------*/
+@media (max-width: 1600px) {
+    .mainT1 {
+        font-size: 75px;
+    }
+
+    .mainT2 {
+        font-size: 24px;
+    }
+
+    #main-headerIMG {
+        width: 450px;
+    }
+
+    #footerForFHD>div {
+        padding: 0 50px;
+    }
+}
+
+/* -------------------- <1400px --------------------*/
+@media (max-width: 1400px) {
+    #top-headerPC>div {
+        width: 500px;
+    }
+
+    .mainT1 {
+        font-size: 65px;
+    }
+
+    .mainT2 {
+        font-size: 20.5px;
+    }
+
+    #main-headerIMG {
+        width: 400px;
+    }
+
+    #footerForFHD {
+        padding: 50px 6%;
+    }
+
+    #footerForFHD>div {
+        padding: 0 25px;
+    }
+}
+
+/* -------------------- <1300px --------------------*/
+@media (max-width: 1300px) {
+    .mainT1 {
+        font-size: 60px;
+    }
+
+    .mainT2 {
+        font-size: 18.5px;
+    }
+
+    #main-headerIMG {
+        width: 375px;
+    }
+}
+
+/* -------------------- <1150px --------------------*/
+@media (max-width: 1150px) {
+    .no-logo {
+        display: none;
+    }
+
+    .mainT1 {
+        font-size: 55px;
+    }
+
+    .mainT2 {
+        font-size: 17px;
+    }
+
+    #main-headerIMG {
+        width: 320px;
+    }
+
+    #footerForFHD {
+        padding: 50px 4.5%;
+    }
+}
+
+/* -------------------- <1000px --------------------*/
+@media (max-width: 1000px) {
+    #main-header {
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+        padding: 50px 0;
+    }
+
+    #mainTextDiv {
+        width: fit-content;
+        margin: 50px auto;
+    }
+
+    .mainT1 {
+        font-size: 75px;
+    }
+
+    .mainT2 {
+        font-size: 23px;
+    }
+
+    .mainT1,
+    .mainT2 {
+        text-align: center;
+        width: fit-content;
+        margin: 0px auto;
+        padding: 0;
+    }
+
+    #main-headerIMG {
+        width: 65vw;
+        margin: 0 auto;
+    }
+}
+
+/* -------------------- <900px --------------------*/
+@media (max-width: 900px) {
+    #top-headerPC {
+        display: none;
+    }
+
+    #top-headerPHONE {
+        display: flex;
+    }
+
+    main {
+        display: block;
+    }
+
+    #left-offer {
+        display: none;
+    }
+
+    #footerForFHD {
+        display: block;
+    }
+
+    #footerForFHD>div {
+        width: fit-content;
+        display: block;
+        padding: 0;
+        margin: 50px 0 0 0;
+    }
+
+    #footerForFHD>div>div {
+        margin: 0;
+        padding: 20px 0;
+        border-top: 1px solid #9e9e9e;
+    }
+
+    #footerForFHD>div>div:last-child {
+        border-bottom: 1px solid #9e9e9e;
+    }
+}
+
+/* -------------------- <600px --------------------*/
+@media (max-width: 600px) {
+    .mainT1 {
+        font-size: 61px;
+    }
+
+    .mainT2 {
+        font-size: 18.5px;
+    }
+}
+
+/* -------------------- <390px --------------------*/
+@media (max-width: 390px) {
+    .mainT1 {
+        font-size: 45px;
+    }
+
+    .mainT2 {
+        font-size: 13px;
+    }
+
+    #info {
+        font-size: 25px;
+    }
+}
