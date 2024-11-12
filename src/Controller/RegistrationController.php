@@ -48,9 +48,9 @@ class RegistrationController extends AbstractController
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address('no-reply@monak.cz', 'Monak Mail Bot'))
+                    ->from(new Address('no-reply@monak.cz', 'Monak Email Bot'))
                     ->to((string) $user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Prosím potvrďte e-mail!')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             return $security->login($user, 'form_login', 'main');

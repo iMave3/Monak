@@ -21,15 +21,15 @@
 			{# odkomentuj pro stylovani messages #}
 
 			{# <div class="popup">
-																{% include 'svg/close.html.twig' %}
-																{% include 'svg/info.html.twig' %}
-																Akce se povedla yey, nejaka dlouha zprava hihi
-																</div>
-																<div class="popup error">
-																{% include 'svg/close.html.twig' %}
-																{% include 'svg/error.html.twig' %}
-																Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
-												</div> #}
+																									{% include 'svg/close.html.twig' %}
+																									{% include 'svg/info.html.twig' %}
+																									Akce se povedla yey, nejaka dlouha zprava hihi
+																									</div>
+																									<div class="popup error">
+																									{% include 'svg/close.html.twig' %}
+																									{% include 'svg/error.html.twig' %}
+																									Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
+																					</div> #}
 				{% for message in app.flashes('notice') %}
 					<div class="popup"> {% include 'svg/close.html.twig' %}
 					{% include 'svg/info.html.twig' %}
@@ -50,24 +50,39 @@
 				<nav id="top-headerPC">
 					<a href="{{ path('main') }}"><img src="{{ asset('img/logo.png') }}" alt="logo" class="logo"></a>
 					<div id="middleDiv">
-						<a href="https://goo.gl/maps/YCYKFq3zehTT9tZi8" target="blank">
+						<a href="https://goo.gl/maps/YCYKFq3zehTT9tZi8" target="blank" class="un">
 							<span id="location"></span>&nbsp;Poloha</a>
 						<div id="middleNav">
-							<a href="{{ path('main') }}">Úvod</a>
-							<a href="{{ path('menu') }}">Nabídka</a>
-							<a href="{{ path('contact') }}">Kontakt</a>
+							<a href="{{ path('main') }}" class="un">Úvod</a>
+							<a href="{{ path('menu') }}" class="un">Nabídka</a>
+							<a href="{{ path('contact') }}" class="un">Kontakt</a>
 						</div>
 					</div>
 
 					<div id="userOptionsRightDiv">
-						<a href=""><img src="{{ asset('img/shopCartIcon.png') }}" alt="shopCart" id="shopCartIcon"></a>
-						<div class="border"></div>
 						{% if app.user %}
-							{#<div id="credentials" style="width: fit-content;">{{ app.user.firstName }}</div>#}
-							<img src="{{ asset('img/figureIcon.png') }}" alt="figureIcon" id="figureIcon">
+							<a href="" style="height: 44px;"><img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon"></a>
+							<div class="border"></div>
+							{% else %}
+						{% endif %}
+						{% if app.user %}
+							<div id="iconAndNameDiv">
+								<img src="{{ asset('img/figureIcon.png') }}" alt="figureIcon" id="figureIcon">
+								<div id="credentialsDiv">
+									<a id="credentials" style="width: fit-content;">{{ app.user.firstName }}</a>
+									<a id="credentials2" style="width: fit-content;">{{ app.user.lastName }}</a>
+								</div>
+								<div id="submenu">
+									<p>{{app.user.email}}</p>
+									<a href="" class="un">Objednávky</a>
+									<a href="" class="un">Můj profil</a>
+									<a href="" class="un">Napište nám!</a>
+									<a href="{{ path('app_logout') }}" class="unRed un logout">Odhlásit se</a>
+								</div>
+							</div>
 						{% else %}
-							<div id="rightLoginNav">
-								<a href="{{ path('app_login') }}"><img src="" alt="login"></a>
+							<div id="signInHref">
+								<a href="{{ path('app_login') }}">Přihlašte se</a>
 							</div>
 						{% endif %}
 					</div>
@@ -86,8 +101,8 @@
 			</header>
 		{% endblock %}
 
-		{% block body %}
-			<main>
+		<main>
+			{% block leftBody %}
 				<div id="leftOffer">
 					<a href="../php/diaTech.php" class="m1">Diamantová technika</a>
 					<a href="../php/brusKartace.php" class="m2">Brusné kartáče</a>
@@ -99,8 +114,10 @@
 					<a href="../php/prisavky.php" class="m8">Přísavky na kámen</a>
 					<a href="../php/chemie.php" class="m9">Chemie na kámen</a>
 				</div>
-			</main>
-		{% endblock %}
+			{% endblock %}
+
+			{% block rightBody %}{% endblock %}
+		</main>
 
 		{% block footer %}
 			<footer>

@@ -1,8 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
 
-{% block body %}
+{% block header %}
+{% endblock %}
+
+{% block title %}Monak - Přihlášení{% endblock %}
+
+{% block leftBody %}
     <form method="post">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -38,4 +45,7 @@
             Sign in
         </button>
     </form>
+{% endblock %}
+
+{% block footer %}
 {% endblock %}
