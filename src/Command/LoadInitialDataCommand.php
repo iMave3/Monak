@@ -39,7 +39,7 @@ class LoadInitialDataCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         if ($this->entityManager->getRepository(User::class)->findOneBy(['username' => 'mave']) !== null) {
-            $io->error("Nejakej uzivatel uz existuje.");
+            $io->error("Uživatel s daným emailem je už zde zaregistrován. Prosím, vyberte jiný email.");
             return Command::FAILURE;
         }
 

@@ -1,5 +1,5 @@
 :root {
-    --color-white: white;
+    --color-white: white;   
 }
 
 * {
@@ -8,6 +8,7 @@
     box-sizing: border-box;
     font-family: 'Rubik', sans-serif;
     font-style: normal;
+    font-weight: 400;
 }
 
 .closeTopRight {
@@ -65,13 +66,13 @@ h3 {
 
 ::-webkit-scrollbar-track {
     background-color: rgba(255, 0, 0, 0);
-    border: solid 3px white;
+    border: solid 3px var(--color-white);
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: black;
     border-radius: 20px;
-    border: solid 3px white;
+    border: solid 3px var(--color-white);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -115,7 +116,7 @@ h3 {
     position: absolute;
     width: 28px;
     height: 3px;
-    background-color: #ffffff;
+    background-color: var(--color-white);
     border-radius: 2px;
     top: 8px;
     transform: rotate(45deg);
@@ -126,14 +127,14 @@ h3 {
     position: absolute;
     width: 28px;
     height: 3px;
-    background-color: #ffffff;
+    background-color: var(--color-white);
     border-radius: 2px;
     top: 0px;
     transform: rotate(-90deg)
 }
 
 #locationPHONE {
-    color: #FFF;
+    color: var(--color-white);
     font-size: 26px;
     text-decoration: none;
     padding: 15px;
@@ -211,7 +212,7 @@ h3 {
     position: absolute;
     width: 28px;
     height: 3px;
-    background-color: #FFF;
+    background-color: var(--color-white);
     border-radius: 2px;
     top: 8px;
 }
@@ -222,7 +223,7 @@ h3 {
     position: absolute;
     width: 28px;
     height: 3px;
-    background-color: #FFF;
+    background-color: var(--color-white);
     border-radius: 2px;
     top: -8px;
 }
@@ -267,7 +268,7 @@ h3 {
 
 #middleDiv > a:hover #location
 {
-    filter: drop-shadow(1px 1px 3px #fff);
+    filter: drop-shadow(1px 1px 3px var(--color-white));
 }
 
 #middleNav {
@@ -312,6 +313,7 @@ header a {
 #shopCartIcon {
     width: 44px;
     transition: .2s all ease-in-out;
+    cursor: pointer;
 }
 
 #shopCartIcon:hover {
@@ -371,7 +373,7 @@ header a {
 #submenu p {
     text-align: center;
     font-size: 12px;
-    color: white;
+    color: var(--color-white);
     margin-bottom: 7px;
     border-bottom: 1px solid rgb(109, 109, 109);
     padding-bottom: 2px;
@@ -383,17 +385,22 @@ header a {
     width: fit-content;
 }
 
-.logout {
-    color: rgb(255, 9, 9);
-}
-
 .unRed {
-    background-image: linear-gradient(rgb(255, 9, 9) 0 0) !important;
-}
+    display: inline-block;
+    padding-bottom:2px;
+    background-image: linear-gradient(red 0 0);
+    background-position: 0 100%; /*OR bottom left*/
+    background-size: 0% 0px;
+    background-repeat: no-repeat;
+    transition:
+      background-size 0.2s,
+      background-position 0s 0.2s; /*change after the size immediately*/
+  }
+
 .un {
     display: inline-block;
     padding-bottom:2px;
-    background-image: linear-gradient(#fff 0 0);
+    background-image: linear-gradient(var(--color-white) 0 0);
     background-position: 0 100%; /*OR bottom left*/
     background-size: 0% 0px;
     background-repeat: no-repeat;
@@ -402,7 +409,7 @@ header a {
       background-position 0s 0.2s; /*change after the size immediately*/
   }
   
-.un:hover {
+.un:hover, .unRed:hover {
     background-position: 100% 100%; /*OR bottom right*/
     background-size: 100% 2px;
 }
