@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block leftBody %}
+{% endblock %}
+
+{% block body %}
+
+<p>Váš email:&nbsp;</p>
+<p>{{app.user.email}}</p>
+<a href="">Změnit</a>
+<p>Vaše jméno:&nbsp;</p>
+<p>{{app.user.firstName}}</p>
+
+{% endblock %}

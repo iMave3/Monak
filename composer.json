@@ -46,7 +46,7 @@
         "symfony/validator": "^6.4",
         "symfony/web-link": "^6.4",
         "symfony/yaml": "^6.4",
-        "symfonycasts/reset-password-bundle": "^1.20",
+        "symfonycasts/reset-password-bundle": "^1.23",
         "symfonycasts/verify-email-bundle": "^1.17",
         "twig/extra-bundle": "^3.12",
         "twig/intl-extra": "^3.12",

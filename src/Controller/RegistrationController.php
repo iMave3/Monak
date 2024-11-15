@@ -35,7 +35,6 @@ class RegistrationController extends AbstractController
             $formData = $form->getData();
             
             $user = new User(
-                $formData['username'],
                 $formData['email'],
                 $formData['firstName'],
                 $formData['lastName'],

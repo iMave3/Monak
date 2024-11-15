@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df7a0985d9685a986c6f6537ea5cf9fd",
+    "content-hash": "05c519f14aa354af13155698db5d8a5a",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -7073,16 +7073,16 @@
         },
         {
             "name": "symfonycasts/reset-password-bundle",
-            "version": "v1.22.0",
+            "version": "v1.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SymfonyCasts/reset-password-bundle.git",
-                "reference": "d9cf4395c0a19a3093bc51b10f508b38f98117f5"
+                "reference": "419a3283beb66392eca7030cf7c5c363b39b12b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SymfonyCasts/reset-password-bundle/zipball/d9cf4395c0a19a3093bc51b10f508b38f98117f5",
-                "reference": "d9cf4395c0a19a3093bc51b10f508b38f98117f5",
+                "url": "https://api.github.com/repos/SymfonyCasts/reset-password-bundle/zipball/419a3283beb66392eca7030cf7c5c363b39b12b1",
+                "reference": "419a3283beb66392eca7030cf7c5c363b39b12b1",
                 "shasum": ""
             },
             "require": {
@@ -7097,9 +7097,10 @@
                 "doctrine/annotations": "^1.0",
                 "doctrine/doctrine-bundle": "^2.8",
                 "doctrine/orm": "^2.13",
-                "phpstan/phpstan": "^1.11.x-dev",
                 "symfony/framework-bundle": "^5.4 | ^6.0 | ^7.0",
-                "symfony/phpunit-bridge": "^5.4 | ^6.0 | ^7.0"
+                "symfony/phpunit-bridge": "^5.4 | ^6.0 | ^7.0",
+                "symfony/process": "^6.4 | ^7.0 | ^7.1",
+                "symfonycasts/internal-test-helpers": "dev-main"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -7114,9 +7115,9 @@
             "description": "Symfony bundle that adds password reset functionality.",
             "support": {
                 "issues": "https://github.com/SymfonyCasts/reset-password-bundle/issues",
-                "source": "https://github.com/SymfonyCasts/reset-password-bundle/tree/v1.22.0"
+                "source": "https://github.com/SymfonyCasts/reset-password-bundle/tree/v1.23.0"
             },
-            "time": "2024-06-06T11:59:57+00:00"
+            "time": "2024-11-08T11:57:33+00:00"
         },
         {
             "name": "symfonycasts/verify-email-bundle",
@@ -8842,7 +8843,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -8850,6 +8851,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
