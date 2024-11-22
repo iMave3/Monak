@@ -10,6 +10,7 @@
 /node_modules/
 /public/js/*
 !/public/js/.gitkeep
+!/public/js/formInput.js
 
 #ides (put your favorite IDE tmp file masks here)
 .*.swp
