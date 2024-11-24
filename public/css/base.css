@@ -328,7 +328,7 @@ header a {
     text-shadow: 0 0 1px #fff, 0 0 1px #fff, 0 0 1px #FFF, 0 0 1px #FFF, 0 0 1px #FFF, 0 0 1px #FFF, 0 0 1px #fff;
 }*/
 
-#iconAndNameDiv:hover #figureIcon {
+.figureIconOn, #iconAndNameDiv:hover #figureIcon {
     filter: drop-shadow(1px 1px 3px #7e7e7e);
 }
 
@@ -368,6 +368,7 @@ header a {
     border-radius: 20px;
     place-items: center center;
     cursor: default;
+    display: none;
 }
 
 #submenu p {
