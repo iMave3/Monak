@@ -22,15 +22,15 @@
 			{# odkomentuj pro stylovani messages #}
 
 			{# <div class="popup">
-																												{% include 'svg/close.html.twig' %}
-																												{% include 'svg/info.html.twig' %}
-																												Akce se povedla yey, nejaka dlouha zprava hihi
-																												</div>
-																												<div class="popup error">
-																												{% include 'svg/close.html.twig' %}
-																												{% include 'svg/error.html.twig' %}
-																												Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
-																								</div> #}
+														{% include 'svg/close.html.twig' %}
+														{% include 'svg/info.html.twig' %}
+														Akce se povedla yey, nejaka dlouha zprava hihi
+														</div>
+														<div class="popup error">
+														{% include 'svg/close.html.twig' %}
+														{% include 'svg/error.html.twig' %}
+														Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
+												</div> #}
 				{% for message in app.flashes('notice') %}
 					<div class="popup"> {% include 'svg/close.html.twig' %}
 					{% include 'svg/info.html.twig' %}
@@ -78,6 +78,8 @@
 									<a href="" class="un">Objednávky</a>
 									<a href="{{ path('myProfile') }}" class="un">Můj profil</a>
 									<a href="" class="un">Napište nám!</a>
+									{% if is_granted('ROLE_ADMIN') %}asdasd
+									{% endif %}
 									<a href="{{ path('app_logout') }}" class="unRed">Odhlásit se</a>
 								</div>
 							</div>

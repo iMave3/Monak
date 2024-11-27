@@ -2,7 +2,9 @@
 
 namespace App\Command;
 
+use App\Entity\Category;
 use App\Entity\User;
+use App\Entity\Product;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,23 +40,57 @@ class LoadInitialDataCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        if ($this->entityManager->getRepository(User::class)->findOneBy(['username' => 'mave']) !== null) {
+        if ($this->entityManager->getRepository(User::class)->findOneBy(['email' => 'plihal.marek@seznam.cz']) !== null) {
             $io->error("Uživatel s daným emailem je už zde zaregistrován. Prosím, vyberte jiný email.");
             return Command::FAILURE;
         }
 
         $user = new User(
-            'mave',
             'plihal.marek@seznam.cz',
             'Marek',
             'Plíhal'
         );
+
         $user->setVerified(true);
         $user->setRoles(['ROLE_ADMIN']);
         $user->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
         $user->setLastVisit(new DateTime('now', new DateTimeZone('Europe/Prague')));
 
+        $category = new Category('Frezy');
+
+        $product = new Product(
+            'První produkt nevim',
+            'diaTech/frezy/1.webp',
+            true,
+            12090
+        );
+
+        
+        $product1 = new Product(
+            'Druhž produkt nevim',
+            'diaTech/frezy/2.webp',
+            false,
+            4090
+        );
+
+        $product2 = new Product(
+            'treti produkt nevim',
+            'diaTech/frezy/3.webp',
+            true,
+            33090
+        );
+
+
+        $category->addProduct($product);
+        $category->addProduct($product1);
+        $category->addProduct($product2);
+
+        $this->entityManager->persist($product);
+        $this->entityManager->persist($product1);
+        $this->entityManager->persist($product2);
+        $this->entityManager->persist($category);
         $this->entityManager->persist($user);
+
         $this->entityManager->flush();
 
         $io->success("Byly nahrány úvodní data.");

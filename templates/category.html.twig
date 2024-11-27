@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    {{ category.name }}
+    {% for product in category.products %}
+        <div class="product">
+            <img src="{{ asset('img/products/' ~ product.imageURL) }}" alt="">
+        </div>
+    {% endfor %}
+{% endblock %}
