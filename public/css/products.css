@@ -1,0 +1,91 @@
+:root {
+    --pictureShadowNotActive: #3b3b3b;
+    --pictureShadowActive: #000;
+    --notActivebuttonColor: RGB(60, 61, 64);
+    --ActivebuttonColor: RGB(0, 0, 0);
+    --imageRadius: 10px;
+}
+
+/* right */
+#right-offer {
+    text-align: center;
+}
+
+#mainRight-offer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    place-items: center right;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+#mainRight-offer > a {
+    box-shadow: 10px 10px 17px #e6e6e6, 10px 10px 17px #e6e6e6 inset;
+    text-decoration: none;
+    color: black;
+    padding: 7px 5px 20px 5px;
+    border-radius: 20px;
+}
+
+#mainRight-offer > a img{
+    border-radius: var(--imageRadius);
+    transform: scale(.83);
+    height: 240px;
+    width: 250px;
+    object-fit: cover;
+    overflow: hidden;
+    object-position: center;
+    filter: drop-shadow(5px 5px 10px var(--pictureShadowNotActive));
+    transition: all .2s ease-in-out;
+}
+
+#mainRight-offer>a img:hover {
+    filter: drop-shadow(5px 5px 12px var(--pictureShadowActive));
+}
+
+#mainRight-offer > a h2 {
+    font-size: 20px;
+    margin: 5px 0 20px 0;
+}
+
+#mainRight-offer > a p {
+    font-size: 20px;
+    background-color: var(--notActivebuttonColor);
+    width: fit-content;
+    color: RGB(245, 244, 244);
+    margin: 0 auto;
+    padding: 5px 15px;
+    border-radius: 30px;
+    transition: .2s all ease-in-out;
+}
+
+#mainRight-offer > a p:hover {
+    background-color: var(--ActivebuttonColor);
+}
+
+/* ------------------------------- RESPONSIBILITY ------------------------------- */
+/* -------------------- <1600px --------------------*/
+@media (max-width: 1600px) {
+    #mainRight-offer {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+/* -------------------- <1230px --------------------*/
+@media (max-width: 1230px) {
+    #mainRight-offer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+/* -------------------- <900px --------------------*/
+@media (max-width: 900px) {
+    main {
+        width: 100%;
+    }
+}
+/* -------------------- <620px --------------------*/
+@media (max-width: 620px) {
+    #mainRight-offer {
+        grid-template-columns: 1fr;
+    }
+}

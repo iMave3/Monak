@@ -1,13 +1,20 @@
 {% extends "base.html.twig" %}
 
 {% block stylesheets %}
+		<link rel="stylesheet" href="{{ asset('css/products.css') }}">
 {% endblock %}
 
 {% block body %}
-    {{ category.name }}
-    {% for product in category.products %}
-        <div class="product">
-            <img src="{{ asset('img/products/' ~ product.imageURL) }}" alt="">
-        </div>
-    {% endfor %}
+	<div id="right-offer">
+		<div id="mainRight-offer">
+	{% for product in category.products %}
+        <a href="../php/rucBrouseni.php">
+				<img src="{{ asset('img/products/' ~ product.imageURL) }}" alt="">
+				<h2>{{ category.name }}</h2>
+				<p>Otevřít</p>
+			</a>
+	{% endfor %}
+		</div>
+	</div>
+
 {% endblock %}

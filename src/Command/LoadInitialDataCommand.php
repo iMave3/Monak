@@ -28,9 +28,7 @@ class LoadInitialDataCommand extends Command
         parent::__construct();
     }
 
-    protected function configure(): void
-    {
-    }
+    protected function configure(): void {}
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -56,7 +54,8 @@ class LoadInitialDataCommand extends Command
         $user->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
         $user->setLastVisit(new DateTime('now', new DateTimeZone('Europe/Prague')));
 
-        $category = new Category('Frezy');
+        $category = new Category('Diamantová technika');
+        $category2 = new Category('Brusné kotouče');
 
         $product = new Product(
             'První produkt nevim',
@@ -65,7 +64,7 @@ class LoadInitialDataCommand extends Command
             12090
         );
 
-        
+
         $product1 = new Product(
             'Druhž produkt nevim',
             'diaTech/frezy/2.webp',
@@ -89,6 +88,7 @@ class LoadInitialDataCommand extends Command
         $this->entityManager->persist($product1);
         $this->entityManager->persist($product2);
         $this->entityManager->persist($category);
+        $this->entityManager->persist($category2);
         $this->entityManager->persist($user);
 
         $this->entityManager->flush();

@@ -24,10 +24,20 @@ class Category
     #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
     private Collection $products;
 
+    #[ORM\Column(length: 255)]
+    private ?string $imageURL = null;
+
+    /**
+     * @var Collection<int, SubCategory>
+     */
+    #[ORM\OneToMany(targetEntity: SubCategory::class, mappedBy: 'category_id')]
+    private Collection $category_id;
+
     public function __construct(string $name)
     {
         $this->name = $name;
         $this->products = new ArrayCollection();
+        $this->category_id = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,6 +81,48 @@ class Category
             // set the owning side to null (unless already changed)
             if ($product->getCategory() === $this) {
                 $product->setCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getImageURL(): ?string
+    {
+        return $this->imageURL;
+    }
+
+    public function setImageURL(string $imageURL): static
+    {
+        $this->imageURL = $imageURL;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SubCategory>
+     */
+    public function getCategoryId(): Collection
+    {
+        return $this->category_id;
+    }
+
+    public function addCategoryId(SubCategory $categoryId): static
+    {
+        if (!$this->category_id->contains($categoryId)) {
+            $this->category_id->add($categoryId);
+            $categoryId->setCategoryId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategoryId(SubCategory $categoryId): static
+    {
+        if ($this->category_id->removeElement($categoryId)) {
+            // set the owning side to null (unless already changed)
+            if ($categoryId->getCategoryId() === $this) {
+                $categoryId->setCategoryId(null);
             }
         }
 
