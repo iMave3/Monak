@@ -2,9 +2,9 @@
 
 namespace App\Command;
 
-use App\Entity\Category;
 use App\Entity\User;
 use App\Entity\Product;
+use App\Entity\Tag;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
@@ -50,12 +50,10 @@ class LoadInitialDataCommand extends Command
         );
 
         $user->setVerified(true);
-        $user->setRoles(['ROLE_ADMIN']);
         $user->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
         $user->setLastVisit(new DateTime('now', new DateTimeZone('Europe/Prague')));
 
-        $category = new Category('Diamantová technika');
-        $category2 = new Category('Brusné kotouče');
+        $tag = new Tag('Frezy');
 
         $product = new Product(
             'První produkt nevim',
@@ -79,16 +77,14 @@ class LoadInitialDataCommand extends Command
             33090
         );
 
-
-        $category->addProduct($product);
-        $category->addProduct($product1);
-        $category->addProduct($product2);
+        $tag->addProduct($product);
+        $tag->addProduct($product1);
+        $tag->addProduct($product2);
 
         $this->entityManager->persist($product);
         $this->entityManager->persist($product1);
         $this->entityManager->persist($product2);
-        $this->entityManager->persist($category);
-        $this->entityManager->persist($category2);
+        $this->entityManager->persist($tag);
         $this->entityManager->persist($user);
 
         $this->entityManager->flush();

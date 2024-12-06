@@ -20,7 +20,7 @@ db_reset () {
     # reset DB
     bin/console doctrine:database:drop --force
     bin/console doctrine:database:create
-    bin/console doctrine:migrations:migrate
+    bin/console doctrine:migrations:migrate --no-interaction
     bin/console LoadInitialData
 }
 
@@ -70,11 +70,11 @@ docker_runtime_update() {
 }
 
 docker_up() {
-    docker_compose up --build -d
+    docker_compose up --build -d --remove-orphans
 }
 
 docker_down() {
-    docker_compose down
+    docker_compose down --remove-orphans
 }
 
 docker_kill() {

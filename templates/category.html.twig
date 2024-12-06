@@ -5,16 +5,28 @@
 {% endblock %}
 
 {% block body %}
-	<div id="right-offer">
+	{% if category.subcategories is defined %}
+		{% for subcategory in category.subcategories %}
+			<a href="{{ path('catalog', {'name': subcategory}) }}">{{subcategory}}</a>
+		{% endfor %}
+	{% endif %}
+
+	{% if category.tags is defined %}
+		{% for tag in category.tags %}
+			<a href="{{ path('tag', {'name': tag}) }}">{{tag}}</a>
+		{% endfor %}
+	{% endif %}
+
+	{# <div id="right-offer">
 		<div id="mainRight-offer">
-	{% for product in category.products %}
+	{% for product in tag.products %}
         <a href="../php/rucBrouseni.php">
 				<img src="{{ asset('img/products/' ~ product.imageURL) }}" alt="">
-				<h2>{{ category.name }}</h2>
+				<h2>{{ tag.name }}</h2>
 				<p>Otevřít</p>
 			</a>
 	{% endfor %}
 		</div>
-	</div>
+	</div> #}
 
 {% endblock %}
