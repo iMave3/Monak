@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+		<link rel="stylesheet" href="{{ asset('css/products.css') }}">
+{% endblock %}
+
+{% block body %}
+	{% if tag.childrenTags is not empty %}
+		Podkategorie:
+		{% for childrenTag in tag.childrenTags %}
+			<a href="{{ path('tag', {'id': childrenTag.id}) }}">{{childrenTag.name}}</a>
+		{% endfor %}
+	{% endif %}
+
+	{% if tag.products is not empty %}
+		Produkty:
+		{% for product in tag.products %}
+			<p>{{ product.name }}</p>
+		{% endfor %}
+	{% endif %}
+
+{% endblock %}

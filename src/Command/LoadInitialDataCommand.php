@@ -53,7 +53,12 @@ class LoadInitialDataCommand extends Command
         $user->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
         $user->setLastVisit(new DateTime('now', new DateTimeZone('Europe/Prague')));
 
-        $tag = new Tag('Frezy');
+        $tag1 = new Tag("Diamantová technika", 'diaTech/diaTech.png');
+        $tag2 = new Tag("Brusné kotouče", 'brusKartace/brusKartace.png');
+
+        $tag3 = new Tag('Frezy', "diaTech/frezy.png");
+        $tag1->addChildrenTag($tag3);
+
 
         $product = new Product(
             'První produkt nevim',
@@ -61,7 +66,6 @@ class LoadInitialDataCommand extends Command
             true,
             12090
         );
-
 
         $product1 = new Product(
             'Druhž produkt nevim',
@@ -77,14 +81,16 @@ class LoadInitialDataCommand extends Command
             33090
         );
 
-        $tag->addProduct($product);
-        $tag->addProduct($product1);
-        $tag->addProduct($product2);
+        $tag3->addProduct($product);
+        $tag3->addProduct($product1);
+        $tag3->addProduct($product2);
 
         $this->entityManager->persist($product);
         $this->entityManager->persist($product1);
         $this->entityManager->persist($product2);
-        $this->entityManager->persist($tag);
+        $this->entityManager->persist($tag1);
+        $this->entityManager->persist($tag2);
+        $this->entityManager->persist($tag3);
         $this->entityManager->persist($user);
 
         $this->entityManager->flush();

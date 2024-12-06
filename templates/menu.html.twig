@@ -7,6 +7,9 @@
 {% block body %}
 	<div id="right-offer">
 		<div id="mainRight-offer">
+			{% for tag in tags %}
+				<a href="{{ path('tag', {'id': tag.id}) }}">{{ tag.name }}</a>
+			{% endfor %}
 			{# {% for categories in category %}
 				<a href="{{ path('show_category', {'id': categories.id}) }}">
 					<img src="{{ asset('img/products/' ~ categories.id ~ '.png') }}" alt="">

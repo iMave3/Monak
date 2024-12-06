@@ -24,14 +24,28 @@ class Tag
     /**
      * @var Collection<int, Product>
      */
-    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'tags')]
+    #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'tag', orphanRemoval: true)]
     private Collection $products;
 
-    public function __construct(string $name, ?string $description = null)
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'childrenTags')]
+    private ?self $parentTag = null;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parentTag')]
+    private Collection $childrenTags;
+
+    #[ORM\Column(length: 255)]
+    private ?string $imageURL = null;
+
+    public function __construct(string $name, string $imageURL, ?string $description = null)
     {
-        $this->products = new ArrayCollection();
         $this->name = $name;
         $this->description = $description;
+        $this->products = new ArrayCollection();
+        $this->childrenTags = new ArrayCollection();
+        $this->imageURL = $imageURL;
     }
 
     public function getId(): ?int
@@ -75,7 +89,7 @@ class Tag
     {
         if (!$this->products->contains($product)) {
             $this->products->add($product);
-            $product->addTag($this);
+            $product->setTag($this);
         }
 
         return $this;
@@ -84,8 +98,65 @@ class Tag
     public function removeProduct(Product $product): static
     {
         if ($this->products->removeElement($product)) {
-            $product->removeTag($this);
+            // set the owning side to null (unless already changed)
+            if ($product->getTag() === $this) {
+                $product->setTag(null);
+            }
         }
+
+        return $this;
+    }
+
+    public function getParentTag(): ?self
+    {
+        return $this->parentTag;
+    }
+
+    public function setParentTag(?self $parentTag): static
+    {
+        $this->parentTag = $parentTag;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getChildrenTags(): Collection
+    {
+        return $this->childrenTags;
+    }
+
+    public function addChildrenTag(self $childrenTag): static
+    {
+        if (!$this->childrenTags->contains($childrenTag)) {
+            $this->childrenTags->add($childrenTag);
+            $childrenTag->setParentTag($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChildrenTag(self $childrenTag): static
+    {
+        if ($this->childrenTags->removeElement($childrenTag)) {
+            // set the owning side to null (unless already changed)
+            if ($childrenTag->getParentTag() === $this) {
+                $childrenTag->setParentTag(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getImageURL(): ?string
+    {
+        return $this->imageURL;
+    }
+
+    public function setImageURL(string $imageURL): static
+    {
+        $this->imageURL = $imageURL;
 
         return $this;
     }

@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -27,11 +25,9 @@ class Product
     #[ORM\Column(nullable: true)]
     private ?int $price = null;
 
-    /**
-     * @var Collection<int, Tag>
-     */
-    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'products')]
-    private Collection $tags;
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Tag $tag = null;
 
     public function __construct(string $name, string $imageURL, bool $isAvailable, int $price)
     {
@@ -39,7 +35,6 @@ class Product
         $this->imageURL = $imageURL;
         $this->isAvailable = $isAvailable;
         $this->price = $price;
-        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -95,26 +90,14 @@ class Product
         return $this;
     }
 
-    /**
-     * @return Collection<int, Tag>
-     */
-    public function getTags(): Collection
+    public function getTag(): ?Tag
     {
-        return $this->tags;
+        return $this->tag;
     }
 
-    public function addTag(Tag $tag): static
+    public function setTag(?Tag $tag): static
     {
-        if (!$this->tags->contains($tag)) {
-            $this->tags->add($tag);
-        }
-
-        return $this;
-    }
-
-    public function removeTag(Tag $tag): static
-    {
-        $this->tags->removeElement($tag);
+        $this->tag = $tag;
 
         return $this;
     }
