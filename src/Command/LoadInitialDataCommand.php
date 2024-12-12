@@ -28,7 +28,9 @@ class LoadInitialDataCommand extends Command
         parent::__construct();
     }
 
-    protected function configure(): void {}
+    protected function configure(): void
+    {
+    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -55,8 +57,8 @@ class LoadInitialDataCommand extends Command
 
         $tag1 = new Tag("Diamantová technika", 'diaTech/diaTech.png');
         $tag2 = new Tag("Brusné kotouče", 'brusKartace/brusKartace.png');
-
         $tag3 = new Tag('Frezy', "diaTech/frezy.png");
+        
         $tag1->addChildrenTag($tag3);
 
 

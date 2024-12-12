@@ -10,13 +10,5 @@
 			{% for tag in tags %}
 				<a href="{{ path('tag', {'id': tag.id}) }}">{{ tag.name }}</a>
 			{% endfor %}
-			{# {% for categories in category %}
-				<a href="{{ path('show_category', {'id': categories.id}) }}">
-					<img src="{{ asset('img/products/' ~ categories.id ~ '.png') }}" alt="">
-					<h2>{{ categories.name }}</h2>
-				<p>Otevřít</p>
-			</a>
-				{% endfor %}#}
-
 		</div>
 	{% endblock %}

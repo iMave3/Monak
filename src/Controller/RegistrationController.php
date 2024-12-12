@@ -25,13 +25,15 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security): Response
-    {
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $userPasswordHasher,
+        Security $security
+    ): Response {
         $form = $this->createForm(RegistrationFormType::class);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-           
             $formData = $form->getData();
             
             $user = new User(
@@ -45,7 +47,9 @@ class RegistrationController extends AbstractController
             $this->entityManager->flush();
 
             // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            $this->emailVerifier->sendEmailConfirmation(
+                'app_verify_email',
+                $user,
                 (new TemplatedEmail())
                     ->from(new Address('no-reply@monak.cz', 'Monak Email Bot'))
                     ->to((string) $user->getEmail())

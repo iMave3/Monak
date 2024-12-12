@@ -43,16 +43,4 @@ class AbstractController extends AbstractControllerBase
         $this->addFlash($type, $message);
         return $this->redirectToRoute($route, $parameters);
     }
-
-    // protected function getDefaultUser() : ?UserInterface
-    // {
-    //     return parent::getUser();
-    // }
-
-    // protected function getUser() : User
-    // {
-    //     $user = parent::getUser();
-    //     assert($user instanceof User);
-    //     return $user;
-    // }
 }

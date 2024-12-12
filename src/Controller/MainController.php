@@ -7,7 +7,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validation;
 
 class MainController extends AbstractController
-{  
+{
+
     #[Route("/", name:"main")]
     public function index(): Response
     {
