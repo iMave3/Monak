@@ -8,10 +8,10 @@ use Symfony\Component\Validator\Validation;
 
 class AdminPanelController extends AbstractController
 {
-    #[Route("/", name:"main")]
+    #[Route("/admin", name:"adminPanel")]
     public function index(): Response
     {
-        return $this->render('main.html.twig', [
+        return $this->render('adminPanel.html.twig', [
         ]);
     }
 }
