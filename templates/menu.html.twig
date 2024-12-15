@@ -4,11 +4,27 @@
 	<link rel="stylesheet" href="{{ asset('css/menu.css') }}">
 {% endblock %}
 
+{% block leftBody %}{% endblock %}
+
+
 {% block body %}
 	<div id="right-offer">
 		<div id="mainRight-offer">
-			{% for tag in tags %}
-				<a href="{{ path('tag', {'id': tag.id}) }}">{{ tag.name }}</a>
-			{% endfor %}
-		</div>
-	{% endblock %}
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<a href="{{ path('create_tag') }}" id="dia">
+					<img src="../img/offer/dia.png" alt="">
+					<h2>&nbsp;</h2>
+					<p>Přidat</p>
+				</a>
+			{% endif %}
+
+		</a>
+		{% for tag in tags %}
+			<a href="{{ path('tag', {'id': tag.id}) }}">
+				<img src="{{ asset('img/exhibitionPictures/' ~ tag.imageURL ~ '.png') }}" alt="{{ tag.name }}">
+				<h2>{{ tag.name }}</h2>
+				<p>Otevřít</p>
+			</a>
+		{% endfor %}
+	</div>
+{% endblock %}

@@ -1,14 +1,19 @@
 {% extends "base.html.twig" %}
 
 {% block stylesheets %}
-		<link rel="stylesheet" href="{{ asset('css/products.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/products.css') }}">
 {% endblock %}
 
 {% block body %}
+	<div id="right-offer">
+		<div id="mainRight-offer">
 	{% if tag.childrenTags is not empty %}
-		Podkategorie:
 		{% for childrenTag in tag.childrenTags %}
-			<a href="{{ path('tag', {'id': childrenTag.id}) }}">{{childrenTag.name}}</a>
+			<a href="{{ path('tag', {'id': childrenTag.id}) }}">
+				<img src="{{ asset('img/exhibitionPictures/' ~ childrenTag.imageURL ~ '.png') }}" alt="{{ tag.name }}">
+				<h2>{{childrenTag.name}}</h2>
+				<p>Otevřít</p>
+			</a>
 		{% endfor %}
 	{% endif %}
 
@@ -18,5 +23,5 @@
 			<p>{{ product.name }}</p>
 		{% endfor %}
 	{% endif %}
-
+		</div>
 {% endblock %}
