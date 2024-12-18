@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\FileType; // Přidejte FileType pro soubor
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class TagFormType extends AbstractType
 {
@@ -23,17 +24,17 @@ public function buildForm(FormBuilderInterface $builder, array $options)
         ->add('description', TextType::class, [
             'required' => false,
         ])
-        ->add('imagePath', FileType::class, [
+        ->add('image', FileType::class, [
             'label' => 'Obrázek',
+            'required' => true,
             'mapped' => false,
-            'required' => false,
-        ])
-        ->add('parentTag', EntityType::class, [
-            'class' => Tag::class,
-            'choice_label' => 'name',
-            'required' => false,
-            'placeholder' => 'None',
-            'choices' => $options['tags']
+            'constraints' => [
+                new Image([
+                    'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'], // Specify allowed types
+                    'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, WEBP).',
+                    'maxSize' => '5M'
+                ]),
+        ]
         ]);
 }
 
@@ -41,8 +42,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Tag::class,
-            'tags' => [], // Doplnění seznamu tagů do formuláře
+            
         ]);
     }
 }

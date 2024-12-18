@@ -4,77 +4,80 @@ namespace App\Controller;
 
 use App\Entity\Tag;
 use App\Form\TagFormType;
+use Symfony\Bundle\MakerBundle\Validator;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ProductsController extends AbstractController
-{ 
-    #[Route("/menu", name:"menu")]
+{
+    #[Route("/menu", name: "menu")]
     public function menu(): Response
     {
         $tags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
 
-        return $this->render('menu.html.twig', [
-            'tags' => $tags
+        $mainTags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
+
+        return $this->render('tag.html.twig', [
+            'tag' => null,
+            'tags' => $tags,
+            'mainTags' => $mainTags,
+            'currentTagId' => null
         ]);
     }
 
-    #[Route("/tag/create", name:"create_tag")]
-    public function createTag(Request $request): Response
-    { 
-        // Vytvoření nového tagu
-        $tag = new Tag("", "");
-        
-        // Načtení všech tagů, které budou k dispozici pro výběr nadřazeného tagu
-        $tags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
-    
+    #[Route("/tag/create/{parentId}", name: "create_tag", defaults:["parentId" => null])]
+    public function createTag(?string $parentId = null, Request $request): Response
+    {
+        $parentTag = null;
+        if ($parentId !== null) {
+            $parentTag = $this->entityManager->find(Tag::class, $parentId);
+        }
+
         // Vytvoření formuláře s předaným seznamem tagů pro výběr parentTag
-        $form = $this->createForm(TagFormType::class, $tag, [
-            'tags' => $tags,  // Předání seznamu hlavních tagů do formuláře
-        ]);
-    
+        $form = $this->createForm(TagFormType::class);
+
         $form->handleRequest($request);
-    
+
         // Ověření, zda byl formulář odeslán a zda je platný
         if ($form->isSubmitted() && $form->isValid()) {
-            $newTag = $form->getData();
+            // Vytvoření nového tagu
+            $formData = $form->getData();
 
-// Ve vašem kontroleru
-$imagePath = $form->get("imagePath")->getData();
-if ($imagePath) {
-    $newFileName = uniqid() . "." . $imagePath->guessExtension();
+            $image = $form->get('image')->getData();
+            
+            $newFileName = uniqid() . "." . $image->guessExtension();
 
-    try {
-        $imagePath->move(
-            $this->getParameter('kernel.project_dir') . "/public/uploads",  // Uložení do public/uploads
-            $newFileName
-        );
-    } catch (FileException $e) {
-        return new Response($e->getMessage());
-    }
+            try {
+                $image->move(
+                    $this->getParameter('kernel.project_dir') . "/public/uploads",
+                    $newFileName
+                );
+            } catch (FileException $e) {
+                return new Response($e->getMessage());
+            }
 
-    // Nastavení cesty k obrázku pro entitu
-    $newTag->setImagePath("/uploads/" . $newFileName);
-}
+            $imagePath = "/uploads/" . $newFileName;
 
-            // Persistování nového tagu
-            $this->entityManager->persist($newTag);
+            $tag = new Tag($formData['name'], $imagePath , $formData['description']);
+            $tag->setParentTag($parentTag);
+
+            $this->entityManager->persist($tag);
             $this->entityManager->flush();
-    
-            // Přesměrování na stránku menu po úspěšném přidání tagu
+
             return $this->redirectToRoute('menu');
         }
-    
+
         return $this->render('create.html.twig', [
             'form' => $form->createView()
         ]);
     }
-    
 
-    #[Route("/tag/{id}", name:"tag")]
+    #[Route("/tag/{id}", name: "tag")]
     public function tag(int $id): Response
     {
         $tag = $this->entityManager->find(Tag::class, $id);
@@ -83,7 +86,65 @@ if ($imagePath) {
 
         return $this->render('tag.html.twig', [
             'tag' => $tag,
-            'mainTags' => $mainTags
+            'mainTags' => $mainTags,
+            'currentTagId' => $id
         ]);
     }
+
+    #[Route("/tag/remove/{id}", name: "remove_tag")]
+    public function removeTag(string $id): Response
+    {
+        $tag = $this->entityManager->find(Tag::class, $id);
+
+        if ($tag === null) {
+            return $this->flashRedirect('error', 'Tag nenalezen!', 'main');
+        }
+
+        $this->entityManager->remove($tag);
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('menu');
+    }
+
+    #[Route("/tag/edit/{id}", name: "edit_tag")]
+    public function editTag(string $id, Request $request): Response
+    {
+        $tag = $this->entityManager->find(Tag::class, $id);
+        $form = $this->createForm(TagFormType::class, $tag);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() and $form->isValid()) {
+            $image = $form->get('image')->getData();
+            
+            $newFileName = uniqid() . "." . $image->guessExtension();
+
+            try {
+                $image->move(
+                    $this->getParameter('kernel.project_dir') . "/public/uploads",
+                    $newFileName
+                );
+            } catch (FileException $e) {
+                return new Response($e->getMessage());
+            }
+
+            $imagePath = "/uploads/" . $newFileName;
+
+            $tag->setName($form->get("name")->getData());
+            $tag->setDescription($form->get("description")->getData());
+            $tag->setImageURL($imagePath);
+    
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('menu');
+            
+        }
+
+        return $this->render("edit.html.twig", [
+            "tag" => $tag,
+            "form" => $form->createView()
+        ]);
+
+    }
+        
 }

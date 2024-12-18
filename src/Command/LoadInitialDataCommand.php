@@ -55,12 +55,41 @@ class LoadInitialDataCommand extends Command
         $user->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
         $user->setLastVisit(new DateTime('now', new DateTimeZone('Europe/Prague')));
 
-        $tag1 = new Tag("Diamantová technika", 'diaTech/diaTech.png');
-        $tag2 = new Tag("Brusné kotouče", 'brusKartace/brusKartace.png');
-        $tag3 = new Tag('Frezy', "diaTech/frezy.png");
-        
-        $tag1->addChildrenTag($tag3);
+        $tag1 = new Tag("Diamantová technika", '/img/exhibitionPictures/diaTech.png');
+        $tag2 = new Tag("Brusné kotouče", '/img/exhibitionPictures/brusKartace.png');
+        $tag3 = new Tag("Katalog výrobků", '/img/exhibitionPictures/katalog.png');
+        $tag4 = new Tag("Nářadí BAVARIA", '/img/exhibitionPictures/bavaria.png');
+        $tag5 = new Tag("Plastiky a gravírace", '/img/exhibitionPictures/gravirace.png');
+        $tag6 = new Tag("Žulové rotační výrobky", '/img/exhibitionPictures/zulove.png');
+        $tag7 = new Tag("Zlato", '/img/exhibitionPictures/zlato.png');
+        $tag8 = new Tag("Přísavky na kámen", '/img/exhibitionPictures/prisavky.png');
+        $tag9 = new Tag("Chemie na kámen", '/img/exhibitionPictures/chemie.png');
 
+        
+        $this->entityManager->persist($tag1);
+        $this->entityManager->persist($tag2);
+        $this->entityManager->persist($tag3);
+        $this->entityManager->persist($tag4);
+        $this->entityManager->persist($tag5);
+        $this->entityManager->persist($tag6);
+        $this->entityManager->persist($tag7);
+        $this->entityManager->persist($tag8);
+        $this->entityManager->persist($tag9);
+
+        $tag10 = new Tag("Ruční broušení", '/img/exhibitionPictures/ruc.png');
+        $tag11 = new Tag("Diamantové řezací kotouče", '/img/exhibitionPictures/rez.png');
+        $tag12 = new Tag("Kalibrovací frézy", '/img/exhibitionPictures/frezy.png');
+        $tag13 = new Tag("Vrtací korunky", '/img/exhibitionPictures/kor.png');
+
+        $tag1->addChildrenTag($tag10);
+        $tag1->addChildrenTag($tag11);
+        $tag1->addChildrenTag($tag12);
+        $tag1->addChildrenTag($tag13);
+
+        $this->entityManager->persist($tag10);
+        $this->entityManager->persist($tag11);
+        $this->entityManager->persist($tag12);
+        $this->entityManager->persist($tag13);
 
         $product = new Product(
             'První produkt nevim',
@@ -86,14 +115,13 @@ class LoadInitialDataCommand extends Command
         $tag3->addProduct($product);
         $tag3->addProduct($product1);
         $tag3->addProduct($product2);
-
+        
         $this->entityManager->persist($product);
         $this->entityManager->persist($product1);
         $this->entityManager->persist($product2);
-        $this->entityManager->persist($tag1);
-        $this->entityManager->persist($tag2);
-        $this->entityManager->persist($tag3);
+        
         $this->entityManager->persist($user);
+
 
         $this->entityManager->flush();
 

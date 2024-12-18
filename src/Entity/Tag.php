@@ -33,13 +33,13 @@ class Tag
     /**
      * @var Collection<int, self>
      */
-    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parentTag')]
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parentTag', cascade:['remove'])]
     private Collection $childrenTags;
 
     #[ORM\Column(length: 255)]
     private ?string $imageURL = null;
 
-    public function __construct(string $name, string $imageURL, ?string $description = null)
+    public function __construct(?string $name = null, ?string $imageURL = null, ?string $description = null)
     {
         $this->name = $name;
         $this->description = $description;

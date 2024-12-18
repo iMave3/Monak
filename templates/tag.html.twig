@@ -7,21 +7,40 @@
 {% block body %}
 	<div id="right-offer">
 		<div id="mainRight-offer">
-	{% if tag.childrenTags is not empty %}
-		{% for childrenTag in tag.childrenTags %}
-			<a href="{{ path('tag', {'id': childrenTag.id}) }}">
-				<img src="{{ asset('img/exhibitionPictures/' ~ childrenTag.imageURL ~ '.png') }}" alt="{{ tag.name }}">
-				<h2>{{childrenTag.name}}</h2>
-				<p>Otevřít</p>
-			</a>
-		{% endfor %}
-	{% endif %}
 
-	{% if tag.products is not empty %}
-		Produkty:
-		{% for product in tag.products %}
-			<p>{{ product.name }}</p>
-		{% endfor %}
-	{% endif %}
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<a href="{{ path('create_tag', {'parentId': currentTagId }) }}" id="dia">
+					<img src="/img/addIcon.png" alt="">
+					<h2>&nbsp;</h2>
+					<p>Přidat</p>
+				</a>
+			{% endif %}
+
+
+			{% if tag and tag.products is not empty %}
+				Produkty:
+				{% for product in tag.products %}
+					<p>{{ product.name }}</p>
+				{% endfor %}
+			{% endif %}
+
+			{% if tag and tag.childrenTags is not empty %}
+				{% set childrenTags = tag.childrenTags %}
+			{% elseif tags is defined %}
+				{% set childrenTags = tags %}
+			{% endif %}
+
+			{% if childrenTags is defined and childrenTags is not null %}
+				{% for childrenTag in childrenTags %}
+					<a style="display: inline" href="{{ path('edit_tag', {'id': childrenTag.id}) }}">edit</a>
+					<a style="display: inline" href="{{ path('remove_tag', {'id': childrenTag.id}) }}">delete</a>
+					<a href="{{ path('tag', {'id': childrenTag.id}) }}">
+						<img src="{{ asset(childrenTag.imageURL) }}" alt="{{ childrenTag.name }}">
+						<h2>{{childrenTag.name}}</h2>
+						<p>Otevřít</p>
+					</a>
+				{% endfor %}
+			{% endif %}
 		</div>
+	</div>
 {% endblock %}

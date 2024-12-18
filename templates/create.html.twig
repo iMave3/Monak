@@ -3,14 +3,13 @@
 {% block body %}
 	<div class="w-4/5 m-auto pt-40">
 		<h1 class="text-6xl text-center pb-12">
-			Create Movie
+			Vytvořit kategorii
 		</h1>
 
 {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
     {{ form_row(form.name) }}
     {{ form_row(form.description) }}
-    {{ form_row(form.imagePath) }}  <!-- Tady bude input pro obrázek -->
-    {{ form_row(form.parentTag) }}
+    {{ form_row(form.image) }}  <!-- Tady bude input pro obrázek -->
     <button type="submit">Uložit</button>
 {{ form_end(form) }}
 
