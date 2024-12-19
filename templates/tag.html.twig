@@ -32,9 +32,13 @@
 
 			{% if childrenTags is defined and childrenTags is not null %}
 				{% for childrenTag in childrenTags %}
-					<a style="display: inline" href="{{ path('edit_tag', {'id': childrenTag.id}) }}">edit</a>
-					<a style="display: inline" href="{{ path('remove_tag', {'id': childrenTag.id}) }}">delete</a>
 					<a href="{{ path('tag', {'id': childrenTag.id}) }}">
+						<object>
+							<a href="{{ path('edit_tag', {'id': childrenTag.id}) }}">Upravit</a>
+						</object>
+						<object>
+							<a href="{{ path('remove_tag', {'id': childrenTag.id}) }}">Smazat</a>
+						</object>
 						<img src="{{ asset(childrenTag.imageURL) }}" alt="{{ childrenTag.name }}">
 						<h2>{{childrenTag.name}}</h2>
 						<p>Otevřít</p>

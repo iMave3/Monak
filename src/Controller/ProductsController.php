@@ -39,7 +39,7 @@ class ProductsController extends AbstractController
         }
 
         // Vytvoření formuláře s předaným seznamem tagů pro výběr parentTag
-        $form = $this->createForm(TagFormType::class);
+        $form = $this->createForm(TagFormType::class, null, ['data' => ['imageRequired' => true]]);
 
         $form->handleRequest($request);
 
@@ -110,29 +110,31 @@ class ProductsController extends AbstractController
     public function editTag(string $id, Request $request): Response
     {
         $tag = $this->entityManager->find(Tag::class, $id);
-        $form = $this->createForm(TagFormType::class, $tag);
+        $form = $this->createForm(TagFormType::class, $tag, ['data' => ['imageRequired' => false]]);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() and $form->isValid()) {
             $image = $form->get('image')->getData();
             
-            $newFileName = uniqid() . "." . $image->guessExtension();
+            if ($image !== null) {
+                $newFileName = uniqid() . "." . $image->guessExtension();
 
-            try {
-                $image->move(
-                    $this->getParameter('kernel.project_dir') . "/public/uploads",
-                    $newFileName
-                );
-            } catch (FileException $e) {
-                return new Response($e->getMessage());
+                try {
+                    $image->move(
+                        $this->getParameter('kernel.project_dir') . "/public/uploads",
+                        $newFileName
+                    );
+                } catch (FileException $e) {
+                    return new Response($e->getMessage());
+                }
+
+                $imagePath = "/uploads/" . $newFileName;
+                $tag->setImageURL($imagePath);
             }
-
-            $imagePath = "/uploads/" . $newFileName;
 
             $tag->setName($form->get("name")->getData());
             $tag->setDescription($form->get("description")->getData());
-            $tag->setImageURL($imagePath);
     
             $this->entityManager->flush();
 

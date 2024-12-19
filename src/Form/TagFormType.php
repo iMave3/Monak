@@ -19,6 +19,21 @@ class TagFormType extends AbstractType
 // src/Form/TagFormType.php
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
+    $required = $options['data']['imageRequired'];
+
+    $constraints = [];
+    if ($required) {
+        $constraints = [
+            new Image([
+                'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'], // Specify allowed types
+                'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, WEBP).',
+                'maxSize' => '5M'
+            ]),
+        ];
+    }
+
+    //dd($required, $constraints);
+
     $builder
         ->add('name', TextType::class)
         ->add('description', TextType::class, [
@@ -26,15 +41,9 @@ public function buildForm(FormBuilderInterface $builder, array $options)
         ])
         ->add('image', FileType::class, [
             'label' => 'Obrázek',
-            'required' => true,
+            'required' => $required,
             'mapped' => false,
-            'constraints' => [
-                new Image([
-                    'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'], // Specify allowed types
-                    'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, WEBP).',
-                    'maxSize' => '5M'
-                ]),
-        ]
+            'constraints' => $constraints
         ]);
 }
 

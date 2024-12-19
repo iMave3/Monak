@@ -23,7 +23,14 @@
     color: black;
     padding: 7px 5px 20px 5px;
     border-radius: 20px;
+    position: relative;
 }
+
+#mainRight-offer>a>object, #mainRight-offer>a>object>a {
+    position:absolute;
+}
+
+
 
 #mainRight-offer>a img {
     height: 240px;
