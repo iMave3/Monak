@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/products.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/tags.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -10,8 +10,14 @@
 
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				<a href="{{ path('create_tag', {'parentId': currentTagId }) }}" id="dia">
-					<img src="/img/addIcon.png" alt="">
-					<h2>&nbsp;</h2>
+					<img src="/img/addTagIcon.png" alt="">
+					<h2>Kategorie</h2>
+					<p>Přidat</p>
+				</a>
+
+				<a href="{{ path('create_tag', {'parentId': currentTagId }) }}" id="dia">
+					<img src="/img/addProductIcon.png" alt="">
+					<h2>Produkt</h2>
 					<p>Přidat</p>
 				</a>
 			{% endif %}
@@ -32,13 +38,15 @@
 
 			{% if childrenTags is defined and childrenTags is not null %}
 				{% for childrenTag in childrenTags %}
-					<a href="{{ path('tag', {'id': childrenTag.id}) }}">
-						<object>
-							<a href="{{ path('edit_tag', {'id': childrenTag.id}) }}">Upravit</a>
-						</object>
-						<object>
-							<a href="{{ path('remove_tag', {'id': childrenTag.id}) }}">Smazat</a>
-						</object>
+					<a href="{{ path('tag', {'id': childrenTag.id}) }}" style="position: relative;">
+						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+							<object class="editDelete" id="editObject">
+								<a href="{{ path('edit_tag', {'id': childrenTag.id}) }}">Upravit</a>
+							</object>
+							<object class="editDelete" id="deleteObject">
+								<a href="{{ path('remove_tag', {'id': childrenTag.id}) }}">Smazat</a>
+							</object>
+						{% endif %}
 						<img src="{{ asset(childrenTag.imageURL) }}" alt="{{ childrenTag.name }}">
 						<h2>{{childrenTag.name}}</h2>
 						<p>Otevřít</p>

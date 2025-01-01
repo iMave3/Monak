@@ -64,6 +64,36 @@
     background-color: var(--ActivebuttonColor);
 }
 
+.editDelete {
+    position: absolute;
+}
+
+.editDelete a {
+    text-decoration: none;
+}
+
+.editDelete a:hover {
+    text-decoration: underline;
+}
+
+#editObject {
+    top: 10px;
+    left: 15px;
+}
+
+#editObject a {
+    color: green;
+}
+
+#deleteObject {
+    top: 10px;
+    right: 15px;
+}
+
+#deleteObject a {
+    color: red;
+}
+
 /* ------------------------------- RESPONSIBILITY ------------------------------- */
 /* -------------------- <1600px --------------------*/
 @media (max-width: 1600px) {

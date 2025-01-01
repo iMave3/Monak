@@ -25,14 +25,12 @@ public function buildForm(FormBuilderInterface $builder, array $options)
     if ($required) {
         $constraints = [
             new Image([
-                'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'], // Specify allowed types
+                'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
                 'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, WEBP).',
                 'maxSize' => '5M'
             ]),
         ];
     }
-
-    //dd($required, $constraints);
 
     $builder
         ->add('name', TextType::class)

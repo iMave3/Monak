@@ -13,8 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class ProductsController extends AbstractController
+class TagController extends AbstractController
 {
+    // MENU -----------------------
     #[Route("/menu", name: "menu")]
     public function menu(): Response
     {
@@ -30,7 +31,8 @@ class ProductsController extends AbstractController
         ]);
     }
 
-    #[Route("/tag/create/{parentId}", name: "create_tag", defaults:["parentId" => null])]
+    // CREATE -----------------------
+    #[Route("/tag/create/{parentId}", name: "create_tag", defaults: ["parentId" => null])]
     public function createTag(?string $parentId = null, Request $request): Response
     {
         $parentTag = null;
@@ -49,7 +51,7 @@ class ProductsController extends AbstractController
             $formData = $form->getData();
 
             $image = $form->get('image')->getData();
-            
+
             $newFileName = uniqid() . "." . $image->guessExtension();
 
             try {
@@ -63,7 +65,7 @@ class ProductsController extends AbstractController
 
             $imagePath = "/uploads/" . $newFileName;
 
-            $tag = new Tag($formData['name'], $imagePath , $formData['description']);
+            $tag = new Tag($formData['name'], $imagePath, $formData['description']);
             $tag->setParentTag($parentTag);
 
             $this->entityManager->persist($tag);
@@ -77,6 +79,7 @@ class ProductsController extends AbstractController
         ]);
     }
 
+    // RENDER
     #[Route("/tag/{id}", name: "tag")]
     public function tag(int $id): Response
     {
@@ -91,6 +94,7 @@ class ProductsController extends AbstractController
         ]);
     }
 
+    // REMOVE -----------------------
     #[Route("/tag/remove/{id}", name: "remove_tag")]
     public function removeTag(string $id): Response
     {
@@ -106,6 +110,7 @@ class ProductsController extends AbstractController
         return $this->redirectToRoute('menu');
     }
 
+    // EDIT -----------------------
     #[Route("/tag/edit/{id}", name: "edit_tag")]
     public function editTag(string $id, Request $request): Response
     {
@@ -114,9 +119,9 @@ class ProductsController extends AbstractController
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted() and $form->isValid()) {
+        if ($form->isSubmitted() and $form->isValid()) {
             $image = $form->get('image')->getData();
-            
+
             if ($image !== null) {
                 $newFileName = uniqid() . "." . $image->guessExtension();
 
@@ -135,18 +140,15 @@ class ProductsController extends AbstractController
 
             $tag->setName($form->get("name")->getData());
             $tag->setDescription($form->get("description")->getData());
-    
+
             $this->entityManager->flush();
 
             return $this->redirectToRoute('menu');
-            
         }
 
         return $this->render("edit.html.twig", [
             "tag" => $tag,
             "form" => $form->createView()
         ]);
-
     }
-        
 }
