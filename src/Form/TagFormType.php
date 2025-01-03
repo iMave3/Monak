@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints\Image;
 
 class TagFormType extends AbstractType
 {
-// src/Form/TagFormType.php
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
     $required = $options['data']['imageRequired'];

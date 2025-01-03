@@ -79,7 +79,7 @@ class TagController extends AbstractController
         ]);
     }
 
-    // RENDER
+    // RENDER -----------------------
     #[Route("/tag/{id}", name: "tag")]
     public function tag(int $id): Response
     {

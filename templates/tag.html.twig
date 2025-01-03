@@ -9,27 +9,47 @@
 		<div id="mainRight-offer">
 
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-				<a href="{{ path('create_tag', {'parentId': currentTagId }) }}" id="dia">
+				<a href="{{ path('create_tag', {'parentId': currentTagId }) }}" id="">
 					<img src="/img/addTagIcon.png" alt="">
 					<h2>Kategorie</h2>
 					<p>Přidat</p>
 				</a>
 
-				<a href="{{ path('create_tag', {'parentId': currentTagId }) }}" id="dia">
+				{% if currentTagId != null %}
+				<a href="{{ path('create_product', {'tagId': currentTagId }) }}" id="">
 					<img src="/img/addProductIcon.png" alt="">
 					<h2>Produkt</h2>
 					<p>Přidat</p>
 				</a>
+				{% endif %}
 			{% endif %}
 
 
-			{% if tag and tag.products is not empty %}
-				Produkty:
+			{% if tag and tag.products is not empty %} 
 				{% for product in tag.products %}
-					<p>{{ product.name }}</p>
+					<object class="product">
+						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+							<object class="editDelete" id="editObject">
+								<a href="{{ path('edit_product', {'id': product.id}) }}">Upravit</a>
+							</object>
+							<object class="editDelete" id="deleteObject">
+								<a href="{{ path('remove_product', {'id': product.id}) }}">Smazat</a>
+							</object>
+						{% endif %}
+						<img src="{{ asset(product.imageURL) }}" alt="{{ product.name }}">
+						<h2>{{product.name}}</h2>
+						<h3>
+						{% if product.isAvailable %}
+							Skladem
+						{% else %}
+							Není skladem
+						{% endif %}
+						</h3>
+						<a href="">Přidat do košíku</a>
+					</object>
 				{% endfor %}
 			{% endif %}
-
+			
 			{% if tag and tag.childrenTags is not empty %}
 				{% set childrenTags = tag.childrenTags %}
 			{% elseif tags is defined %}
