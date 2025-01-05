@@ -25,14 +25,12 @@ class ProductController extends AbstractController
             return $this->flashRedirect('error', 'Neni nikde', 'menu');
         }
 
-        // Vytvoření formuláře s předaným seznamem tagů pro výběr parentTag
         $form = $this->createForm(ProductFormType::class, null, ['data' => ['imageRequired' => true]]);
 
         $form->handleRequest($request);
 
-        // Ověření, zda byl formulář odeslán a zda je platný
         if ($form->isSubmitted() && $form->isValid()) {
-            // Vytvoření nového tagu
+
             $formData = $form->getData();
 
             $image = $form->get('image')->getData();
@@ -56,7 +54,7 @@ class ProductController extends AbstractController
             $this->entityManager->persist($product);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('tag', ["id"=>$tagId]);
+            return $this->redirectToRoute('tag', ["id" => $tagId]);
         }
 
         return $this->render('createProduct.html.twig', [
@@ -77,7 +75,9 @@ class ProductController extends AbstractController
         $this->entityManager->remove($product);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('menu');
+        $tagId = $product->getTag()->getId();
+
+        return $this->redirectToRoute('tag', ["id" => $tagId]);
     }
 
     // EDIT -----------------------
@@ -114,7 +114,7 @@ class ProductController extends AbstractController
 
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('tag', ["id"=>$product->getTag()->getId()]);
+            return $this->redirectToRoute('tag', ["id" => $product->getTag()->getId()]);
         }
 
         return $this->render("editProduct.html.twig", [

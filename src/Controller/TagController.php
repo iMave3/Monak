@@ -19,6 +19,7 @@ class TagController extends AbstractController
     #[Route("/menu", name: "menu")]
     public function menu(): Response
     {
+        $isOnlyRender = false;
         $tags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
 
         $mainTags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
@@ -27,7 +28,25 @@ class TagController extends AbstractController
             'tag' => null,
             'tags' => $tags,
             'mainTags' => $mainTags,
-            'currentTagId' => null
+            'currentTagId' => null,
+            'isOnlyRender' => $isOnlyRender,
+        ]);
+    }
+
+    // RENDER -----------------------
+    #[Route("/tag/{id}", name: "tag")]
+    public function tag(int $id): Response
+    {
+        $isOnlyRender = true;
+        $tag = $this->entityManager->find(Tag::class, $id);
+
+        $mainTags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
+
+        return $this->render('tag.html.twig', [
+            'tag' => $tag,
+            'mainTags' => $mainTags,
+            'currentTagId' => $id,
+            'isOnlyRender' => $isOnlyRender
         ]);
     }
 
@@ -71,26 +90,15 @@ class TagController extends AbstractController
             $this->entityManager->persist($tag);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('menu');
+
+            if ($parentTag == null)
+                return $this->redirectToRoute('menu');
+            else
+                return $this->redirectToRoute('tag', ['id' => $parentTag->getId()]);
         }
 
         return $this->render('create.html.twig', [
             'form' => $form->createView()
-        ]);
-    }
-
-    // RENDER -----------------------
-    #[Route("/tag/{id}", name: "tag")]
-    public function tag(int $id): Response
-    {
-        $tag = $this->entityManager->find(Tag::class, $id);
-
-        $mainTags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
-
-        return $this->render('tag.html.twig', [
-            'tag' => $tag,
-            'mainTags' => $mainTags,
-            'currentTagId' => $id
         ]);
     }
 
@@ -99,15 +107,21 @@ class TagController extends AbstractController
     public function removeTag(string $id): Response
     {
         $tag = $this->entityManager->find(Tag::class, $id);
-
+    
         if ($tag === null) {
             return $this->flashRedirect('error', 'Tag nenalezen!', 'main');
         }
-
+    
+        $parentTag = $tag->getParentTag();
+        
         $this->entityManager->remove($tag);
         $this->entityManager->flush();
-
-        return $this->redirectToRoute('menu');
+        
+        if ($parentTag !== null) {
+            return $this->redirectToRoute('tag', ['id' => $parentTag->getId()]);
+        } else {
+            return $this->redirectToRoute('menu');
+        }
     }
 
     // EDIT -----------------------
@@ -140,10 +154,17 @@ class TagController extends AbstractController
 
             $tag->setName($form->get("name")->getData());
             $tag->setDescription($form->get("description")->getData());
+            
+            $parentTag = $tag->getParentTag();
 
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('menu');
+        
+            if ($parentTag !== null) {
+                return $this->redirectToRoute('tag', ['id' => $parentTag->getId()]);
+            } else {
+                return $this->redirectToRoute('menu');
+            }
         }
 
         return $this->render("edit.html.twig", [

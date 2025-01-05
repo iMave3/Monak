@@ -15,23 +15,30 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    place-items: center right;
-    width: fit-content;
-    margin: 0 auto;
+    width: 100%;
+    align-items: stretch;
 }
 
-#mainRight-offer > a {
+#mainRight-offer>a,
+.product {
+    min-height: 340px;
+    position: relative;
     box-shadow: 10px 10px 17px #e6e6e6, 10px 10px 17px #e6e6e6 inset;
     text-decoration: none;
     color: black;
-    padding: 7px 5px 20px 5px;
+    padding: 7px 5px;
     border-radius: 20px;
 }
 
-#mainRight-offer > a img{
+#mainRight-offer>a {
+    background-color: #dadada;
+}
+
+#mainRight-offer>a img,
+.product img {
     border-radius: var(--imageRadius);
     transform: scale(.83);
-    height: 240px;
+    height: 250px;
     width: 250px;
     object-fit: cover;
     overflow: hidden;
@@ -40,16 +47,23 @@
     transition: all .2s ease-in-out;
 }
 
-#mainRight-offer>a img:hover {
+#mainRight-offer>a img:hover,
+.product img:hover {
     filter: drop-shadow(5px 5px 12px var(--pictureShadowActive));
 }
 
-#mainRight-offer > a h2 {
+#mainRight-offer>a h2,
+.product h2 {
     font-size: 20px;
-    margin: 5px 0 20px 0;
+    margin: 0;
 }
 
-#mainRight-offer > a p {
+.lastH {
+    margin-bottom: 45px;
+}
+
+#mainRight-offer>a p,
+.product>a:last-child, .product>p:last-child {
     font-size: 20px;
     background-color: var(--notActivebuttonColor);
     width: fit-content;
@@ -58,10 +72,35 @@
     padding: 5px 15px;
     border-radius: 30px;
     transition: .2s all ease-in-out;
+    text-decoration: none;
 }
 
-#mainRight-offer > a p:hover {
+.lastButton {
+    position: absolute;
+    left: 0; 
+    right: 0; 
+    margin-inline: auto; 
+    width: fit-content;
+    bottom: 10px;
+    z-index: 1000;
+}
+
+.product .isAvailable {
+    background-color: rgb(0, 163, 0) !important;
+}
+
+.product .isNotAvailable {
+    background-color: rgb(92, 92, 92) !important;
+    cursor: not-allowed;
+}
+
+#mainRight-offer>a p:hover,
+.product>a:last-child:hover {
     background-color: var(--ActivebuttonColor);
+}
+
+.product .isAvailable:hover {
+    background-color: rgb(0, 114, 0) !important;
 }
 
 .editDelete {
@@ -101,18 +140,21 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
 /* -------------------- <1230px --------------------*/
 @media (max-width: 1230px) {
     #mainRight-offer {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
 /* -------------------- <900px --------------------*/
 @media (max-width: 900px) {
     main {
         width: 100%;
     }
 }
+
 /* -------------------- <620px --------------------*/
 @media (max-width: 620px) {
     #mainRight-offer {

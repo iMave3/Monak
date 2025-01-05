@@ -4,6 +4,29 @@
 	<link rel="stylesheet" href="{{ asset('css/tags.css') }}">
 {% endblock %}
 
+
+{% block leftBody %}
+	{% if isOnlyRender == false %}
+
+		{% else %}
+			<div id="leftOffer">
+				<a href="../php/diaTech.php" class="m1">HLAVNÍ NABÍDKA</a>
+				<a href="../php/diaTech.php" class="m1">Diamantová technika</a>
+				<a href="../php/brusKartace.php" class="m2">Brusné kartáče</a>
+				<a href="../pdf/katalog/Katalog výrobů - MONAK.pdf" class="m3">Katalog výrobků</a>
+				<a href="../pdf/bavaria/BAVARIA katalog - MONAK.pdf" class="m4">Nářadí BAVARIA</a>
+				<a href="../php/gravirace.php" class="m5">Plastiky a gravírace</a>
+				<a href="../pdf/zulove/Katalog žulové rotační výrobky - MONAK.pdf" class="m6">Žulové rotační výrobky</a>
+				<a href="../php/zlato.php" class="m7">Zlato</a>
+				<a href="../php/prisavky.php" class="m8">Přísavky na kámen</a>
+				<a href="../php/chemie.php" class="m9">Chemie na kámen</a>
+			</div>
+
+	{% endif %}
+
+
+{% endblock %}
+
 {% block body %}
 	<div id="right-offer">
 		<div id="mainRight-offer">
@@ -11,21 +34,47 @@
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				<a href="{{ path('create_tag', {'parentId': currentTagId }) }}" id="">
 					<img src="/img/addTagIcon.png" alt="">
-					<h2>Kategorie</h2>
-					<p>Přidat</p>
+					<h2 class="tagName">Kategorie</h2>
+					<p class="lastButton">Přidat</p>
 				</a>
 
 				{% if currentTagId != null %}
-				<a href="{{ path('create_product', {'tagId': currentTagId }) }}" id="">
-					<img src="/img/addProductIcon.png" alt="">
-					<h2>Produkt</h2>
-					<p>Přidat</p>
-				</a>
+					<a href="{{ path('create_product', {'tagId': currentTagId }) }}" id="">
+						<img src="/img/addProductIcon.png" alt="">
+						<h2 class="tagName">Produkt</h2>
+						<p class="lastButton">Přidat</p>
+					</a>
 				{% endif %}
 			{% endif %}
 
 
-			{% if tag and tag.products is not empty %} 
+			{% if tag and tag.childrenTags is not empty %}
+				{% set childrenTags = tag.childrenTags %}
+			{% elseif tags is defined %}
+				{% set childrenTags = tags %}
+			{% endif %}
+
+			{% if childrenTags is defined and childrenTags is not null %}
+				{% for childrenTag in childrenTags %}
+					<a href="{{ path('tag', {'id': childrenTag.id}) }}">
+						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+							<object class="editDelete" id="editObject">
+								<a href="{{ path('edit_tag', {'id': childrenTag.id}) }}">Upravit</a>
+							</object>
+							<object class="editDelete" id="deleteObject">
+								<a href="{{ path('remove_tag', {'id': childrenTag.id}) }}">Smazat</a>
+							</object>
+						{% endif %}
+						<img src="{{ asset(childrenTag.imageURL) }}" alt="{{ childrenTag.name }}">
+						<h2 class="tagName">{{childrenTag.name}}</h2>
+						<h3 class="tagDescription lastH">{{childrenTag.description}}</h3>
+
+						<p class="lastButton">Otevřít</p>
+					</a>
+				{% endfor %}
+			{% endif %}
+
+			{% if tag and tag.products is not empty %}
 				{% for product in tag.products %}
 					<object class="product">
 						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -37,40 +86,19 @@
 							</object>
 						{% endif %}
 						<img src="{{ asset(product.imageURL) }}" alt="{{ product.name }}">
-						<h2>{{product.name}}</h2>
-						<h3>
 						{% if product.isAvailable %}
-							Skladem
+							<h4 style="color:green">Skladem</h4>
 						{% else %}
-							Není skladem
+							<h4 style="color:red">Není skladem</h4>
 						{% endif %}
-						</h3>
-						<a href="">Přidat do košíku</a>
+						<h2 class="productName">{{product.name}}</h2>
+						<h3 class="productPrice lastH">{{ product.price }},- /ks</h3>
+						{% if product.isAvailable %}
+							<a href="" class="isAvailable lastButton">Přidat do košíku</a>
+						{% else %}
+							<p class="isNotAvailable lastButton">Nelze přidat</p>
+						{% endif %}
 					</object>
-				{% endfor %}
-			{% endif %}
-			
-			{% if tag and tag.childrenTags is not empty %}
-				{% set childrenTags = tag.childrenTags %}
-			{% elseif tags is defined %}
-				{% set childrenTags = tags %}
-			{% endif %}
-
-			{% if childrenTags is defined and childrenTags is not null %}
-				{% for childrenTag in childrenTags %}
-					<a href="{{ path('tag', {'id': childrenTag.id}) }}" style="position: relative;">
-						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-							<object class="editDelete" id="editObject">
-								<a href="{{ path('edit_tag', {'id': childrenTag.id}) }}">Upravit</a>
-							</object>
-							<object class="editDelete" id="deleteObject">
-								<a href="{{ path('remove_tag', {'id': childrenTag.id}) }}">Smazat</a>
-							</object>
-						{% endif %}
-						<img src="{{ asset(childrenTag.imageURL) }}" alt="{{ childrenTag.name }}">
-						<h2>{{childrenTag.name}}</h2>
-						<p>Otevřít</p>
-					</a>
 				{% endfor %}
 			{% endif %}
 		</div>
