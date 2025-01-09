@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TagController extends AbstractController
 {
+
     // MENU -----------------------
     #[Route("/menu", name: "menu")]
     public function menu(): Response
@@ -22,12 +23,10 @@ class TagController extends AbstractController
         $isOnlyRender = false;
         $tags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
 
-        $mainTags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
-
         return $this->render('tag.html.twig', [
             'tag' => null,
             'tags' => $tags,
-            'mainTags' => $mainTags,
+            'mainTags' => $tags,
             'currentTagId' => null,
             'isOnlyRender' => $isOnlyRender,
         ]);
@@ -128,8 +127,11 @@ class TagController extends AbstractController
     #[Route("/tag/edit/{id}", name: "edit_tag")]
     public function editTag(string $id, Request $request): Response
     {
+
         $tag = $this->entityManager->find(Tag::class, $id);
-        $form = $this->createForm(TagFormType::class, $tag, ['data' => ['imageRequired' => false]]);
+        $form = $this->createForm(TagFormType::class, $tag, ['imageRequired' => false]);
+
+        // $form = $this->createForm(TagFormType::class, $tag);
 
         $form->handleRequest($request);
 

@@ -18,8 +18,7 @@ class TagFormType extends AbstractType
 {
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
-    $required = $options['data']['imageRequired'];
-
+    $required = $options['imageRequired'];
     $constraints = [];
     if ($required) {
         $constraints = [
@@ -47,6 +46,7 @@ public function buildForm(FormBuilderInterface $builder, array $options)
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired('imageRequired');
         $resolver->setDefaults([
             
         ]);

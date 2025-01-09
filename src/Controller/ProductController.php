@@ -80,6 +80,11 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('tag', ["id" => $tagId]);
     }
 
+    public function isAvailableCheckBox()
+    {
+        
+    }
+
     // EDIT -----------------------
     #[Route("/product/edit/{id}", name: "edit_product")]
     public function editProduct(string $id, Request $request): Response
