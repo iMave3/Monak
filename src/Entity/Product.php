@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -29,12 +31,19 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Tag $tag = null;
 
+    /**
+     * @var Collection<int, OrderSet>
+     */
+    #[ORM\OneToMany(targetEntity: OrderSet::class, mappedBy: 'product', orphanRemoval: true)]
+    private Collection $orderSets;
+
     public function __construct(string $name, string $imageURL, bool $isAvailable, int $price)
     {
         $this->name = $name;
         $this->imageURL = $imageURL;
         $this->isAvailable = $isAvailable;
         $this->price = $price;
+        $this->orderSets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,6 +107,36 @@ class Product
     public function setTag(?Tag $tag): static
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderSet>
+     */
+    public function getOrderSets(): Collection
+    {
+        return $this->orderSets;
+    }
+
+    public function addOrderSet(OrderSet $orderSet): static
+    {
+        if (!$this->orderSets->contains($orderSet)) {
+            $this->orderSets->add($orderSet);
+            $orderSet->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderSet(OrderSet $orderSet): static
+    {
+        if ($this->orderSets->removeElement($orderSet)) {
+            // set the owning side to null (unless already changed)
+            if ($orderSet->getProduct() === $this) {
+                $orderSet->setProduct(null);
+            }
+        }
 
         return $this;
     }
