@@ -9,13 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validation;
 
-class AdminPanelController extends AbstractController
+class AdminController extends AbstractController
 {
-    #[Route("/admin", name: "adminPanel")]
+    #[Route("/adminOrders", name: "adminOrders")]
     public function index(): Response
     {
 
-        return $this->render('adminPanel.html.twig', [
+        return $this->render('adminOrders.html.twig', [
 
         ]);
     }

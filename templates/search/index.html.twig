@@ -1,0 +1,22 @@
+{# templates/search/index.html.twig #}
+
+<form method="get" action="{{ path('app_search') }}">
+    {{ form_start(form) }}
+    {{ form_row(form.query) }}
+    {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+</form>
+
+{% if products is not empty %}
+    <h3>Výsledky hledání:</h3>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Žádné výsledky.</p>
+{% endif %}
+<button type="submit" class="search-button">
+    <i class="fa fa-search"></i> Hledat
+</button>

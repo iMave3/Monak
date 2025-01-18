@@ -16,17 +16,17 @@ class MainController extends AbstractController
         ]);
     }
 
-    #[Route("/contact", name:"contact")]
-    public function contact(): Response
-    {
-        return $this->render('contact.html.twig', [
-        ]);
-    }
     #[Route("/myProfile", name:"myProfile")]
     public function myProfile(): Response
     {
         return $this->render('myProfile.html.twig', [
-            'asdasd' => 'value'
+
+        ]);
+    }
+    #[Route("/contact", name:"contact")]
+    public function contact(): Response
+    {
+        return $this->render('contact.html.twig', [
         ]);
     }
 }

@@ -22,15 +22,15 @@
 			{# odkomentuj pro stylovani messages #}
 
 			{# <div class="popup">
-																				{% include 'svg/close.html.twig' %}
-																				{% include 'svg/info.html.twig' %}
-																				Akce se povedla yey, nejaka dlouha zprava hihi
-																				</div>
-																				<div class="popup error">
-																				{% include 'svg/close.html.twig' %}
-																				{% include 'svg/error.html.twig' %}
-																				Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
-																		</div> #}
+																							{% include 'svg/close.html.twig' %}
+																							{% include 'svg/info.html.twig' %}
+																							Akce se povedla yey, nejaka dlouha zprava hihi
+																							</div>
+																							<div class="popup error">
+																							{% include 'svg/close.html.twig' %}
+																							{% include 'svg/error.html.twig' %}
+																							Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
+																					</div> #}
 				{% for message in app.flashes('notice') %}
 					<div class="popup"> {% include 'svg/close.html.twig' %}
 					{% include 'svg/info.html.twig' %}
@@ -73,14 +73,19 @@
 								</div>
 								<div id="submenu">
 									<p>{{app.user.email}}</p>
-									<a href="" class="un">Objednávky</a>
+									<a href="{{ path('adminOrders') }}" class="un">Objednávky</a>
 									<a href="{{ path('myProfile') }}" class="un">Můj profil</a>
 									<a href="{{ path('app_logout') }}" class="unRed">Odhlásit se</a>
 								</div>
 							</div>
 						{% else %}
 							<img src="{{ asset('img/findIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: none;">
-							<img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: none;">
+							<div style="height: 44px;">
+								<img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: none;">
+								<div style="position: absolute;">
+								<a href="{{ path('shoppingcart') }}">.</a>
+								</div>
+							</div>
 						{% endif %}
 					</div>
 				</nav>
@@ -99,8 +104,7 @@
 		</header>
 
 		<main>
-			{% block leftBody %}
-			{% endblock %}
+			{% block leftBody %}{% endblock %}
 
 			{% block body %}{% endblock %}
 		</main>

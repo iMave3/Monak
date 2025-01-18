@@ -1,0 +1,92 @@
+:root {
+    --pictureShadowNotActive: #3b3b3b;
+    --pictureShadowActive: #000;
+    --imageRadius: 10px;
+}
+
+#mainRight-offer {
+    width: 90%;
+    margin: 0 auto;
+}
+
+#cont-div {
+    box-shadow: 10px 10px 17px #e6e6e6, 10px 10px 17px #e6e6e6 inset;
+    width: 100%;
+    padding: 23px;
+    border-radius: 20px;
+}
+
+.insi-div-con {
+    color: rgb(0, 0, 0);
+    font-size: 21px;
+    border-bottom: 1px solid #313131;
+    padding: 15px 10px;
+}
+
+.insi-div-con p {
+    padding: 3px 0;
+}
+
+.insi-div-con a {
+    color: rgb(0, 0, 0);
+}
+
+.insi-div-con a:hover {
+    color: #7e7e7e;
+}
+
+iframe {
+    border-radius: 20px;
+    box-shadow: 4px 4px 10px var(--pictureShadowNotActive);
+    transition: all .2s ease-in-out;
+}
+
+#build {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    border-radius: 20px;
+    box-shadow: 4px 4px 10px var(--pictureShadowNotActive);
+    transition: all .2s ease-in-out;
+}
+
+#infoDiv a {
+    width: fit-content;
+}
+
+#infoDiv{
+    padding: 0;
+    margin: 50px 0 0 0;
+    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    gap: 20px;
+}
+
+#mainRight-offer img:hover,
+iframe:hover {
+    box-shadow: 5px 5px 12px var(--pictureShadowActive);
+}
+
+/* ------------------------------- RESPONSIBILITY ------------------------------- */
+/* -------------------- >1921px --------------------*/
+@media (min-width: 1921px) {
+    #mainRight-offer {
+        width: 1728px;
+    }
+}
+/* -------------------- <700px --------------------*/
+@media (max-width: 700px) {
+    #build-di {
+        width: 100%;
+        padding: 0 30px;
+    }
+
+    #build {
+        width: 100%;
+    }
+
+    #cont-div {
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8 px);
+    }
+}
