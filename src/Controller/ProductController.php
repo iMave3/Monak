@@ -25,7 +25,7 @@ class ProductController extends AbstractController
             return $this->flashRedirect('error', 'Neni nikde', 'menu');
         }
 
-        $form = $this->createForm(ProductFormType::class, null, ['data' => ['imageRequired' => true]]);
+        $form = $this->createForm(ProductFormType::class, null, ['imageRequired' => true]);
 
         $form->handleRequest($request);
 
@@ -90,7 +90,7 @@ class ProductController extends AbstractController
     public function editProduct(string $id, Request $request): Response
     {
         $product = $this->entityManager->find(Product::class, $id);
-        $form = $this->createForm(ProductFormType::class, $product, ['data' => ['imageRequired' => false]]);
+        $form = $this->createForm(ProductFormType::class, $product, ['imageRequired' => false]);
 
         $form->handleRequest($request);
 

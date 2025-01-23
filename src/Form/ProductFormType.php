@@ -19,39 +19,39 @@ use Symfony\Component\Validator\Constraints\Image;
 
 class ProductFormType extends AbstractType
 {
-// src/Form/TagFormType.php
-public function buildForm(FormBuilderInterface $builder, array $options)
-{
-    $required = $options['data']['imageRequired'];
+    // src/Form/TagFormType.php
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $required = $options['imageRequired'];
 
-    $constraints = [];
-    if ($required) {
-        $constraints = [
-            new Image([
-                'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
-                'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, WEBP).',
-                'maxSize' => '5M'
-            ]),
-        ];
+        $constraints = [];
+        if ($required) {
+            $constraints = [
+                new Image([
+                    'mimeTypes' => ['image/jpeg', 'image/png', 'image/webp'],
+                    'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, WEBP).',
+                    'maxSize' => '5M'
+                ]),
+            ];
+        }
+
+        $builder
+            ->add('name', TextType::class)
+            ->add('isAvailable', CheckboxType::class, ['required' => false])
+            ->add('image', FileType::class, [
+                'label' => 'Obrázek',
+                'required' => $required,
+                'mapped' => false,
+                'constraints' => $constraints
+            ])
+            ->add("price", NumberType::class);
     }
-
-    $builder
-        ->add('name', TextType::class)
-        ->add('isAvailable', CheckboxType::class, ['required' => false])
-        ->add('image', FileType::class, [
-            'label' => 'Obrázek',
-            'required' => $required,
-            'mapped' => false,
-            'constraints' => $constraints
-        ])
-        ->add("price", NumberType::class);
-}
 
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired('imageRequired');
         $resolver->setDefaults([
-            
         ]);
     }
 }

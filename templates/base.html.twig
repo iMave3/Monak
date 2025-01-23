@@ -22,15 +22,15 @@
 			{# odkomentuj pro stylovani messages #}
 
 			{# <div class="popup">
-																										{% include 'svg/close.html.twig' %}
-																										{% include 'svg/info.html.twig' %}
-																										Akce se povedla yey, nejaka dlouha zprava hihi
-																										</div>
-																										<div class="popup error">
-																										{% include 'svg/close.html.twig' %}
-																										{% include 'svg/error.html.twig' %}
-																										Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
-																								</div> #}
+																																																					{% include 'svg/close.html.twig' %}
+																																																					{% include 'svg/info.html.twig' %}
+																																																					Akce se povedla yey, nejaka dlouha zprava hihi
+																																																					</div>
+																																																					<div class="popup error">
+																																																					{% include 'svg/close.html.twig' %}
+																																																					{% include 'svg/error.html.twig' %}
+																																																					Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
+																																																			</div> #}
 				{% for message in app.flashes('notice') %}
 					<div class="popup"> {% include 'svg/close.html.twig' %}
 					{% include 'svg/info.html.twig' %}
@@ -63,7 +63,31 @@
 					<div id="userOptionsRightDiv">
 						{% if app.user %}
 							<img src="{{ asset('img/findIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: none;">
-							<img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: none;">
+							<img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: default; height: 44px;">
+							<div style="position: absolute; top:100px; max-width:300px; background-color:white; padding:13px; border-radius: 10px;">
+								{% if cart.total > 0 %}
+									{% for productInfo in cart.products %}
+										<div>
+											<p>{{productInfo.product.name}}</p>
+											<div style="display:flex; justify-content: space-between; margin-bottom: 8px">
+												<p style="color:grey">{{productInfo.quantity}}x</p>
+												<p style="color:red">{{productInfo.product.price}},-</p>
+											</div>
+										</div>
+										<div style="display:flex;">
+											<a href="{{ path('add_cart', {'id': productInfo.product.id}) }}" style="color:blue;">⇑&nbsp;&nbsp;</a>
+											<a href="{{ path('remove_cart', {'id': productInfo.product.id}) }}"style="color:blue;">&nbsp;&nbsp;⇓</a>
+											<a href="{{ path('complete_remove_cart', {'id': productInfo.product.id}) }}"style="color:blue;">&nbsp;odstranit</a>
+										</div>
+									{% endfor %}
+									<p>
+										<span>Celkem</span>
+										{{cart.total}},-</p>
+									<a href="{{ path('shoppingcart') }}" style="color: black">Přejít do košíku</a>
+								{% else %}
+									<p>Prázdný košík</p>
+								{% endif %}
+							</div>
 							<div class="border"></div>
 							<div id="iconAndNameDiv">
 								<img src="{{ asset('img/figureIcon.png') }}" alt="figureIcon" id="figureIcon" style="user-select: none;">
@@ -79,7 +103,7 @@
 								</div>
 							</div>
 						{% else %}
-							<img src="{{ asset('img/findIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: none;">
+							<img src="{{ asset('img/findIcon.png') }}" alt="findIcon" id="shopCartIcon" style="user-select: none;">
 							<div style="height: 44px;">
 								<img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: none;">
 								<div style="position: absolute;">
@@ -94,13 +118,14 @@
 				<div id="main-header">
 					<div id="mainTextDiv">
 						<h1 class="mainT1"></h1>
-						<h1 class="mainT2"></h1>
+						{% if tag is defined and tag is not null %}
+							{{tag.name}}
+						{% else %}
+							<h2 id="info">KOMPLETNÍ SORTIMENT PRO KAMENOPRŮMYSL A STAVEBNICTVÍ</h2>
+						{% endif %}
 					</div>
-
-					<div id="main-headerIMG"></div>
 				</div>
 
-				<h2 id="info">KOMPLETNÍ SORTIMENT PRO KAMENOPRŮMYSL A STAVEBNICTVÍ</h2>
 			{% endblock %}
 		</header>
 

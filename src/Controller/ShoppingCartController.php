@@ -10,14 +10,14 @@ use Symfony\Component\HttpFoundation\Response;
 class ShoppingCartController extends AbstractController
 {
     #[Route("/shoppingcart", name:"shoppingcart")]
-    public function contact(): Response
+    public function cart(): Response
     {
         return $this->render('shoppingCart.html.twig', [
         ]);
     }
 
     #[Route("/cart/add/{id}", name: "add_cart")]
-    public function menu(string $id): Response
+    public function cartAdd(string $id): Response
     {
         $cart = $this->getCart();
 
@@ -33,13 +33,15 @@ class ShoppingCartController extends AbstractController
             $cart['products'][$id] = 1;
         }
 
+        $cart['total'] += $product->getPrice(); 
+
         $this->saveCart($cart);
 
         return $this->redirectToRoute('tag', ['id' => $product->getTag()->getId()]);
     }
 
     #[Route("/cart/remove/{id}", name: "remove_cart")]
-    public function removeTag(string $id): Response
+    public function cartRemove(string $id): Response
     {
         $cart = $this->getCart();
 
@@ -57,10 +59,38 @@ class ShoppingCartController extends AbstractController
                 unset($cart['products'][$id]);
             }
 
+            $cart['total'] -= $product->getPrice();
+
             $this->saveCart($cart);
         }
 
         return $this->redirectToRoute('tag', ['id' => $product->getTag()->getId()]);
     }
+
+    #[Route("/cart/completeRemove/{id}", name: "complete_remove_cart")]
+    public function completeRemove(string $id): Response
+    {
+        $cart = $this->getCart();
+
+        $product = $this->entityManager->find(Product::class, $id);
+
+        if ($product === null) {
+            return $this->flashRedirect('error', 'Produkt nenalezen', 'main');
+        }
+
+        if (isset($cart['products'][$id])) {
+
+            $quantity = $cart['products'][$id];
+
+                unset($cart['products'][$id]);
+
+            $cart['total'] -= $product->getPrice() * $quantity;
+            
+            $this->saveCart($cart);
+        }
+
+        return $this->redirectToRoute('tag', ['id' => $product->getTag()->getId()]);
+    }
+
 
 }

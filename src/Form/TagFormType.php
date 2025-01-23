@@ -48,7 +48,6 @@ public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $resolver->setRequired('imageRequired');
         $resolver->setDefaults([
-            
         ]);
     }
 }

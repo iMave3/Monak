@@ -23,10 +23,12 @@ class AbstractController extends AbstractControllerBase
         $this->requestStack = $requestStack;
         date_default_timezone_set("Europe/Prague");
     }
-
+    // uz by to melo fungovat jak ten total tak spravny prevadeni, pridal jsem ti tam debug_cart coz je ten officialni kosik a ten displaycart je jen ta nadstavba ktera muze byt spatne 
+    // (byla ale nemela by uz byt)
     protected function getGlobalParameters(): array
     {
         return [
+            'debug_cart' => $this->getCart(),
             'cart' => $this->getDisplayCart()
         ];
     }
@@ -81,7 +83,7 @@ class AbstractController extends AbstractControllerBase
             $productId = $product->getId();
             $displayableProducts[] = [
                 'product' => $product, // The Doctrine entity
-                'quantity' => $productsArray['products'][$productId] ?? 0,
+                'quantity' => $cart['products'][$productId],
             ];
         }
 

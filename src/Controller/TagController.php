@@ -32,23 +32,7 @@ class TagController extends AbstractController
         ]);
     }
 
-    // RENDER -----------------------
-    #[Route("/tag/{id}", name: "tag")]
-    public function tag(int $id): Response
-    {
-        $isOnlyRender = true;
-        $tag = $this->entityManager->find(Tag::class, $id);
-
-        $mainTags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
-
-        return $this->render('tag.html.twig', [
-            'tag' => $tag,
-            'mainTags' => $mainTags,
-            'currentTagId' => $id,
-            'isOnlyRender' => $isOnlyRender
-        ]);
-    }
-
+    
     // CREATE -----------------------
     #[Route("/tag/create/{parentId}", name: "create_tag", defaults: ["parentId" => null])]
     public function createTag(?string $parentId = null, Request $request): Response
@@ -57,21 +41,21 @@ class TagController extends AbstractController
         if ($parentId !== null) {
             $parentTag = $this->entityManager->find(Tag::class, $parentId);
         }
-
+        
         // Vytvoření formuláře s předaným seznamem tagů pro výběr parentTag
-        $form = $this->createForm(TagFormType::class, null, ['data' => ['imageRequired' => true]]);
-
+        $form = $this->createForm(TagFormType::class, null, ['imageRequired' => true]);
+        
         $form->handleRequest($request);
-
+        
         // Ověření, zda byl formulář odeslán a zda je platný
         if ($form->isSubmitted() && $form->isValid()) {
             // Vytvoření nového tagu
             $formData = $form->getData();
-
+            
             $image = $form->get('image')->getData();
-
+            
             $newFileName = uniqid() . "." . $image->guessExtension();
-
+            
             try {
                 $image->move(
                     $this->getParameter('kernel.project_dir') . "/public/uploads",
@@ -80,35 +64,54 @@ class TagController extends AbstractController
             } catch (FileException $e) {
                 return new Response($e->getMessage());
             }
-
+            
             $imagePath = "/uploads/" . $newFileName;
-
+            
             $tag = new Tag($formData['name'], $imagePath, $formData['description']);
             $tag->setParentTag($parentTag);
-
+            
             $this->entityManager->persist($tag);
             $this->entityManager->flush();
-
-
+            
+            
             if ($parentTag == null)
-                return $this->redirectToRoute('menu');
-            else
-                return $this->redirectToRoute('tag', ['id' => $parentTag->getId()]);
-        }
+            return $this->redirectToRoute('menu');
+        else
+        return $this->redirectToRoute('tag', ['id' => $parentTag->getId()]);
+}
 
-        return $this->render('create.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
+return $this->render('create.html.twig', [
+    'form' => $form->createView()
+]);
+}
 
-    // REMOVE -----------------------
-    #[Route("/tag/remove/{id}", name: "remove_tag")]
-    public function removeTag(string $id): Response
-    {
-        $tag = $this->entityManager->find(Tag::class, $id);
+// RENDER -----------------------
+#[Route("/tag/{id}", name: "tag")]
+public function tag(int $id): Response
+{
+    $isOnlyRender = true;
+    $tag = $this->entityManager->find(Tag::class, $id);
+
+    $mainTags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
+
+
     
-        if ($tag === null) {
-            return $this->flashRedirect('error', 'Tag nenalezen!', 'main');
+
+    return $this->render('tag.html.twig', [
+        'tag' => $tag,
+        'mainTags' => $mainTags,
+        'currentTagId' => $id,
+        'isOnlyRender' => $isOnlyRender
+    ]);
+}
+// REMOVE -----------------------
+#[Route("/tag/remove/{id}", name: "remove_tag")]
+public function removeTag(string $id): Response
+{
+    $tag = $this->entityManager->find(Tag::class, $id);
+    
+    if ($tag === null) {
+        return $this->flashRedirect('error', 'Tag nenalezen!', 'main');
         }
     
         $parentTag = $tag->getParentTag();
