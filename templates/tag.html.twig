@@ -7,7 +7,6 @@
 
 {% block leftBody %}
 	{% if isOnlyRender == false %}
-
 		{% else %}
 			<div id="leftOffer">
 				<a href="{{ path('menu')}}">HLAVNÍ NABÍDKA</a>
@@ -15,11 +14,7 @@
 					<a href="{{ path('tag', {'id': menuTags.id}) }}" class="m1 {% if currentTagId == menuTags.id %}currentPage{% endif %}">{{menuTags.name}}</a>
 				{% endfor %}
 			</div>
-
-
 	{% endif %}
-
-
 {% endblock %}
 
 {% block body %}
@@ -86,15 +81,15 @@
 						{% else %}
 							<h4 style="color:red">Není skladem</h4>
 						{% endif %}
-						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+						<!--{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 							<a href="{{ path('menu')}}">
 								<input type="checkbox" name="" id="">
 							</a>
-						{% endif %}
+						{% endif %}-->
 						<h2 class="productName">{{product.name}}</h2>
 						<h3 class="productPrice lastH">{{ product.price }},- /ks</h3>
 						{% if product.isAvailable %}
-							<a href="" class="isAvailable lastButton">Přidat do košíku</a>
+							<a href="{{ path('add_cart', {'id': product.id}) }}" class="isAvailable lastButton">Přidat do košíku</a>
 						{% else %}
 							<p class="isNotAvailable lastButton">Nelze přidat</p>
 						{% endif %}
