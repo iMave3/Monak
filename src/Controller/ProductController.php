@@ -80,16 +80,14 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('tag', ["id" => $tagId]);
     }
 
-    public function isAvailableCheckBox()
-    {
-        
-    }
-
     // EDIT -----------------------
     #[Route("/product/edit/{id}", name: "edit_product")]
     public function editProduct(string $id, Request $request): Response
     {
         $product = $this->entityManager->find(Product::class, $id);
+        if ($product === null) {
+            return $this->flashRedirect('error', 'Produkt nenalezen!', 'main');
+        }
         $form = $this->createForm(ProductFormType::class, $product, ['imageRequired' => false]);
 
         $form->handleRequest($request);
