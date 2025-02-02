@@ -22,15 +22,15 @@
 			{# odkomentuj pro stylovani messages #}
 
 			{# <div class="popup">
-																																																					{% include 'svg/close.html.twig' %}
-																																																					{% include 'svg/info.html.twig' %}
-																																																					Akce se povedla yey, nejaka dlouha zprava hihi
-																																																					</div>
-																																																					<div class="popup error">
-																																																					{% include 'svg/close.html.twig' %}
-																																																					{% include 'svg/error.html.twig' %}
-																																																					Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
-																																																			</div> #}
+																																																														{% include 'svg/close.html.twig' %}
+																																																														{% include 'svg/info.html.twig' %}
+																																																														Akce se povedla yey, nejaka dlouha zprava hihi
+																																																														</div>
+																																																														<div class="popup error">
+																																																														{% include 'svg/close.html.twig' %}
+																																																														{% include 'svg/error.html.twig' %}
+																																																														Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
+																																																												</div> #}
 				{% for message in app.flashes('notice') %}
 					<div class="popup"> {% include 'svg/close.html.twig' %}
 					{% include 'svg/info.html.twig' %}
@@ -64,7 +64,7 @@
 						{% if app.user %}
 							<img src="{{ asset('img/findIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: none;">
 							<img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: default; height: 44px;">
-							<div style="position: absolute; top:100px; max-width:300px; background-color:white; padding:13px; border-radius: 10px;">
+							<div style="position: absolute; top:100px; max-width:300px; background-color:white; padding:13px; border-radius: 10px; display=none;" id="submenu">
 								{% if cart.total > 0 %}
 									{% for productInfo in cart.products %}
 										<div>
@@ -74,15 +74,18 @@
 												<p style="color:red">{{productInfo.product.price}},-</p>
 											</div>
 										</div>
-										<div style="display:flex;">
-											<a href="{{ path('add_cart', {'id': productInfo.product.id}) }}" style="color:blue;">⇑&nbsp;&nbsp;</a>
-											<a href="{{ path('remove_cart', {'id': productInfo.product.id}) }}"style="color:blue;">&nbsp;&nbsp;⇓</a>
-											<a href="{{ path('complete_remove_cart', {'id': productInfo.product.id}) }}"style="color:blue;">&nbsp;odstranit</a>
-										</div>
+										{# <div style="display:flex;">
+																																									<a href="{{ path('add_cart', {'id': productInfo.product.id}) }}" style="color:blue;">⇑&nbsp;&nbsp;</a>
+																																									<a href="{{ path('remove_cart', {'id': productInfo.product.id}) }}"style="color:blue;">&nbsp;&nbsp;⇓</a>
+																																									<a href="{{ path('complete_remove_cart', {'id': productInfo.product.id}) }}"style="color:blue;">&nbsp;odstranit</a>
+																																								</div> #}
 									{% endfor %}
 									<p>
 										<span>Celkem</span>
 										{{cart.total}},-</p>
+									<p>
+										<span>Bez DPH</span>
+										{{ cart.total / 1.21 | number_format(2) }},-</p>
 									<a href="{{ path('shoppingcart') }}" style="color: black">Přejít do košíku</a>
 								{% else %}
 									<p>Prázdný košík</p>
@@ -116,63 +119,52 @@
 				</nav>
 
 				<div id="main-header">
-					<div id="mainTextDiv">
-						<h1 class="mainT1"></h1>
-						{% if tag is defined and tag is not null %}
-							{{tag.name}}
-						{% else %}
-							<h2 id="info">KOMPLETNÍ SORTIMENT PRO KAMENOPRŮMYSL A STAVEBNICTVÍ</h2>
-						{% endif %}
-					</div>
+					{% if tag is defined and tag is not null %}
+						<h1 class="mainT1">{{tag.name}}</h1>
+					{% else %}
+						<h2 id="info">KOMPLETNÍ SORTIMENT PRO KAMENOPRŮMYSL A STAVEBNICTVÍ</h2>
+					{% endif %}
 				</div>
+			</div>
 
-			{% endblock %}
-		</header>
-
-		<main>
-			{% block leftBody %}{% endblock %}
-
-			{% block body %}{% endblock %}
-		</main>
-
-		{% block footer %}
-			<footer>
-				<div id="footerForFHD">
-					<img src="{{ asset('img/logo.png') }}" alt="logo" class="logo">
-					<div id="middleFooterInformation">
-						<div>
-							<h2>Kontaktní&nbsp;adresa</h2>
-							<p>Milan&nbsp;Plíhal&nbsp;-&nbsp;MONAK</p>
-							<p>Na&nbsp;Nivách&nbsp;570</p>
-							<p>351&nbsp;37 Luby&nbsp;u&nbsp;Chebu</p>
-							<p>IČ:&nbsp;64180174, DIČ:&nbsp;CZ7001131808</p>
-						</div>
-
-						<div>
-							<h2>Provozovna</h2>
-							<p>Chebská&nbsp;5</p>
-							<p>351&nbsp;37 Luby&nbsp;u&nbsp;Chebu</p>
-						</div>
-
-						<div>
-							<h2>Kontaktní&nbsp;adresa</h2>
-							<p>E-mail:&nbsp;<a href="mailto:info@monak.cz">info@monak.cz</a>
-							</p>
-							<br>
-							<p>Milan&nbsp;Plíhal</p>
-							<p>-&nbsp;mobil:&nbsp;<a href="tel:+420602108155">602&nbsp;108&nbsp;155</a>
-							</p>
-							<p>Obchodní&nbsp;zástupce</p>
-							<p>-&nbsp;mobil:&nbsp;<a href="tel:+420602108156">602&nbsp;108&nbsp;156</a>
-							</p>
-
-						</div>
-					</div>
-					<img src="" alt="" class="logo" style="visibility: hidden;">
-				</div>
-			</footer>
 		{% endblock %}
 	</body>
+</html></header><main>
+{% block leftBody %}{% endblock %}
 
+{% block body %}{% endblock %}</main>{% block footer %}
+<footer>
+	<div id="footerForFHD">
+		<img src="{{ asset('img/logo.png') }}" alt="logo" class="logo">
+		<div id="middleFooterInformation">
+			<div>
+				<h2>Kontaktní&nbsp;adresa</h2>
+				<p>Milan&nbsp;Plíhal&nbsp;-&nbsp;MONAK</p>
+				<p>Na&nbsp;Nivách&nbsp;570</p>
+				<p>351&nbsp;37 Luby&nbsp;u&nbsp;Chebu</p>
+				<p>IČ:&nbsp;64180174, DIČ:&nbsp;CZ7001131808</p>
+			</div>
 
-</html>
+			<div>
+				<h2>Provozovna</h2>
+				<p>Chebská&nbsp;5</p>
+				<p>351&nbsp;37 Luby&nbsp;u&nbsp;Chebu</p>
+			</div>
+
+			<div>
+				<h2>Kontaktní&nbsp;adresa</h2>
+				<p>E-mail:&nbsp;<a href="mailto:info@monak.cz">info@monak.cz</a>
+				</p>
+				<br>
+				<p>Milan&nbsp;Plíhal</p>
+				<p>-&nbsp;mobil:&nbsp;<a href="tel:+420602108155">602&nbsp;108&nbsp;155</a>
+				</p>
+				<p>Obchodní&nbsp;zástupce</p>
+				<p>-&nbsp;mobil:&nbsp;<a href="tel:+420602108156">602&nbsp;108&nbsp;156</a>
+				</p>
+
+			</div>
+		</div>
+		<img src="" alt="" class="logo" style="visibility: hidden;">
+	</div>
+</footer>{% endblock %}</body></html>

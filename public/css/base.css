@@ -425,10 +425,12 @@ header a {
 
 /* -------------------------------------------------------- */
 #main-header {
-    padding: 50px 13%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    width: 100%;
+    padding: 50px 13%; /* Adjust this padding if needed */
+    text-align: center;
 }
 
 #mainTextDiv {
@@ -439,6 +441,13 @@ header a {
 
 #mainTextDiv>* {
     width: fit-content;
+    margin: 0 auto;
+}
+
+.mainT1 {
+    font-size: 90px;
+    color: RGB(245, 244, 245);
+    margin: 0;
 }
 
 #main-headerIMG {
@@ -468,8 +477,7 @@ header a {
     margin: 0 auto;
     font-size: 32px;
     text-align: center;
-    padding: 0 40px;
-    padding-bottom: 50px;
+    padding: 40px 40px 0px 40px;
     color: RGB(245, 244, 245);
 }
 
