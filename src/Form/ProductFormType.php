@@ -37,7 +37,7 @@ class ProductFormType extends AbstractType
 
         $builder
             ->add('name', TextType::class)
-            ->add('isAvailable', CheckboxType::class, ['required' => false])
+            ->add('available', CheckboxType::class, ['required' => false])
             ->add('image', FileType::class, [
                 'label' => 'Obrázek',
                 'required' => $required,

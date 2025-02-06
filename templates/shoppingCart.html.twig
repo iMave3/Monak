@@ -6,6 +6,23 @@
 
 {% block body %}
 
+	{% for productInfo in cart.products %}
+	
+		<div>
+			<p>{{productInfo.product.name}}</p>
+			<div style="display:flex; justify-content: space-between; margin-bottom: 8px">
+				<p style="color:grey">{{productInfo.quantity}}x</p>
+				<p style="color:red">{{productInfo.product.price}},-</p>
+			</div>
+		</div>
+		<div style="display:flex;">
+			<a href="{{ path('add_cart', {'id': productInfo.product.id}) }}" style="color:blue;">⇑&nbsp;&nbsp;</a>
+			<a href="{{ path('remove_cart', {'id': productInfo.product.id}) }}" style="color:blue;">&nbsp;&nbsp;⇓</a>
+			<a href="{{ path('complete_remove_cart', {'id': productInfo.product.id}) }}" style="color:blue;">&nbsp;odstranit</a>
+		</div>
 
+		<a href="{{ path('shoppingcart') }}" style="color: black">Pokračovat</a>
+
+	{% endfor %}
 
 {% endblock %}

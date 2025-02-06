@@ -80,7 +80,7 @@ class Product
         return $this->isAvailable;
     }
 
-    public function setAvailable(bool $isAvailable): static
+    public function setAvailable(bool $isAvailable): self
     {
         $this->isAvailable = $isAvailable;
 

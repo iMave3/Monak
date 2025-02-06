@@ -111,9 +111,9 @@ class ProductController extends AbstractController
                 $product->setImageURL($imagePath);
             }
 
-            $product->setName($form->get("name")->getData());
-            $product->setAvailable($form->get("isAvailable")->getData());
-            $product->setPrice($form->get("price")->getData());
+            /*$product->setName($form->get("name")->getData());
+            $product->setAvailable($form->get("available")->getData());
+            $product->setPrice($form->get("price")->getData());*/
 
             $this->entityManager->flush();
 

@@ -37,7 +37,7 @@ class ShoppingCartController extends AbstractController
 
         $this->saveCart($cart);
 
-        return $this->redirectToRoute('tag', ['id' => $product->getTag()->getId()]);
+        return $this->redirectToRoute('shoppingcart');
     }
 
     #[Route("/cart/remove/{id}", name: "remove_cart")]
@@ -64,7 +64,7 @@ class ShoppingCartController extends AbstractController
             $this->saveCart($cart);
         }
 
-        return $this->redirectToRoute('tag', ['id' => $product->getTag()->getId()]);
+        return $this->redirectToRoute('shoppingcart');
     }
 
     #[Route("/cart/completeRemove/{id}", name: "complete_remove_cart")]
@@ -89,7 +89,7 @@ class ShoppingCartController extends AbstractController
             $this->saveCart($cart);
         }
 
-        return $this->redirectToRoute('tag', ['id' => $product->getTag()->getId()]);
+        return $this->redirectToRoute('shoppingcart');
     }
 
 
