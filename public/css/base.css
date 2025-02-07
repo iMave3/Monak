@@ -375,7 +375,11 @@ header a {
     border-radius: 20px;
     place-items: center center;
     cursor: default;
-    display: none;
+
+}
+
+#submenu.open {
+    
 }
 
 #submenu p {

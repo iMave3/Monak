@@ -17,7 +17,7 @@ class ShoppingCartController extends AbstractController
     }
 
     #[Route("/cart/add/{id}", name: "add_cart")]
-    public function cartAdd(string $id): Response
+    public function cartAdd(string $id, Request $request): Response
     {
         $cart = $this->getCart();
 
@@ -37,7 +37,13 @@ class ShoppingCartController extends AbstractController
 
         $this->saveCart($cart);
 
-        return $this->redirectToRoute('shoppingcart');
+        if ($request->query->has('toCart')) {
+            return $this->redirectToRoute('shoppingcart');
+        }
+
+        return $this->redirectToRoute('tag', [
+            'id' => $product->getTag()->getId()
+        ]);
     }
 
     #[Route("/cart/remove/{id}", name: "remove_cart")]
