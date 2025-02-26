@@ -16,7 +16,7 @@
         <p>
             <span>Bez DPH</span>
             {{ (cart.total / 1.21) |number_format(2, '.', ',') }},-</p>
-        <a href="{{ path('shoppingcart') }}" style="color: black">Přejít do košíku</a>
+        <a href="{{ path('shoppingcart') }}" style="color: black; text-decoration: underline;">Přejít do košíku</a>
     {% else %}
         <p>Prázdný košík</p>
     {% endif %}

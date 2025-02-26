@@ -22,15 +22,15 @@
 			{# odkomentuj pro stylovani messages #}
 
 			{# <div class="popup">
-																																																																										{% include 'svg/close.html.twig' %}
-																																																																										{% include 'svg/info.html.twig' %}
-																																																																										Akce se povedla yey, nejaka dlouha zprava hihi
-																																																																										</div>
-																																																																										<div class="popup error">
-																																																																										{% include 'svg/close.html.twig' %}
-																																																																										{% include 'svg/error.html.twig' %}
-																																																																										Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
-																																																																								</div> #}
+																																																																													{% include 'svg/close.html.twig' %}
+																																																																													{% include 'svg/info.html.twig' %}
+																																																																													Akce se povedla yey, nejaka dlouha zprava hihi
+																																																																													</div>
+																																																																													<div class="popup error">
+																																																																													{% include 'svg/close.html.twig' %}
+																																																																													{% include 'svg/error.html.twig' %}
+																																																																													Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
+																																																																											</div> #}
 				{% for message in app.flashes('notice') %}
 					<div class="popup"> {% include 'svg/close.html.twig' %}
 					{% include 'svg/info.html.twig' %}
@@ -62,7 +62,7 @@
 
 					<div id="userOptionsRightDiv">
 						{% if app.user %}
-							<img src="{{ asset('img/findIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: none;">
+							<img src="{{ asset('img/findIcon.png') }}" alt="findIcon" id="findIcon" style="user-select: none;">
 							<img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: default; height: 44px;">
 							{% include 'cart.html.twig' %}
 							<div class="border"></div>
@@ -80,7 +80,7 @@
 								</div>
 							</div>
 						{% else %}
-							<img src="{{ asset('img/findIcon.png') }}" alt="findIcon" id="shopCartIcon" style="user-select: none;">
+							<img src="{{ asset('img/findIcon.png') }}" alt="findIcon" id="findIcon" style="user-select: none;">
 							<div style="height: 44px;">
 								<img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: none;">
 								{% include 'cart.html.twig' %}

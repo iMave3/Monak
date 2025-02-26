@@ -2,6 +2,10 @@
     --color-white: white;
 }
 
+main {
+    min-height: 40vh;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -316,28 +320,31 @@ header a {
     height: 62px;
 }
 
+#cartSubmenu,
+#submenu {
+    display: none;
+    /* Košík je skrytý na začátku */
+}
+
 #figureIcon,
-#shopCartIcon {
+#shopCartIcon,
+#findIcon {
     width: 44px;
     transition: .2s all ease-in-out;
     cursor: pointer;
 }
 
-#shopCartIcon:hover {
-    filter: drop-shadow(1px 1px 3px #7e7e7e);
+#shopCartIcon:hover,
+#shopCartIcon.on,
+.figureIconOn,
+#iconAndNameDiv:hover #figureIcon,
+#findIcon:hover
+{
+filter: drop-shadow(1px 1px 3px #7e7e7e);
 }
 
 #iconAndNameDiv {
     cursor: pointer;
-}
-
-/*#iconAndNameDiv:hover #credentialsDiv a {
-    text-shadow: 0 0 1px #fff, 0 0 1px #fff, 0 0 1px #FFF, 0 0 1px #FFF, 0 0 1px #FFF, 0 0 1px #FFF, 0 0 1px #fff;
-}*/
-
-.figureIconOn,
-#iconAndNameDiv:hover #figureIcon {
-    filter: drop-shadow(1px 1px 3px #7e7e7e);
 }
 
 .border {
@@ -378,10 +385,6 @@ header a {
 
 }
 
-#submenu.open {
-    
-}
-
 #submenu p {
     text-align: center;
     font-size: 12px;
@@ -403,7 +406,7 @@ header a {
     margin-bottom: 8px;
 }
 
-.products:last-child{
+.products:last-child {
     margin-bottom: 0px;
 }
 

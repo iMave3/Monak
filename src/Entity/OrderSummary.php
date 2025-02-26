@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrderSummaryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderSummaryRepository::class)]
@@ -25,6 +27,20 @@ class OrderSummary
 
     #[ORM\OneToOne(inversedBy: 'orderSummary', cascade: ['persist', 'remove'])]
     private ?CompanyInformation $companyInformation = null;
+
+    /**
+     * @var Collection<int, OrderSet>
+     */
+    #[ORM\OneToMany(targetEntity: OrderSet::class, mappedBy: 'orderSummary', orphanRemoval: true)]
+    private Collection $orderSets;
+
+    public function __construct(float $totalPrice, UserInformation $userInformation)
+    {
+        $this->orderSets = new ArrayCollection();
+        $this->status = 'pending';
+        $this->totalPrice = $totalPrice;
+        $this->setUserInformation($userInformation);
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +91,36 @@ class OrderSummary
     public function setCompanyInformation(?CompanyInformation $companyInformation): static
     {
         $this->companyInformation = $companyInformation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderSet>
+     */
+    public function getOrderSets(): Collection
+    {
+        return $this->orderSets;
+    }
+
+    public function addOrderSet(OrderSet $orderSet): static
+    {
+        if (!$this->orderSets->contains($orderSet)) {
+            $this->orderSets->add($orderSet);
+            $orderSet->setOrderSummary($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderSet(OrderSet $orderSet): static
+    {
+        if ($this->orderSets->removeElement($orderSet)) {
+            // set the owning side to null (unless already changed)
+            if ($orderSet->getOrderSummary() === $this) {
+                $orderSet->setOrderSummary(null);
+            }
+        }
 
         return $this;
     }

@@ -48,7 +48,7 @@ class ProductController extends AbstractController
 
             $imagePath = "/uploads/" . $newFileName;
 
-            $product = new Product($formData["name"], $imagePath, $formData["isAvailable"], $formData["price"]);
+            $product = new Product($formData["name"], $imagePath, $formData["available"], $formData["price"]);
             $product->setTag($tag);
 
             $this->entityManager->persist($product);

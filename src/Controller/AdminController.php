@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\OrderSummary;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,8 +16,10 @@ class AdminController extends AbstractController
     public function index(): Response
     {
 
-        return $this->render('adminOrders.html.twig', [
+        $orderSummaries = $this->entityManager->getRepository(OrderSummary::class)->findAll();
 
+        return $this->render('adminOrders.html.twig', [
+            'orderSummaries' => $orderSummaries
         ]);
     }
 }

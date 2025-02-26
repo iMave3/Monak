@@ -30,6 +30,11 @@ class CompanyInformation
         return $this->id;
     }
 
+    public function isValid() : bool
+    {
+        return $this->companyName && $this->dic;
+    }
+
     public function getCompanyName(): ?string
     {
         return $this->companyName;
