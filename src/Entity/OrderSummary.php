@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\OrderSummaryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderSummaryRepository::class)]
@@ -33,6 +34,9 @@ class OrderSummary
      */
     #[ORM\OneToMany(targetEntity: OrderSet::class, mappedBy: 'orderSummary', orphanRemoval: true)]
     private Collection $orderSets;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $created_at = null;
 
     public function __construct(float $totalPrice, UserInformation $userInformation)
     {
@@ -121,6 +125,18 @@ class OrderSummary
                 $orderSet->setOrderSummary(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $created_at): static
+    {
+        $this->created_at = $created_at;
 
         return $this;
     }

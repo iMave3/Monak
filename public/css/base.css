@@ -27,6 +27,7 @@ main {
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 999;
 }
 
 .popup {
@@ -42,7 +43,6 @@ main {
     margin-bottom: 1em;
     border-radius: 1em;
     position: relative;
-    z-index: 100;
 }
 
 .popup>div,
