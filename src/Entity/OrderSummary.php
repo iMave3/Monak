@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OrderSummaryRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -44,6 +45,7 @@ class OrderSummary
         $this->status = 'pending';
         $this->totalPrice = $totalPrice;
         $this->setUserInformation($userInformation);
+        $this->created_at = new DateTime();
     }
 
     public function getId(): ?int

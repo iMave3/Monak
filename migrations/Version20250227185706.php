@@ -20,7 +20,9 @@ final class Version20250227185706 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE order_summary ADD created_at DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE order_summary ADD created_at DATETIME DEFAULT NULL');
+        $this->addSql("UPDATE order_summary SET created_at = CONCAT(CURDATE(), '00:00:00') WHERE created_at IS NULL");
+        $this->addSql('ALTER TABLE order_summary MODIFY created_at DATETIME NOT NULL');
     }
 
     public function down(Schema $schema): void
