@@ -1,0 +1,41 @@
+main {
+    display: block;
+}
+
+#loginForm {
+    width: fit-content;
+    background-color: rgb(226, 226, 226);
+    border-radius: 20px;
+    height: fit-content;
+    position: relative;
+    padding: 10px;
+}
+
+.signInBtn {
+    display: block;
+    margin: auto;
+}
+
+#logo {
+    margin: 0 auto;
+    display: block;
+    max-width: 170px;
+}
+
+label {
+    position: absolute;
+    left: 70px;
+}
+
+#emailLabel {
+    top: 132px;
+}
+
+#passwordLabel {
+    top: 170px;
+}
+
+#email, #password {
+    display: block;
+    margin: 20px auto;
+}

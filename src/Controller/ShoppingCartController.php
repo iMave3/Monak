@@ -48,10 +48,13 @@ class ShoppingCartController extends AbstractController
         if ($request->query->has('toCart')) {
             return $this->redirectToRoute('shoppingcart');
         }
+        
+        $this->addFlash("notice", "Produkt byl přidán do košíku");
 
         return $this->redirectToRoute('tag', [
             'id' => $product->getTag()->getId()
         ]);
+
     }
 
     #[Route("/cart/remove/{id}", name: "remove_cart")]
@@ -172,7 +175,7 @@ class ShoppingCartController extends AbstractController
             foreach ($this->getCart()['products'] as $id => $quantity) {
                 $product = $this->entityManager->find(Product::class, $id);
                 if ($product === null) {
-                    return $this->flashRedirect('error', 'Produkt nebyl nalezen', 'clearCart');
+                    return $this->flashRedirect('error', 'Produkt nebyl nalezen', 'clear_cart');
                 }
 
                 $orderSet = new OrderSet($quantity, $product->getPrice());
@@ -196,7 +199,7 @@ class ShoppingCartController extends AbstractController
 
             $this->entityManager->flush();
 
-            return $this->flashRedirect('notice', 'Objednávka byla dokončena.', 'main');
+            return $this->flashRedirect('notice', 'Objednávka byla dokončena!', 'clear_cart');
         }
 
         return $this->render('shoppingCartSummary.html.twig', [
