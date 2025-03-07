@@ -1,28 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset your password{% endblock %}
+{% block title %}Změňte si heslo
+{% endblock %}
 
-{% block header %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/reset-password.css') }}">
 {% endblock %}
-{% block leftBody %}
-{% endblock %}
+
+
+{% block header %}{% endblock %}
+{% block leftBody %}{% endblock %}
 {% block body %}
-    {% for flash_error in app.flashes('reset_password_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-    <h1>Změňte si heslo</h1>
+	{% for flash_error in app.flashes('reset_password_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
 
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Zadejte Váš email a my vám zašleme link pro změnu Vašeho hesla.
-            </small>
-        </div>
 
-        <button class="btn btn-primary">Zaslat email</button>
-    {{ form_end(requestForm) }}
+	<img src="{{ asset('img/logo.png') }}" alt="" id="logo">
+	<h1>Změňa hesla</h1>
+
+	<div>
+		<small>
+			Zadejte Váš email a my vám zašleme link pro změnu Vašeho hesla.
+		</small>
+	</div>
+
+	{{ form_start(requestForm) }}
+	<div>
+		{{ form_row(requestForm.email) }}
+	</div>
+
+	<button class="btn btn-primary sendBtn">Zaslat email</button>
+	{{ form_end(requestForm) }}
 {% endblock %}
 
-{% block footer %}
-{% endblock %}
+{% block footer %}{% endblock %}
