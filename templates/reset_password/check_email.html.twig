@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Password Reset Email Sent{% endblock %}
+{% block title %}Odeslání e-mailu s žádostí o obnovení hesla{% endblock %}
 
 {% block body %}
     <p>
-        If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+        Pokud existuje účet odpovídající vašemu e-mailu, byl právě odeslán e-mail s odkazem, který můžete použít k obnovení hesla.
+        Platnost tohoto odkazu vyprší za {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
     </p>
-    <p>If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+    <p>Pokud e-mail neobdržíte, zkontrolujte prosím složku se spamem nebo <a href="{{ path('app_forgot_password_request') }}">zkuste to znovu</a>.</p>
 {% endblock %}

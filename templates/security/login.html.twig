@@ -3,6 +3,9 @@
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/login.css') }}">
 {% endblock %}
+{% block javascripts %}
+	<script src="{{ asset('js/login.js') }}"></script>
+{% endblock %}
 
 {% block header %}{% endblock %}
 
@@ -23,11 +26,12 @@
 			</div>
 		{% endif %}
 
-        <img src="{{ asset('img/logo.png') }}" alt="" id="logo">
-		<h1 class="h3 mb-3 font-weight-normal">Přihlaste se prosím!</h1>
+		<a href="{{ path('main') }}"><img src="{{ asset('img/logo.png') }}" alt="" id="logo"></a>
+		<h1 class="h3 mb-3 font-weight-normal">Přihlaste se zde!</h1>
+
 		<div id="emailDiv">
 			<label for="email" id="emailLabel">Email</label>
-			<input type="text" value="{{ last_username }}" name="_username" id="email" class="form-control" autocomplete="email" required autofocus>
+			<input type="text" name="_username" id="email" class="form-control" required>
 		</div>
 		<div id="passwordDiv">
 			<label for="password" id="passwordLabel">Heslo</label>
@@ -40,7 +44,7 @@
 		</button>
 	</form>
 
-	<a href="{{ path('app_forgot_password_request')}}">Zapomenuté heslo</a>
+	<a href="{{ path('app_forgot_password_request')}}" class="forgottenPassw">Zapomenuté heslo</a>
 {% endblock %}
 
 {% block footer %}{% endblock %}

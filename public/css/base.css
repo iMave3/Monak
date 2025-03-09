@@ -2,18 +2,20 @@
     --color-white: white;
 }
 
-main {
-    min-height: 40vh;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Rubik', sans-serif;
+    font-family: 'Rubik', sans-serif !important;
     font-style: normal;
     font-weight: 400;
+    scroll-behavior: smooth;
 }
+
+main {
+    min-height: 40vh;
+}
+
 
 .closeTopRight {
     position: absolute;

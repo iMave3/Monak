@@ -15,23 +15,24 @@
 		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
 	{% endfor %}
 
+	<div id="resetpasswForm">
+		<a href="{{ path('main') }}"><img src="{{ asset('img/logo.png') }}" alt="" id="logo"></a>
+		<h1>Změna hesla</h1>
 
-	<img src="{{ asset('img/logo.png') }}" alt="" id="logo">
-	<h1>Změňa hesla</h1>
+		<div>
+			<small>
+				Zadejte Váš email a my vám zašleme <br>link pro změnu Vašeho hesla.
+			</small>
+		</div>
 
-	<div>
-		<small>
-			Zadejte Váš email a my vám zašleme link pro změnu Vašeho hesla.
-		</small>
+		{{ form_start(requestForm) }}
+		<div class="emailDiv">
+			{{ form_row(requestForm.email) }}
+		</div>
+
+		<button class="btn btn-primary sendBtn">Zaslat email</button>
+		{{ form_end(requestForm) }}
 	</div>
-
-	{{ form_start(requestForm) }}
-	<div>
-		{{ form_row(requestForm.email) }}
-	</div>
-
-	<button class="btn btn-primary sendBtn">Zaslat email</button>
-	{{ form_end(requestForm) }}
 {% endblock %}
 
 {% block footer %}{% endblock %}
