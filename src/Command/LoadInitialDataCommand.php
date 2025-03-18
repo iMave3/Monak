@@ -91,7 +91,7 @@ class LoadInitialDataCommand extends Command
         $this->entityManager->persist($tag12);
         $this->entityManager->persist($tag13);
 
-        $product = new Product(
+        /*$product = new Product(
             'První produkt nevim',
             'diaTech/frezy/1.webp',
             true,
@@ -119,6 +119,7 @@ class LoadInitialDataCommand extends Command
         $this->entityManager->persist($product);
         $this->entityManager->persist($product1);
         $this->entityManager->persist($product2);
+        */
         
         $this->entityManager->persist($user);
 

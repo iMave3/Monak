@@ -27,14 +27,6 @@
 					<h2 class="tagName">Kategorie</h2>
 					<p class="lastButton">Přidat</p>
 				</a>
-
-				{% if currentTagId != null %}
-					<a href="{{ path('create_product', {'tagId': currentTagId }) }}" id="">
-						<img src="/img/addProductIcon.png" alt="">
-						<h2 class="tagName">Produkt</h2>
-						<p class="lastButton">Přidat</p>
-					</a>
-				{% endif %}
 			{% endif %}
 
 
@@ -62,8 +54,16 @@
 						<p class="lastButton">Otevřít</p>
 					</a>
 				{% endfor %}
-				{% else %}
-				<h1>Momentálně zde není žádný produkt</h1>
+			{% endif %}
+
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				{% if currentTagId != null %}
+					<a href="{{ path('create_product', {'tagId': currentTagId }) }}" id="">
+						<img src="/img/addProductIcon.png" alt="">
+						<h2 class="tagName">Produkt</h2>
+						<p class="lastButton">Přidat</p>
+					</a>
+				{% endif %}
 			{% endif %}
 
 			{% if tag and tag.products is not empty %}
