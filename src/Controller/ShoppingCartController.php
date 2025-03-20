@@ -110,7 +110,7 @@ class ShoppingCartController extends AbstractController
     }
 
     #[Route("/cart/clear", name: "clear_cart")]
-    public function clearCart(string $id): Response
+    public function clearCart(): Response
     {
         $this->saveCart([
             'products' => [],

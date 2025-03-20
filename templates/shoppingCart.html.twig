@@ -7,6 +7,7 @@
 {% block body %}
 
 	{% for productInfo in cart.products %}
+	{% if productInfo.product.isAvailable %}
 	
 		<div>
 			<p>{{productInfo.product.name}}</p>
@@ -22,6 +23,9 @@
 		</div>
 
 		<a href="{{ path('shoppingcart_info') }}" style="color: black">Pokračovat</a>
+	{% else %}
+		<h1>nn</h1>
+	{% endif %}
 	{% endfor %}
 		{% if cart.products == null %}
 			<h1>Máte prázdný košík, prosím vraťte se zpět.</h1>

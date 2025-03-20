@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     $("input").on("blur", function () {
         if ($(this).val() === "") {
-            $(this).prev("#emailLabel").animate({ top: "152px", left: "48px", color: "gray" }, 200);
+            $(this).prev("#emailLabel").animate({ top: "152px", left: /*"48px"*/ "55px", color: "gray" }, 200);
         }
     });
 
@@ -15,7 +15,7 @@ $(document).ready(function () {
 
     $("input").on("blur", function () {
         if ($(this).val() === "") {
-            $(this).prev("#passwordLabel").animate({ top: "191px", left: "48px", color: "gray" }, 200);
+            $(this).prev("#passwordLabel").animate({ top: "191px", left: /*"48px"*/ "55px", color: "gray" }, 200);
         }
     });
 

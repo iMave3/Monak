@@ -1,10 +1,56 @@
 {% extends "base.html.twig" %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ asset('css/adminOrders.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/adminOrders.css') }}">
 {% endblock %}
 
 {% block body %}
+
+	<pre>
     {{ dump(orderSummaries) }}
-    orderSummatries
+</pre>
+	{% if orderSummaries == null %}
+		<h1>Žádná objednávka</h1>
+	{% else %}
+
+		<div class="orderDiv">
+			{% for order in orderSummaries %}
+				<p>Objednávka
+					{{order.id}}</p>
+				<p>Stav objednávky
+					{{order.status}}</p>
+				<p>Datum vytvoření
+					{{order.createdAt|date("d.m.Y  H:i")}}</p>
+				<p>Jméno:
+					{{ order.userInformation.firstName }}</p>
+				<p>Příjmení:
+					{{ order.userInformation.lastName }}</p>
+				<p>Mail:
+					{{ order.userInformation.mail }}</p>
+				<p>Telefonní číslo:
+					{{ order.userInformation.phoneNumber }}</p>
+				<p>Město:
+					{{ order.userInformation.town }}</p>
+				<p>Ulice:
+					{{ order.userInformation.street }}</p>
+				<p>Číslo popisné:
+					{{ order.userInformation.houseNumber }}</p>
+				<p>PSČ:
+					{{ order.userInformation.postcode }}</p>
+                {% for orderSet in order.orderSets %}
+                    {{ orderSet.product.name}}
+                {% endfor %}
+			</div>
+			{% if order.companyInformation != null %}
+				<p>Název firmy:
+					{{order.companyInformation.companyName}}</p>
+				<p>ICO:
+					{{order.companyInformation.ico}}</p>
+				<p>DIC:
+					{{order.companyInformation.dic}}</p>
+			{% endif %}
+			<br>
+		{% endfor %}
+	{% endif %}
+
 {% endblock %}
