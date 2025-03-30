@@ -31,8 +31,9 @@ public function buildForm(FormBuilderInterface $builder, array $options)
     }
 
     $builder
-        ->add('name', TextType::class)
+        ->add('name', TextType::class, ["label" => "Název kategorie"])
         ->add('description', TextType::class, [
+            "label" => "Popisek",
             'required' => false,
         ])
         ->add('image', FileType::class, [

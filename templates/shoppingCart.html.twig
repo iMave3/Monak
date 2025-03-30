@@ -5,30 +5,52 @@
 {% endblock %}
 
 {% block body %}
+	{% set allAvailable = true %}
+	{% set hasProducts = false %}
 
 	{% for productInfo in cart.products %}
-	{% if productInfo.product.isAvailable %}
-	
-		<div>
-			<p>{{productInfo.product.name}}</p>
-			<div style="display:flex; justify-content: space-between; margin-bottom: 8px">
-				<p style="color:grey">{{productInfo.quantity}}x</p>
-				<p style="color:red">{{productInfo.product.price}},-</p>
+		{% if productInfo.product.isAvailable %}
+			<div class="wholeProduct">
+				<p>{{ productInfo.product.name }}</p>
+				<div class="productInformation">
+					<div class="numberDiv">
+						<a href="{{ path('add_cart', {'id': productInfo.product.id, 'toCart': true }) }}">⇑&nbsp;&nbsp;</a>
+						<a href="{{ path('remove_cart', {'id': productInfo.product.id}) }}">&nbsp;&nbsp;⇓</a>
+						<a href="{{ path('complete_remove_cart', {'id': productInfo.product.id}) }}" style="color:red; margin-left: 10px; border-left: 1px solid grey">&nbsp;🗑</a>
+					</div>
+					<div style="display:flex; justify-content: space-between;">
+						<p style="color:grey; margin-right: 8px">{{ productInfo.quantity }}x</p>
+						<p style="color:red">{{ productInfo.product.price }},-</p>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div style="display:flex;">
-			<a href="{{ path('add_cart', {'id': productInfo.product.id, 'toCart': true }) }}" style="color:blue;">⇑&nbsp;&nbsp;</a>
-			<a href="{{ path('remove_cart', {'id': productInfo.product.id}) }}" style="color:blue;">&nbsp;&nbsp;⇓</a>
-			<a href="{{ path('complete_remove_cart', {'id': productInfo.product.id}) }}" style="color:blue;">&nbsp;odstranit</a>
-		</div>
-
-		<a href="{{ path('shoppingcart_info') }}" style="color: black">Pokračovat</a>
-	{% else %}
-		<h1>nn</h1>
-	{% endif %}
-	{% endfor %}
-		{% if cart.products == null %}
-			<h1>Máte prázdný košík, prosím vraťte se zpět.</h1>
+			<p style="margin-bottom: 20px; text-align: end;">Celková cena produktu je
+				{{ (productInfo.quantity * productInfo.product.price)}},- s DPH.</p>
+			{% set hasProducts = true %}
+		{% else %}
+			<div class="wholeProduct">
+				<p>{{ productInfo.product.name }}</p>
+				<div class="productInformation">
+					<div style="display:flex; justify-content: space-between;">
+						<p style="color:rgb(161, 161, 161); margin-right: 8px">{{ productInfo.quantity }}x</p>
+						<p style="color:rgb(255, 154, 154)">{{ productInfo.product.price }},-</p>
+					</div>
+					<div style="display:flex;">
+						<a href="{{ path('complete_remove_cart', {'id': productInfo.product.id}) }}" style="color:red;">Odstranit</a>
+					</div>
+				</div>
+			</div>
+			<p style="text-align: center">Tento produkt již není dostupný, prosím odstraňte ho!</p>
+			{% set allAvailable = false %}
 		{% endif %}
+		<br>
+	{% endfor %}
 
+	{% if cart.products == null and cart.total <= 0 %}
+		<h1 style="text-align: center; display: flex; justify-content: center; align-items: center; height: 35vh;">Máte prázdný košík, prosím vraťte se zpět.</h1>
+	{% endif %}
+
+	{% if allAvailable and hasProducts %}
+		<a class="continueBTN" href="{{ path('shoppingcart_info') }}">Pokračovat</a>
+	{% endif %}
 {% endblock %}

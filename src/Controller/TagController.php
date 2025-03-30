@@ -17,7 +17,7 @@ class TagController extends AbstractController
 {
 
     // MENU -----------------------
-    #[Route("/menu", name: "menu")]
+    #[Route("/", name: "main")]
     public function menu(): Response
     {
         $isOnlyRender = false;
@@ -75,7 +75,7 @@ class TagController extends AbstractController
             
             
             if ($parentTag == null)
-            return $this->redirectToRoute('menu');
+            return $this->redirectToRoute('main');
         else
         return $this->redirectToRoute('tag', ['id' => $parentTag->getId()]);
 }
@@ -122,7 +122,7 @@ public function removeTag(string $id): Response
         if ($parentTag !== null) {
             return $this->redirectToRoute('tag', ['id' => $parentTag->getId()]);
         } else {
-            return $this->redirectToRoute('menu');
+            return $this->redirectToRoute('main');
         }
     }
 
@@ -168,7 +168,7 @@ public function removeTag(string $id): Response
             if ($parentTag !== null) {
                 return $this->redirectToRoute('tag', ['id' => $parentTag->getId()]);
             } else {
-                return $this->redirectToRoute('menu');
+                return $this->redirectToRoute('main');
             }
         }
 

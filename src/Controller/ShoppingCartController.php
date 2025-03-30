@@ -17,11 +17,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ShoppingCartController extends AbstractController
 {
-    #[Route("/shoppingcart", name:"shoppingcart")]
+    #[Route("/shoppingcart", name: "shoppingcart")]
     public function cart(): Response
     {
-        return $this->render('shoppingCart.html.twig', [
-        ]);
+        return $this->render('shoppingCart.html.twig', []);
     }
 
     #[Route("/cart/add/{id}", name: "add_cart")]
@@ -41,20 +40,19 @@ class ShoppingCartController extends AbstractController
             $cart['products'][$id] = 1;
         }
 
-        $cart['total'] += $product->getPrice(); 
+        $cart['total'] += $product->getPrice();
 
         $this->saveCart($cart);
 
         if ($request->query->has('toCart')) {
             return $this->redirectToRoute('shoppingcart');
         }
-        
+
         $this->addFlash("notice", "Produkt byl přidán do košíku");
 
         return $this->redirectToRoute('tag', [
             'id' => $product->getTag()->getId()
         ]);
-
     }
 
     #[Route("/cart/remove/{id}", name: "remove_cart")]
@@ -99,10 +97,10 @@ class ShoppingCartController extends AbstractController
 
             $quantity = $cart['products'][$id];
 
-                unset($cart['products'][$id]);
+            unset($cart['products'][$id]);
 
             $cart['total'] -= $product->getPrice() * $quantity;
-            
+
             $this->saveCart($cart);
         }
 
@@ -120,7 +118,7 @@ class ShoppingCartController extends AbstractController
         return $this->redirectToRoute('main');
     }
 
-    #[Route("/shoppingcart-info", name:"shoppingcart_info")]
+    #[Route("/shoppingcart-info", name: "shoppingcart_info")]
     public function cartInfo(Request $request): Response
     {
 
@@ -129,14 +127,13 @@ class ShoppingCartController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $formData = $form->getData();            
+            $formData = $form->getData();
 
             $session = $this->requestStack->getSession();
             $session->set('userInformation', $formData['userInformation']);
 
             $companyInformation = $formData['companyInformation'];
             if ($companyInformation !== null) {
-                // TODO: dalsi osetreni company
                 $session->set('companyInformation', $formData['companyInformation']);
             }
 
@@ -148,7 +145,7 @@ class ShoppingCartController extends AbstractController
         ]);
     }
 
-    #[Route("/shoppingcart-summary", name:"shoppingcart_summary")]
+    #[Route("/shoppingcart-summary", name: "shoppingcart_summary")]
     public function cartSummary(Request $request): Response
     {
         $session = $this->requestStack->getSession();
@@ -181,10 +178,15 @@ class ShoppingCartController extends AbstractController
                 $orderSet = new OrderSet($quantity, $product->getPrice());
 
                 $orderSummary->addOrderSet($orderSet);
+
+                $totalPrice += $product->getPrice() * $quantity;
+
                 $product->addOrderSet($orderSet);
 
                 $this->entityManager->persist($orderSet);
             }
+
+            $orderSummary->setTotalPrice($totalPrice);
 
             $companyInformation = $session->get('companyInformation');
             if ($companyInformation && $companyInformation->getCompanyName() !== null && $companyInformation->getIco() !== null && $companyInformation->getDic() !== null) {

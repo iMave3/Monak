@@ -36,15 +36,17 @@ class ProductFormType extends AbstractType
         }
 
         $builder
-            ->add('name', TextType::class)
-            ->add('available', CheckboxType::class, ['required' => false])
+            ->add('name', TextType::class, [
+                'label' => 'Název produktu'
+            ])
+            ->add('available', CheckboxType::class, ['label' => 'Skladem', 'required' => false])
             ->add('image', FileType::class, [
                 'label' => 'Obrázek',
                 'required' => $required,
                 'mapped' => false,
                 'constraints' => $constraints
             ])
-            ->add("price", NumberType::class);
+            ->add("price", NumberType::class, ["label" => "Cena"]);
     }
 
 

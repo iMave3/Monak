@@ -62,12 +62,7 @@ class AbstractController extends AbstractControllerBase
             'total' => 0,
         ]);
     }
-
-    // protected function getUdaje() : array
-    // {
-    //     $session = $this->requestStack->getSession();
-    // }
-
+    
     protected function saveCart(array $cart) : void
     {
         $session = $this->requestStack->getSession();

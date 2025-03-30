@@ -22,7 +22,7 @@ class ProductController extends AbstractController
     {
         $tag = $this->entityManager->find(Tag::class, $tagId);
         if ($tag === null) {
-            return $this->flashRedirect('error', 'Neni nikde', 'menu');
+            return $this->flashRedirect('error', 'Neni nikde', 'main');
         }
 
         $form = $this->createForm(ProductFormType::class, null, ['imageRequired' => true]);

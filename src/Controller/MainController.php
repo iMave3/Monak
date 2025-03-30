@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Validation;
 class MainController extends AbstractController
 {
 
-    #[Route("/", name:"main")]
+    #[Route("/info", name:"info")]
     public function index(): Response
     {
         return $this->render('main.html.twig', [

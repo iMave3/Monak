@@ -2,3 +2,4 @@
 import "./popup.js";
 import "./header.js";
 import "./login.js";
+import "./adminOrders.js";

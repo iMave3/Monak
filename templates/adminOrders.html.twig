@@ -3,54 +3,78 @@
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/adminOrders.css') }}">
 {% endblock %}
+{% block javascripts %}
+	<script src="{{ asset('js/adminOrders.js') }}"></script>
+{% endblock %}
 
 {% block body %}
-
-	<pre>
-    {{ dump(orderSummaries) }}
-</pre>
-	{% if orderSummaries == null %}
-		<h1>Žádná objednávka</h1>
+	{% if orderSummaries is empty %}
+		<h1>Žádné objednávky</h1>
 	{% else %}
-
-		<div class="orderDiv">
+		<div class="orders-container">
 			{% for order in orderSummaries %}
-				<p>Objednávka
-					{{order.id}}</p>
-				<p>Stav objednávky
-					{{order.status}}</p>
-				<p>Datum vytvoření
-					{{order.createdAt|date("d.m.Y  H:i")}}</p>
-				<p>Jméno:
-					{{ order.userInformation.firstName }}</p>
-				<p>Příjmení:
-					{{ order.userInformation.lastName }}</p>
-				<p>Mail:
-					{{ order.userInformation.mail }}</p>
-				<p>Telefonní číslo:
-					{{ order.userInformation.phoneNumber }}</p>
-				<p>Město:
-					{{ order.userInformation.town }}</p>
-				<p>Ulice:
-					{{ order.userInformation.street }}</p>
-				<p>Číslo popisné:
-					{{ order.userInformation.houseNumber }}</p>
-				<p>PSČ:
-					{{ order.userInformation.postcode }}</p>
-                {% for orderSet in order.orderSets %}
-                    {{ orderSet.product.name}}
-                {% endfor %}
-			</div>
-			{% if order.companyInformation != null %}
-				<p>Název firmy:
-					{{order.companyInformation.companyName}}</p>
-				<p>ICO:
-					{{order.companyInformation.ico}}</p>
-				<p>DIC:
-					{{order.companyInformation.dic}}</p>
-			{% endif %}
-			<br>
-		{% endfor %}
+				<div class="order">
+					<div class="order-summary" onclick="toggleOrderDetails({{ order.id }})">
+						<p>
+							<strong>Objednávka:</strong>
+							{{ order.id }}</p>
+						<p style="margin: 0 20px">
+							<strong>Datum:</strong>
+							{{ order.createdAt|date("d.m.Y H:i") }}</p>
+						<p style="margin: 0 20px 0 0">
+							<strong>Cena:</strong>
+							{{ order.totalPrice }},-</p>
+						<p  style="margin: 0 20px 0 0">
+							<span>Bez DPH</span>
+							{{ (order.totalPrice / 1.21) |number_format(2, '.', ',') }},-</p>
+						<p>
+							<strong>Stav objednávky:</strong>
+							{{ order.status }}</p>
+					</div>
+
+					<div class="order-details" id="details-{{ order.id }}">
+						<p>
+							<strong>Jméno:</strong>
+							{{ order.userInformation.firstName }}
+							{{ order.userInformation.lastName }}</p>
+						<p>
+							<strong>Email:</strong>
+							{{ order.userInformation.mail }}</p>
+						<p>
+							<strong>Telefon:</strong>
+							{{ order.userInformation.phoneNumber }}</p>
+						<p>
+							<strong>Adresa:</strong>
+							{{ order.userInformation.street }},
+							{{ order.userInformation.town }},
+							{{ order.userInformation.postcode }}</p>
+
+						<p>
+							<strong>Produkty:</strong>
+						</p>
+						<ul>
+							{% for orderSet in order.orderSets %}
+								<li>{{ orderSet.product.name }}
+									({{ orderSet.quantity }}x)</li>
+							{% endfor %}
+						</ul>
+
+						{% if order.companyInformation %}
+							<p>
+								<strong>Firma:</strong>
+								{{ order.companyInformation.companyName }}</p>
+							<p>
+								<strong>IČO:</strong>
+								{{ order.companyInformation.ico }}</p>
+							<p>
+								<strong>DIČ:</strong>
+								{{ order.companyInformation.dic }}</p>
+						{% endif %}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
 	{% endif %}
+
 
 {% endblock %}

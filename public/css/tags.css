@@ -47,6 +47,23 @@
     transition: all .2s ease-in-out;
 }
 
+.tagDescription {
+    max-width: 250px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.productName, .tagName {
+    display: block;
+    max-width: 250px;
+    padding: 0 10px;
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+}
+
 #mainRight-offer>a img:hover,
 .product img:hover {
     filter: drop-shadow(5px 5px 12px var(--pictureShadowActive));

@@ -1,3 +1,38 @@
-main {
-    display:block;
+.orders-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+}
+
+.order {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.order-summary {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: #f8f8f8;
+    cursor: pointer;
+}
+
+.order-summary:hover {
+    background: #e0e0e0;
+}
+
+.order-details {
+    display: none; /* Defaultně skryté */
+    padding: 10px;
+    background: #fff;
+    border-top: 1px solid #ccc;
+}
+
+.order-details ul {
+    margin: 0;
+    padding-left: 20px;
 }

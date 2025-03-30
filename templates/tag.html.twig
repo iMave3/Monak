@@ -9,7 +9,7 @@
 	{% if isOnlyRender == false %}
 		{% else %}
 			<div id="leftOffer">
-				<a href="{{ path('menu')}}">HLAVNÍ NABÍDKA</a>
+				<a href="{{ path('main')}}">HLAVNÍ NABÍDKA</a>
 				{% for menuTags in mainTags %}
 					<a href="{{ path('tag', {'id': menuTags.id}) }}" class="m1 {% if currentTagId == menuTags.id %}currentPage{% endif %}">{{menuTags.name}}</a>
 				{% endfor %}
@@ -49,7 +49,7 @@
 						{% endif %}
 						<img src="{{ asset(childrenTag.imageURL) }}" alt="{{ childrenTag.name }}">
 						<h2 class="tagName">{{childrenTag.name}}</h2>
-						<h3 class="tagDescription lastH">{{childrenTag.description}}</h3>
+						<h4 class="tagDescription lastH">{{childrenTag.description}}</h4>
 
 						<p class="lastButton">Otevřít</p>
 					</a>
@@ -83,11 +83,7 @@
 						{% else %}
 							<h4 style="color:red">Není skladem</h4>
 						{% endif %}
-						<!--{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-													<a href="{{ path('menu')}}">
-														<input type="checkbox" name="" id="">
-													</a>
-												{% endif %}-->
+
 						<h2 class="productName">{{product.name}}</h2>
 						<h3 class="productPrice lastH">{{ product.price }},- /ks</h3>
 						{% if product.isAvailable %}
@@ -97,6 +93,26 @@
 						{% endif %}
 					</object>
 				{% endfor %}
+			{% else %}
+				{% if currentTagId is not null %}
+
+					<h1 class="no-products-message">Zatím zde není žádný produkt</h1>
+					<style>
+						#mainRight-offer {
+							display: grid;
+							grid-template-columns: repeat(4, minmax(200px, 1fr));
+							grid-template-rows: auto 1fr auto;
+							gap: 20px;
+							min-height: 80vh;
+						}
+
+						.no-products-message {
+							grid-column: 1 / -1;
+							text-align: center;
+							align-self: center;
+						}
+					</style>
+				{% endif %}
 			{% endif %}
 		</div>
 	</div>

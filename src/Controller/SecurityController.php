@@ -13,7 +13,7 @@ class SecurityController extends AbstractController
     {
 
         if ($this->getUser() !== null) {
-            return $this->flashRedirect('error', 'Nejdriv se odhlas', 'main');
+            return $this->flashRedirect('error', 'Nejdříve se musíte odhlásit', 'main');
         }
 
         // get the login error if there is one
