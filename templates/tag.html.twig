@@ -19,10 +19,10 @@
 
 {% block body %}
 	<div id="right-offer">
-		<div id="mainRight-offer">
+		<div id="mainRight-offer" style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid grey">
 
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-				<a href="{{ path('create_tag', {'parentId': currentTagId }) }}" id="">
+				<a href="{{ path('create_tag', {'parentId': currentTagId }) }}" class="createTags">
 					<img src="/img/addTagIcon.png" alt="">
 					<h2 class="tagName">Kategorie</h2>
 					<p class="lastButton">Přidat</p>
@@ -55,10 +55,11 @@
 					</a>
 				{% endfor %}
 			{% endif %}
-
+		</div>
+		<div id="mainRight-offer">
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				{% if currentTagId != null %}
-					<a href="{{ path('create_product', {'tagId': currentTagId }) }}" id="">
+					<a href="{{ path('create_product', {'tagId': currentTagId }) }}" class="createProducts">
 						<img src="/img/addProductIcon.png" alt="">
 						<h2 class="tagName">Produkt</h2>
 						<p class="lastButton">Přidat</p>
@@ -98,14 +99,6 @@
 
 					<h1 class="no-products-message">Zatím zde není žádný produkt</h1>
 					<style>
-						#mainRight-offer {
-							display: grid;
-							grid-template-columns: repeat(4, minmax(200px, 1fr));
-							grid-template-rows: auto 1fr auto;
-							gap: 20px;
-							min-height: 80vh;
-						}
-
 						.no-products-message {
 							grid-column: 1 / -1;
 							text-align: center;
@@ -116,4 +109,4 @@
 			{% endif %}
 		</div>
 	</div>
-{% endblock %}
+</div>{% endblock %}

@@ -1,18 +1,24 @@
 {% extends "/base.html.twig" %}
 
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/tags.css') }}">
+{% endblock %}
+
 {% block body %}
-	<div class="w-4/5 m-auto pt-40">
-		<h1 class="text-6xl text-center pb-12">
+	<div>
+		<h1 style="margin: 0 auto 30px auto; width: fit-content;">
 			Vytvořit kategorii
 		</h1>
 
-{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.description) }}
-    {{ form_row(form.image) }}  <!-- Tady bude input pro obrázek -->
-    <button type="submit">Uložit</button>
-{{ form_end(form) }}
-
+		<div class="product" style="max-width: 260px">
+			{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+			<div class="imageDiv">{{ form_row(form.image) }}</div>
+			<h2 class="tagName" style="margin: 0 auto; width: fit-content;">{{ form_row(form.name) }}</h2>
+			<h4 class="tagDescription lastH">{{ form_row(form.description) }}</h4>
+			<button type="submit" class="lastButton productTag tagBTN">Uložit</button>
+			{{ form_end(form) }}
+		</div>
+	</div>
 
 	</div>
 {% endblock %}

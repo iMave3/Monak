@@ -470,11 +470,6 @@ filter: drop-shadow(1px 1px 3px #7e7e7e);
     margin: 0 auto;
 }
 
-.mainT1 {
-    font-size: 90px;
-    color: RGB(245, 244, 245);
-    margin: 0;
-}
 
 #main-headerIMG {
     filter: drop-shadow(3px 3px 9px rgb(85, 85, 85));
@@ -487,15 +482,10 @@ filter: drop-shadow(1px 1px 3px #7e7e7e);
 }
 
 .mainT1 {
-    padding-right: 50px;
     font-size: 90px;
+    text-align: center;
     color: RGB(245, 244, 245);
     text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 2px #FFF, 0 0 2px #FFF, 0 0 2px #FFF, 0 0 2px #FFF, 0 0 2px #fff;
-}
-
-.mainT2 {
-    font-size: 29px;
-    color: RGB(245, 244, 245);
 }
 
 #info {
@@ -611,10 +601,6 @@ footer a:hover {
         font-size: 75px;
     }
 
-    .mainT2 {
-        font-size: 24px;
-    }
-
     #main-headerIMG {
         width: 450px;
     }
@@ -626,16 +612,13 @@ footer a:hover {
 
 /* -------------------- <1400px --------------------*/
 @media (max-width: 1400px) {
-    #top-headerPC>div {
-        width: 500px;
+
+    #top-headerPC {
+        width: 100%;
     }
 
     .mainT1 {
         font-size: 65px;
-    }
-
-    .mainT2 {
-        font-size: 20.5px;
     }
 
     #main-headerIMG {
@@ -653,12 +636,12 @@ footer a:hover {
 
 /* -------------------- <1300px --------------------*/
 @media (max-width: 1300px) {
-    .mainT1 {
-        font-size: 60px;
+    .logo {
+        display: none;
     }
 
-    .mainT2 {
-        font-size: 18.5px;
+    #middleDiv {
+        position: inherit;
     }
 
     #main-headerIMG {
@@ -668,16 +651,17 @@ footer a:hover {
 
 /* -------------------- <1150px --------------------*/
 @media (max-width: 1150px) {
-    .no-logo {
-        display: none;
+    #middleDiv {
+        margin-left: 0;
     }
 
-    .mainT1 {
-        font-size: 55px;
+    #userOptionsRightDiv {
+        margin-left: 20px;
     }
 
-    .mainT2 {
-        font-size: 17px;
+    #middleDiv>a:first-child {
+        padding-right: 10px;
+        border-right: 2px solid grey;
     }
 
     #main-headerIMG {
@@ -698,21 +682,12 @@ footer a:hover {
         padding: 50px 0;
     }
 
-    #mainTextDiv {
-        width: fit-content;
-        margin: 50px auto;
-    }
 
     .mainT1 {
         font-size: 75px;
     }
 
-    .mainT2 {
-        font-size: 23px;
-    }
-
-    .mainT1,
-    .mainT2 {
+    .mainT1 {
         text-align: center;
         width: fit-content;
         margin: 0px auto;
@@ -727,20 +702,12 @@ footer a:hover {
 
 /* -------------------- <900px --------------------*/
 @media (max-width: 900px) {
-    #top-headerPC {
+    #top-headerPC, #leftOffer {
         display: none;
-    }
-
-    #top-headerPHONE {
-        display: flex;
     }
 
     main {
         display: block;
-    }
-
-    #left-offer {
-        display: none;
     }
 
     #footerForFHD {
@@ -771,22 +738,11 @@ footer a:hover {
         font-size: 61px;
     }
 
-    .mainT2 {
-        font-size: 18.5px;
-    }
 }
 
 /* -------------------- <390px --------------------*/
 @media (max-width: 390px) {
     .mainT1 {
         font-size: 45px;
-    }
-
-    .mainT2 {
-        font-size: 13px;
-    }
-
-    #info {
-        font-size: 25px;
     }
 }
