@@ -10,6 +10,7 @@ use App\Entity\UserInformation;
 use App\Form\CompanyInformationType;
 use App\Form\OrderInformationType;
 use App\Form\UserInformationType;
+use App\Service\EmailService;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,10 @@ class ShoppingCartController extends AbstractController
 
         if ($product === null) {
             return $this->flashRedirect('error', 'Produkt nenalezen', 'main');
+        }
+
+        if ($product->isDiscontinued()) {
+            return $this->flashRedirect('error', 'Produkt nelze přidat', 'main');
         }
 
         if (isset($cart['products'][$id])) {
@@ -146,7 +151,7 @@ class ShoppingCartController extends AbstractController
     }
 
     #[Route("/shoppingcart-summary", name: "shoppingcart_summary")]
-    public function cartSummary(Request $request): Response
+    public function cartSummary(Request $request, EmailService $emailService): Response
     {
         $session = $this->requestStack->getSession();
         $userInformation = $session->get('userInformation');
@@ -200,6 +205,10 @@ class ShoppingCartController extends AbstractController
             $this->entityManager->persist($orderSummary);
 
             $this->entityManager->flush();
+
+            $emailService->sendEmail($userInformation->getMail(), 'Objednávka byla dokončena', 'mailOrderComplete.html.twig', [
+                'userInformation' => $userInformation 
+            ]);
 
             return $this->flashRedirect('notice', 'Objednávka byla dokončena!', 'clear_cart');
         }

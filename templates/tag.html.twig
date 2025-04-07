@@ -19,6 +19,29 @@
 
 {% block body %}
 	<div id="right-offer">
+
+	{% if tag is not null %}
+		<form method="get">
+			<input type="text" name="name" placeholder="Search..." value="{{ app.request.get('name') }}">
+
+			<select name="order">
+				<option value="name" {{ app.request.get('order') == 'name' ? 'selected' }}>Abecedně</option>
+				<option value="price" {{ app.request.get('order') == 'price' ? 'selected' }}>Cena</option>
+			</select>
+
+			<select name="direction">
+				<option value="ASC" {{ app.request.get('direction') == 'ASC' ? 'selected' }}>Vzestupně</option>
+				<option value="DESC" {{ app.request.get('direction') == 'DESC' ? 'selected' }}>Sestupně</option>
+			</select>
+
+			<label>
+				<input type="checkbox" name="in_stock" value="1" {{ app.request.get('in_stock') ? 'checked' }}>Pouze skladem
+			</label>
+
+			<button type="submit">Aplikovat filtry</button>
+		</form>
+	{% endif %}
+
 		<div id="mainRight-offer" {% if tag and tag.childrenTags is not empty or is_granted('IS_AUTHENTICATED_FULLY') %} style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid grey" {% endif %}>
 
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -67,32 +90,40 @@
 				{% endif %}
 			{% endif %}
 
-			{% if tag and tag.products is not empty %}
-				{% for product in tag.products %}
-					<object class="product">
-						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-							<object class="editDelete" id="editObject">
-								<a href="{{ path('edit_product', {'id': product.id}) }}">Upravit</a>
-							</object>
-							<object class="editDelete" id="deleteObject">
-								<a href="{{ path('remove_product', {'id': product.id}) }}">Smazat</a>
-							</object>
-						{% endif %}
-						<img src="{{ asset(product.imageURL) }}" alt="{{ product.name }}">
-						{% if product.isAvailable %}
-							<h4 style="color:green">Skladem</h4>
-						{% else %}
-							<h4 style="color:red">Není skladem</h4>
-						{% endif %}
+			{% if products is defined and products is not empty %}
+				{% for product in products %}
+					{% if is_granted('IS_AUTHENTICATED_FULLY') or not product.discontinued %}
+						<object class="product">
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								<object class="editDelete" id="editObject">
+									<a href="{{ path('edit_product', {'id': product.id}) }}">Upravit</a>
+								</object>
+								{% if product.discontinued %}
+									<object class="editDelete" id="deleteObject">
+										<a href="{{ path('set_discontinue_product', {'id': product.id, 'state': false})}}">Obnovit</a>
+									</object>
+								{% else %}
+									<object class="editDelete" id="deleteObject">
+										<a href="{{ path('set_discontinue_product', {'id': product.id, 'state': true}) }}">Vyřadit</a>
+									</object>
+								{% endif %}
+							{% endif %}
+							<img src="{{ asset(product.imageURL) }}" alt="{{ product.name }}">
+							{% if product.isAvailable %}
+								<a href="{{ path('set_stock_product', {'id': product.id, 'state': false}) }}"><h4 style="color:green">Skladem</h4></a>
+							{% else %}
+								<a href="{{ path('set_stock_product', {'id': product.id, 'state': true}) }}"><h4 style="color:red">Není skladem</h4></a>
+							{% endif %}
 
-						<h2 class="productName">{{product.name}}</h2>
-						<h3 class="productPrice lastH">{{ product.price }},- /ks</h3>
-						{% if product.isAvailable %}
-							<a href="{{ path('add_cart', {'id': product.id}) }}" class="isAvailable lastButton">Přidat do košíku</a>
-						{% else %}
-							<p class="isNotAvailable lastButton">Nelze přidat</p>
-						{% endif %}
-					</object>
+							<h2 class="productName">{{product.name}}</h2>
+							<h3 class="productPrice lastH">{{ product.price }},- /ks</h3>
+							{% if product.isAvailable %}
+								<a href="{{ path('add_cart', {'id': product.id}) }}" class="isAvailable lastButton">Přidat do košíku</a>
+							{% else %}
+								<p class="isNotAvailable lastButton">Nelze přidat</p>
+							{% endif %}
+						</object>
+					{% endif %}
 				{% endfor %}
 			{% else %}
 				{% if currentTagId is not null %}

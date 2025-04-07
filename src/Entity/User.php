@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $lastName = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $lastVisit = null;
+    private ?\DateTimeInterface $createdAt = null;
 
     public function __construct(string $email, string $firstName, string $lastName)
     {
@@ -163,14 +163,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getLastVisit(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->lastVisit;
+        return $this->createdAt;
     }
 
-    public function setLastVisit(\DateTimeInterface $lastVisit): static
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
-        $this->lastVisit = $lastVisit;
+        $this->createdAt = $createdAt;
 
         return $this;
     }

@@ -9,5 +9,10 @@
 	{{ form_widget(form) }}
 
 	<button type="submit">Uložit</button>
+
+	<div>
+	prechozi img
+		<img src="{{ asset(tag.imageURL) }}" alt="{{ tag.name }}">
+	</div>
 	{{ form_end(form) }}
 {% endblock %}

@@ -8,9 +8,16 @@
 {% endblock %}
 
 {% block body %}
+	<form method="get" style="margin-bottom: 20px;">
+			<input type="text" name="id" placeholder="Hledat objednávku..." value="{{ app.request.get('id') }}">
+			<button type="submit">Hledat</button>
+		</form>
+
 	{% if orderSummaries is empty %}
 		<h1>Žádné objednávky</h1>
 	{% else %}
+		
+
 		<div class="orders-container">
 			{% for order in orderSummaries %}
 				<div class="order">
@@ -71,6 +78,11 @@
 								<strong>DIČ:</strong>
 								{{ order.companyInformation.dic }}</p>
 						{% endif %}
+
+						<a href="{{ path('set_state_order', {'id': order.id, 'state': 'pending'}) }}">Nastavit na probíhající</a>
+						<a href="{{ path('set_state_order', {'id': order.id, 'state': 'delivered'}) }}">Nastavit na doručena</a>
+						<a href="{{ path('set_state_order', {'id': order.id, 'state': 'taken'}) }}">Nastavit na převzata</a>
+						<a href="{{ path('set_state_order', {'id': order.id, 'state': 'returned'}) }}">Nastavit na vrácena</a>
 					</div>
 				</div>
 			{% endfor %}

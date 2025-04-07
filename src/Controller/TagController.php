@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Entity\Tag;
 use App\Form\TagFormType;
 use Symfony\Bundle\MakerBundle\Validator;
@@ -87,21 +88,44 @@ return $this->render('create.html.twig', [
 
 // RENDER -----------------------
 #[Route("/tag/{id}", name: "tag")]
-public function tag(int $id): Response
+public function tag(int $id, Request $request): Response
 {
     $isOnlyRender = true;
     $tag = $this->entityManager->find(Tag::class, $id);
 
     $mainTags = $this->entityManager->getRepository(Tag::class)->findBy(['parentTag' => null]);
 
+    $name = $request->query->get('name');
+    $order = $request->query->get('order', 'name');
+    $direction = strtoupper($request->query->get('direction', 'ASC'));
+    $inStock = $request->query->getBoolean('in_stock');
 
-    
+    $qb = $this->entityManager->createQueryBuilder()
+        ->select('p')
+        ->from(Product::class, 'p');
+
+    if ($name) {
+        $qb->andWhere('p.name LIKE :name')
+           ->setParameter('name', '%' . $name . '%');
+    }
+
+    if ($inStock) {
+        $qb->andWhere('p.isAvailable = true');
+    }
+
+    $allowedOrderFields = ['name', 'price'];
+    if (in_array($order, $allowedOrderFields)) {
+        $qb->orderBy('p.' . $order, $direction);
+    }
+
+    $products = $qb->getQuery()->getResult();
 
     return $this->render('tag.html.twig', [
         'tag' => $tag,
         'mainTags' => $mainTags,
         'currentTagId' => $id,
-        'isOnlyRender' => $isOnlyRender
+        'isOnlyRender' => $isOnlyRender,
+        'products' => $products
     ]);
 }
 // REMOVE -----------------------

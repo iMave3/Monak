@@ -23,13 +23,14 @@ class AbstractController extends AbstractControllerBase
         $this->requestStack = $requestStack;
         date_default_timezone_set("Europe/Prague");
     }
-    // uz by to melo fungovat jak ten total tak spravny prevadeni, pridal jsem ti tam debug_cart coz je ten officialni kosik a ten displaycart je jen ta nadstavba ktera muze byt spatne 
-    // (byla ale nemela by uz byt)
+    
+
     protected function getGlobalParameters(): array
     {
         return [
             'debug_cart' => $this->getCart(),
-            'cart' => $this->getDisplayCart()
+            'cart' => $this->getDisplayCart(),
+            'search_url' => $this->generateUrl('search')
         ];
     }
 

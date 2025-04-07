@@ -17,7 +17,7 @@ class EmailService
     public function sendEmail(string $emailTo, string $subject, string $template, array $context) : void
     {
         $mail = (new TemplatedEmail())
-            ->from(new Address('mailer@studenteco.cz', 'Student Economy'))
+            ->from(new Address('no-reply@monak.cz', 'Monak Email Bot'))
             ->to($emailTo)
             ->subject($subject)
             ->htmlTemplate($template)

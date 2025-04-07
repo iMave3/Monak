@@ -37,6 +37,9 @@ class Product
     #[ORM\OneToMany(targetEntity: OrderSet::class, mappedBy: 'product', orphanRemoval: true)]
     private Collection $orderSets;
 
+    #[ORM\Column]
+    private ?bool $discontinued = null;
+
     public function __construct(string $name, string $imageURL, bool $isAvailable, int $price)
     {
         $this->name = $name;
@@ -44,6 +47,7 @@ class Product
         $this->isAvailable = $isAvailable;
         $this->price = $price;
         $this->orderSets = new ArrayCollection();
+        $this->discontinued = false;
     }
 
     public function getId(): ?int
@@ -137,6 +141,18 @@ class Product
                 $orderSet->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isDiscontinued(): ?bool
+    {
+        return $this->discontinued;
+    }
+
+    public function setDiscontinued(bool $discontinued): static
+    {
+        $this->discontinued = $discontinued;
 
         return $this;
     }

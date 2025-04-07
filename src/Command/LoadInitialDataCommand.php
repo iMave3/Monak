@@ -53,7 +53,7 @@ class LoadInitialDataCommand extends Command
 
         $user->setVerified(true);
         $user->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
-        $user->setLastVisit(new DateTime('now', new DateTimeZone('Europe/Prague')));
+        $user->setCreatedAt(new DateTime('now', new DateTimeZone('Europe/Prague')));
 
         $tag1 = new Tag("Diamantová technika", '/img/exhibitionPictures/diaTech.png');
         $tag2 = new Tag("Brusné kotouče", '/img/exhibitionPictures/brusKartace.png');

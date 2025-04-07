@@ -16,6 +16,13 @@
 
 		{% block stylesheets %}{% endblock %}
 		{% block javascripts %}{% endblock %}
+		<script>
+			$(() => {
+				$('#searchButton').click(() => {
+					window.location = "{{ search_url }}" + '?name=' + $('#searchInput').val();
+				});
+			});
+		</script>
 	</head>
 	<body>
 		<div class="popups">
@@ -61,8 +68,13 @@
 					</div>
 
 					<div id="userOptionsRightDiv">
+						<div>
+							<input type="text" name="searchInput" id="searchInput">
+							<a href="javascript:void(0);" id="searchButton">vyhledat</a>
+						</div>
 						{% if app.user %}
 							<img src="{{ asset('img/findIcon.png') }}" alt="findIcon" id="findIcon" style="user-select: none;">
+							
 							<img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: default; height: 44px;">
 							{% include 'cart.html.twig' %}
 							<div class="border"></div>

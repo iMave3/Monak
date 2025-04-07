@@ -62,17 +62,45 @@ class ProductController extends AbstractController
         ]);
     }
 
-    // REMOVE -----------------------
-    #[Route("/product/remove/{id}", name: "remove_product")]
-    public function removeProduct(string $id): Response
+    // DISCONTINUE -----------------------
+    #[Route("/product/set-discontinue/{id}", name: "set_discontinue_product")]
+    public function setDiscontinueProduct(string $id, Request $request): Response
     {
         $product = $this->entityManager->find(Product::class, $id);
 
         if ($product === null) {
             return $this->flashRedirect('error', 'Produkt nenalezen!', 'main');
         }
+        $state = $request->query->get('state');
+        if ($state === null) {
+            return $this->flashRedirect('error', 'Neposlán stav!', 'main');
+        }
 
-        $this->entityManager->remove($product);
+        $product->setDiscontinued($state);
+
+        $this->entityManager->flush();
+
+        $tagId = $product->getTag()->getId();
+
+        return $this->redirectToRoute('tag', ["id" => $tagId]);
+    }
+
+    // SET STOCK -----------------------
+    #[Route("/product/set-stock/{id}", name: "set_stock_product")]
+    public function setStockProduct(string $id, Request $request): Response
+    {
+        $product = $this->entityManager->find(Product::class, $id);
+
+        if ($product === null) {
+            return $this->flashRedirect('error', 'Produkt nenalezen!', 'main');
+        }
+        $state = $request->query->get('state');
+        if ($state === null) {
+            return $this->flashRedirect('error', 'Neposlán stav!', 'main');
+        }
+
+        $product->setAvailable($state);
+
         $this->entityManager->flush();
 
         $tagId = $product->getTag()->getId();
