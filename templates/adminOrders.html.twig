@@ -18,18 +18,19 @@
 						<p>
 							<strong>Objednávka:</strong>
 							{{ order.id }}</p>
-						<p style="margin: 0 20px">
+						<p style="margin: 0 17px">
 							<strong>Datum:</strong>
 							{{ order.createdAt|date("d.m.Y H:i") }}</p>
-						<p style="margin: 0 20px 0 0">
+						<p style="margin: 0 17px 0 0">
 							<strong>Cena:</strong>
 							{{ order.totalPrice }},-</p>
-						<p  style="margin: 0 20px 0 0">
+						<p style="margin: 0 17px 0 0">
 							<span>Bez DPH</span>
 							{{ (order.totalPrice / 1.21) |number_format(2, '.', ',') }},-</p>
 						<p>
 							<strong>Stav objednávky:</strong>
 							{{ order.status }}</p>
+						<a href="{{ path('remove_order', {'id': order.id}) }}" style="margin-left: 17px; color:red; font-size: 18px; text-decoration: none; position: relative; top: -2px">&nbsp;🗑</a>
 					</div>
 
 					<div class="order-details" id="details-{{ order.id }}">

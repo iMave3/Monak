@@ -3,7 +3,7 @@
     flex-direction: column;
     gap: 10px;
     width: 100%;
-    max-width: 800px;
+    max-width: 810px;
     margin: auto;
 }
 
@@ -19,6 +19,7 @@
     padding: 10px;
     background: #f8f8f8;
     cursor: pointer;
+    align-items: center;
 }
 
 .order-summary:hover {

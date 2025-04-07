@@ -22,4 +22,22 @@ class AdminController extends AbstractController
             'orderSummaries' => $orderSummaries
         ]);
     }
+
+    #[Route("/adminOrders/remove/{id}", name: "remove_order")]
+    public function completeRemove(string $id): Response
+    {
+        $orderSummary = $this->entityManager->find(OrderSummary::class, $id);
+
+        if ($orderSummary === null) {
+            return $this->flashRedirect('error', 'Objednávka nenalezena', 'main');
+        }
+        
+        else {
+            
+            $this->entityManager->remove($orderSummary);
+            $this->entityManager->flush();
+        }
+
+        return $this->redirectToRoute('adminOrders');
+    }
 }

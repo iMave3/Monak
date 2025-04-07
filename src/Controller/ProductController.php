@@ -110,11 +110,6 @@ class ProductController extends AbstractController
                 $imagePath = "/uploads/" . $newFileName;
                 $product->setImageURL($imagePath);
             }
-
-            /*$product->setName($form->get("name")->getData());
-            $product->setAvailable($form->get("available")->getData());
-            $product->setPrice($form->get("price")->getData());*/
-
             $this->entityManager->flush();
 
             return $this->redirectToRoute('tag', ["id" => $product->getTag()->getId()]);

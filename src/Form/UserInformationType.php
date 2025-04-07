@@ -26,7 +26,7 @@ class UserInformationType extends AbstractType
                     'class' => ''
                 ]
             ])
-            ->add('lastName')
+            ->add('lastName', TextType::class, ['label' => 'Křestní jméno'])
             ->add('mail', EmailType::class)
             ->add('phoneNumber', null , [
 
