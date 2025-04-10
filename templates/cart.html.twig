@@ -1,23 +1,40 @@
-<div style="position: absolute; top:100px; max-width:300px; background-color:white; padding:13px; border-radius: 10px;" id="cartSubmenu">
-    {% if cart.total > 0 %}
-        {% for productInfo in cart.products %}
-            <div>
-                <p>{{productInfo.product.name}}</p>
-                <div class="products">
-                    <p style="color:grey">{{productInfo.quantity}}x</p>
-                    <p style="color:red">{{productInfo.product.price}},-</p>
-                </div>
-            </div>
-        {% endfor %}
-        <div class="border" style="width:95%; height:1px; color:grey; margin:4px auto;"></div>
-        <p>
-            <span>Celkem</span>
-            {{cart.total |number_format(0, '.', ',')}},-</p>
-        <p>
-            <span>Bez DPH</span>
-            {{ (cart.total / 1.21) |number_format(2, '.', ',') }},-</p>
-        <a href="{{ path('shoppingcart') }}" style="color: black; text-decoration: underline;">Přejít do košíku</a>
-    {% else %}
-        <p>Prázdný košík</p>
-    {% endif %}
+<div
+	style="position: absolute; top:100px; max-width:300px; background-color:white; padding:13px; border-radius: 10px;" id="cartSubmenu">
+	<!-- Zkontroluj, jestli je celková částka košíku větší než 0 -->
+	{% if cart.total > 0 %}
+		<!-- Iterace přes všechny produkty v košíku -->
+		{% for productInfo in cart.products %}
+			<div>
+				<!-- Zobrazení názvu produktu -->
+				<p style="max-width: 150px;">{{productInfo.product.name}}</p>
+				<div
+					class="products">
+					<!-- Zobrazení množství produktu a jeho ceny -->
+					<p style="color:grey">{{productInfo.quantity}}x</p>
+					<p style="color:red">{{productInfo.product.price |number_format(2, '.', ',')}},-</p>
+				</div>
+			</div>
+		{% endfor %}
+
+		<!-- Oddělovač mezi položkami a součtem -->
+		<div class="border" style="width:95%; height:1px; color:grey; margin:4px auto;"></div>
+
+		<!-- Zobrazení celkové částky košíku -->
+		<p style="max-width: 150px;">
+			<span>Celkem</span><br>
+			{{cart.total |number_format(0, '.', ',')}},-
+		</p>
+
+		<!-- Zobrazení částky bez DPH -->
+		<p style="max-width: 150px;">
+			<span>Bez DPH</span><br>
+			{{ (cart.total / 1.21) |number_format(2, '.', ',') }},-
+		</p>
+
+		<!-- Odkaz na stránku s podrobnostmi o košíku -->
+		<a href="{{ path('shoppingcart') }}" style="color: black; text-decoration: underline;">Přejít do košíku</a>
+	{% else %}
+		<!-- Pokud je košík prázdný, zobrazí se tato zpráva -->
+		<p>Prázdný košík</p>
+	{% endif %}
 </div>

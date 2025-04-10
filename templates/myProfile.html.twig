@@ -1,13 +1,50 @@
 {% extends "base.html.twig" %}
 
+{% block stylesheets %}
+	<!-- Načtení specifického CSS souboru pro tuto stránku (profil uživatele) -->
+	<link rel="stylesheet" href="{{ asset('css/myProfile.css') }}">
+{% endblock %}
+
 {% block leftBody %}
+	<!-- Tento blok je prázdný, ale může být použit pro obsah levé části stránky, pokud je to potřeba -->
 {% endblock %}
 
 {% block body %}
+	<!-- Hlavní obsah stránky pro profil uživatele -->
+	<div class="user-profile-container">
+		<h2 class="profile-header">Profil uživatele</h2>
 
-<p>Váš email:&nbsp;</p>
-<p>{{app.user.email}}</p>
-<p>Vaše jméno:</p>
-<p>{{app.user.firstName}} {{app.user.lastName}}</p>
+		<!-- Sekce s informacemi o uživatelském profilu -->
+		<div
+			class="profile-info">
+			<!-- Informace o uživatelském e-mailu -->
+			<div class="profile-item">
+				<strong>Email:</strong>
+				<p>{{ app.user.email }}</p>
+			</div>
+
+			<!-- Informace o jménu uživatele -->
+			<div class="profile-item">
+				<strong>Jméno:</strong>
+				<p>{{ app.user.firstName }}
+					{{ app.user.lastName }}</p>
+			</div>
+
+			<!-- Informace o datu vytvoření účtu -->
+			<div class="profile-item">
+				<strong>Datum vytvoření:</strong>
+				<p>{{ app.user.createdAt|date('d.m.Y H:i') }}</p>
+			</div>
+
+			<!-- Informace o stavu ověření účtu -->
+			<div class="profile-item">
+				<strong>Status ověření:</strong>
+				<p>
+					{% if app.user.isVerified %}Ověřeno{% else %}Neověřeno
+					{% endif %}
+				</p>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

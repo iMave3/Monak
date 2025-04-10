@@ -1,23 +1,38 @@
 {% extends "/base.html.twig" %}
 
 {% block stylesheets %}
+	<!-- Zahrnutí specifického CSS souboru pro stránku produktů -->
 	<link rel="stylesheet" href="{{ asset('css/tags.css') }}">
 {% endblock %}
 
-
 {% block body %}
 	<div>
+		<!-- Nadpis pro vytvoření nového produktu -->
 		<h1 style="margin: 0 auto 30px auto; width: fit-content;">
 			Vytvořit produkt
 		</h1>
 
-		<div class="product" style="max-width: 260px">
+		<div
+			class="product" style="max-width: 260px">
+			<!-- Formulář pro vytvoření produktu, který zahrnuje nahrávání souborů (obrázků) -->
 			{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+			<!-- Pole pro nahrání obrázku produktu -->
 			<div class="imageDiv">{{ form_row(form.image) }}</div>
+
+			<!-- Pole pro označení dostupnosti produktu -->
 			<div class="isAvailableDiv">{{ form_row(form.available) }}</div>
+
+			<!-- Pole pro název produktu -->
 			<h2 class="productName" style="margin: 0 auto; width: fit-content;">{{ form_row(form.name) }}</h2>
+
+			<!-- Pole pro cenu produktu -->
 			<h3 class="productPrice lastH" style="margin: 0 auto; width: fit-content;">{{ form_row(form.price) }}</h3>
+
+			<!-- Tlačítko pro odeslání formuláře a uložení produktu -->
 			<button type="submit" class="lastButton productTag productBTN">Uložit</button>
+
+			<!-- Konec formuláře -->
 			{{ form_end(form) }}
 		</div>
 	</div>

@@ -9,26 +9,31 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderInformationType extends AbstractType
 {
+    // Metoda pro sestavení formuláře
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            // Přidání formuláře pro uživatelské informace
             ->add('userInformation', UserInformationType::class, [
-                'label' => false,
+                'label' => false, // Skrytí labelu pro tento podformulář
             ])
+            // Přidání formuláře pro firemní informace (volitelné)
             ->add('companyInformation', CompanyInformationType::class, [
-                'label' => false,
-                'required' => false
+                'label' => false, // Skrytí labelu pro tento podformulář
+                'required' => false // Označení tohoto pole jako volitelného
             ])
+            // Přidání tlačítka pro odeslání formuláře
             ->add('submit', SubmitType::class, [
-                'label' => 'Pokračovat',
+                'label' => 'Pokračovat', // Text na tlačítku
             ])
         ;
     }
 
+    // Metoda pro nastavení výchozích voleb pro formulář
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            // Zde nejsou přidány žádné speciální výchozí volby
         ]);
     }
 }

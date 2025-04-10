@@ -1,9 +1,127 @@
 {% extends "/base.html.twig" %}
+
 {% block stylesheets %}
+	<!-- Načítání CSS souboru pro tuto stránku -->
+	<link rel="stylesheet" href="{{ asset('css/shoppingCartsummary.css') }}">
 {% endblock %}
+
 {% block leftBody %}{% endblock %}
 
 {% block body %}
-    {{ dump(userInformation) }}
-	{{form(form)}}
+	<!-- Titulek pro stránku s rekapitulací objednávky -->
+	<h2 style="margin-bottom: 30px; text-align: center;">Rekapitulace objednávky</h2>
+
+	<!-- Začátek formuláře -->
+	{{ form_start(form) }}
+
+	<!-- Kontejner pro rekapitulaci objednávky -->
+	<div
+		class="summary-container">
+		<!-- Levý sloupec pro osobní údaje -->
+		<div class="left-column">
+			<h3>Osobní údaje</h3>
+			<div class="summary-section">
+				<p>
+					<strong>Křestní jméno:</strong>
+					{{ userInformation.firstName }}</p>
+				<p>
+					<strong>Příjmení:</strong>
+					{{ userInformation.lastName }}</p>
+				<p>
+					<strong>E-mail:</strong>
+					{{ userInformation.mail }}</p>
+				<p>
+					<strong>Telefon:</strong>
+					{{ userInformation.phoneNumber }}</p>
+				<p>
+					<strong>Město:</strong>
+					{{ userInformation.town }}</p>
+				<p>
+					<strong>Ulice:</strong>
+					{{ userInformation.street }}</p>
+				<p>
+					<strong>Číslo popisné:</strong>
+					{{ userInformation.houseNumber }}</p>
+				<p>
+					<strong>PSČ:</strong>
+					{{ userInformation.postcode }}</p>
+			</div>
+
+			<!-- Firemní údaje, pokud jsou k dispozici -->
+			{% if companyInformation %}
+				<h3>Firemní údaje</h3>
+				<div class="summary-section">
+					<p>
+						<strong>Název společnosti:</strong>
+						{{ companyInformation.companyName }}</p>
+					<p>
+						<strong>IČO:</strong>
+						{{ companyInformation.ico }}</p>
+					<p>
+						<strong>DIČ:</strong>
+						{{ companyInformation.dic }}</p>
+				</div>
+			{% endif %}
+		</div>
+
+		<!-- Pravý sloupec pro seznam produktů v košíku -->
+		<div class="right-column">
+			<h3>Produkty v košíku</h3>
+			<div class="summary-section">
+				{% set totalPriceWithTax = 0 %}
+				<!-- Nastavení proměnné pro celkovou cenu s DPH -->
+				{% set totalPriceWithoutTax = 0 %}
+				<!-- Nastavení proměnné pro celkovou cenu bez DPH -->
+				{% for item in cart.products %}
+					<div
+						class="product-summary">
+						<!-- Zobrazení obrázku a názvu produktu -->
+						<img src="{{ asset(item.product.imageURL) }}" alt="{{ item.product.name }}" class="product-image">
+						<p>
+							<strong>Produkt:</strong>
+							{{ item.product.name }}</p>
+						<p>
+							<strong>Počet:</strong>
+							{{ item.quantity }}</p>
+						<p>
+							<strong>Cena za kus:</strong>
+							{{ item.product.price | number_format(2) }}&nbsp;Kč</p>
+						<p>
+							<strong>Celková cena:</strong>
+							{{ (item.product.price * item.quantity) | number_format(2) }}&nbsp;Kč</p>
+
+						<!-- Výpočet ceny bez DPH -->
+						{% set priceWithoutTax = (item.product.price + 79)/ 1.21 %}
+						<p>
+							<strong>Cena bez DPH:</strong>
+							{{ priceWithoutTax | number_format(2) }}&nbsp;Kč</p>
+
+						<!-- Akumulace celkových částek -->
+						{% set totalPriceWithTax = totalPriceWithTax + (item.product.price * item.quantity) %}
+						{% set totalPriceWithoutTax = totalPriceWithoutTax + (priceWithoutTax * item.quantity) %}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	<!-- Sekce pro zobrazení celkové ceny objednávky -->
+	<div class="summary-total">
+		<h3>Celková cena objednávky</h3>
+		<p>
+			<strong>Celková cena s DPH:</strong>
+			{{ (totalPriceWithTax + 79)| number_format(2) }}&nbsp;Kč</p>
+		<p>
+			<strong>Celková cena bez DPH:</strong>
+			{{ totalPriceWithoutTax | number_format(2) }}&nbsp;Kč</p>
+	</div>
+
+	<!-- Tlačítko pro potvrzení objednávky -->
+	<div class="submitCSS" style="text-align: center; margin-top:20px;">
+		{{ form_row(form.submit) }}
+		<!-- Tlačítko pro odeslání formuláře -->
+	</div>
+
+	<!-- Konec formuláře -->
+	{{ form_end(form) }}
 {% endblock %}

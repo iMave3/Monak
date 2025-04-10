@@ -11,43 +11,41 @@
 			{% endblock %}
 		</title>
 
-		<link rel="stylesheet" href="{{ asset('css/base.css') }}">
+		<!-- Link na hlavní CSS soubor pro stylování stránky -->
+		<link
+		rel="stylesheet" href="{{ asset('css/base.css') }}">
+		<!-- Skript pro vlastní JavaScript -->
 		<script src="{{ asset('js/main.js') }}"></script>
 
 		{% block stylesheets %}{% endblock %}
 		{% block javascripts %}{% endblock %}
 		<script>
-			$(() => {
-				$('#searchButton').click(() => {
-					window.location = "{{ search_url }}" + '?name=' + $('#searchInput').val();
-				});
-			});
+			$(() => { // Akce při kliknutí na tlačítko pro hledání - přesměrování na stránku s výsledky hledání
+$('#searchButton').click(() => {
+window.location = "{{ search_url }}" + '?name=' + $('#searchInput').val();
+});
+});
 		</script>
 	</head>
 	<body>
-		<div class="popups">
-			{# odkomentuj pro stylovani messages #}
-
-			{# <div class="popup">
-																																																																																									{% include 'svg/close.html.twig' %}
-																																																																																									{% include 'svg/info.html.twig' %}
-																																																																																									Akce se povedla yey, nejaka dlouha zprava hihi
-																																																																																									</div>
-																																																																																									<div class="popup error">
-																																																																																									{% include 'svg/close.html.twig' %}
-																																																																																									{% include 'svg/error.html.twig' %}
-																																																																																									Akce se nepovedla -_- jeste delsi zprava protoze proc ne lorem ipsum Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe, enim?
-																																																																																							</div> #}
-				{% for message in app.flashes('notice') %}
-					<div class="popup"> {% include 'svg/close.html.twig' %}
+		<div
+			class="popups">
+			<!-- Zobrazení zpráv (oznámení nebo chyby) -->
+			{% for message in app.flashes('notice') %}
+				<div class="popup">
+					{% include 'svg/close.html.twig' %}
+					<!-- Ikona pro zavření popupu -->
 					{% include 'svg/info.html.twig' %}
+					<!-- Ikona pro informativní zprávu -->
 					{{ message }}
 				</div>
 			{% endfor %}
 			{% for message in app.flashes('error') %}
 				<div class="popup error">
 					{% include 'svg/close.html.twig' %}
+					<!-- Ikona pro zavření popupu -->
 					{% include 'svg/error.html.twig' %}
+					<!-- Ikona pro chybovou zprávu -->
 					{{ message }}
 				</div>
 			{% endfor %}
@@ -55,12 +53,20 @@
 
 		<header>
 			{% block header %}
-				<nav id="top-headerPC">
+				<nav
+					id="top-headerPC">
+					<!-- Logo navigace s odkazem na hlavní stránku -->
 					<a href="{{ path('main') }}"><img src="{{ asset('img/logo.png') }}" alt="logo" class="logo"></a>
-					<div id="middleDiv">
+
+					<div
+						id="middleDiv">
+						<!-- Odkaz na umístění firmy v mapách -->
 						<a href="https://goo.gl/maps/YCYKFq3zehTT9tZi8" target="blank" class="un">
 							<span id="location"></span>&nbsp;Poloha</a>
-						<div id="middleNav">
+
+						<div
+							id="middleNav">
+							<!-- Navigační odkazy -->
 							<a href="{{ path('info') }}" class="un">Úvod</a>
 							<a href="{{ path('main') }}" class="un">Nabídka</a>
 							<a href="{{ path('contact') }}" class="un">Kontakt</a>
@@ -68,22 +74,34 @@
 					</div>
 
 					<div id="userOptionsRightDiv">
-						<div>
+						<div
+							id="searchBox" style="display: none; background-color:white; padding:7px 10px; border-radius: 10px; align-items: center;">
+							<!-- Vyhledávací pole -->
 							<input type="text" name="searchInput" id="searchInput">
-							<a href="javascript:void(0);" id="searchButton">vyhledat</a>
+							<a href="javascript:void(0);" id="searchButton" style="color: black; font-size: 25px; margin-left:5px; position: relative; top: -2px">⌕</a>
 						</div>
+
 						{% if app.user %}
-							<img src="{{ asset('img/findIcon.png') }}" alt="findIcon" id="findIcon" style="user-select: none;">
-							
+							<!-- Uživatelská ikona, pokud je uživatel přihlášen -->
+							<img
+							src="{{ asset('img/findIcon.png') }}" alt="findIcon" id="findIcon" style="user-select: none;">
+
+							<!-- Ikona košíku -->
 							<img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: default; height: 44px;">
 							{% include 'cart.html.twig' %}
+							<!-- Zobrazení nákupního košíku -->
 							<div class="border"></div>
+
+							<!-- Panel s uživatelskými informacemi -->
 							<div id="iconAndNameDiv">
 								<img src="{{ asset('img/figureIcon.png') }}" alt="figureIcon" id="figureIcon" style="user-select: none;">
-								<div id="credentialsDiv" style="user-select: none;">
+								<div
+									id="credentialsDiv" style="user-select: none;">
+									<!-- Jméno uživatele -->
 									<a id="credentials" style="width: fit-content;">{{ app.user.firstName }}</a>
 									<a id="credentials2" style="width: fit-content;">{{ app.user.lastName }}</a>
 								</div>
+
 								<div id="submenu">
 									<p>{{app.user.email}}</p>
 									<a href="{{ path('adminOrders') }}" class="un">Objednávky</a>
@@ -92,10 +110,12 @@
 								</div>
 							</div>
 						{% else %}
+							<!-- Pokud není uživatel přihlášen, zobrazení ikonky pro vyhledávání a košík -->
 							<img src="{{ asset('img/findIcon.png') }}" alt="findIcon" id="findIcon" style="user-select: none;">
 							<div style="height: 44px;">
 								<img src="{{ asset('img/shoppingCartIcon.png') }}" alt="shopingCart" id="shopCartIcon" style="user-select: none;">
 								{% include 'cart.html.twig' %}
+								<!-- Zobrazení prázdného košíku pro nepřihlášeného uživatele -->
 							</div>
 						{% endif %}
 					</div>
@@ -103,50 +123,60 @@
 
 				<div id="main-header">
 					{% if tag is defined and tag is not null %}
+						<!-- Pokud je definován a existuje tag, zobrazení názvu tagu -->
 						<h1 class="mainT1">{{tag.name}}</h1>
 					{% else %}
+						<!-- Výchozí nadpis -->
 						<h2 id="info">KOMPLETNÍ SORTIMENT PRO KAMENOPRŮMYSL A STAVEBNICTVÍ</h2>
 					{% endif %}
 				</div>
-			</div>
+			{% endblock %}
+		</header>
+
+		<main>
+			<!-- Tělo stránky, kde se načítá obsah specifikovaný v dalších blocích -->
+			{% block leftBody %}{% endblock %}
+			{% block body %}{% endblock %}
+		</main>
+
+		{% block footer %}
+			<footer>
+				<div
+					id="footerForFHD">
+					<!-- Logo na spodní části stránky -->
+					<img src="{{ asset('img/logo.png') }}" alt="logo" class="logo">
+
+					<div id="middleFooterInformation">
+						<div>
+							<h2>Kontaktní&nbsp;adresa</h2>
+							<p>Milan&nbsp;Plíhal&nbsp;-&nbsp;MONAK</p>
+							<p>Na&nbsp;Nivách&nbsp;570</p>
+							<p>351&nbsp;37 Luby&nbsp;u&nbsp;Chebu</p>
+							<p>IČ:&nbsp;64180174, DIČ:&nbsp;CZ7001131808</p>
+						</div>
+
+						<div>
+							<h2>Provozovna</h2>
+							<p>Chebská&nbsp;5</p>
+							<p>351&nbsp;37 Luby&nbsp;u&nbsp;Chebu</p>
+						</div>
+
+						<div>
+							<h2>Kontaktní&nbsp;adresa</h2>
+							<p>E-mail:&nbsp;<a href="mailto:info@monak.cz">info@monak.cz</a>
+							</p>
+							<p>Milan&nbsp;Plíhal</p>
+							<p>-&nbsp;mobil:&nbsp;<a href="tel:+420602108155">602&nbsp;108&nbsp;155</a>
+							</p>
+							<p>Obchodní&nbsp;zástupce</p>
+							<p>-&nbsp;mobil:&nbsp;<a href="tel:+420602108156">602&nbsp;108&nbsp;156</a>
+							</p>
+						</div>
+					</div>
+					<!-- Skrytý obrázek pro FHD -->
+					<img src="" alt="" class="logo" style="visibility: hidden;">
+				</div>
+			</footer>
 		{% endblock %}
 	</body>
-</html></header><main>
-{% block leftBody %}{% endblock %}
-
-{% block body %}{% endblock %}</main>{% block footer %}
-<footer>
-	<div id="footerForFHD">
-		<img src="{{ asset('img/logo.png') }}" alt="logo" class="logo">
-		<div id="middleFooterInformation">
-			<div>
-				<h2>Kontaktní&nbsp;adresa</h2>
-				<p>Milan&nbsp;Plíhal&nbsp;-&nbsp;MONAK</p>
-				<p>Na&nbsp;Nivách&nbsp;570</p>
-				<p>351&nbsp;37 Luby&nbsp;u&nbsp;Chebu</p>
-				<p>IČ:&nbsp;64180174, DIČ:&nbsp;CZ7001131808</p>
-			</div>
-
-			<div>
-				<h2>Provozovna</h2>
-				<p>Chebská&nbsp;5</p>
-				<p>351&nbsp;37 Luby&nbsp;u&nbsp;Chebu</p>
-			</div>
-
-			<div>
-				<h2>Kontaktní&nbsp;adresa</h2>
-				<p>E-mail:&nbsp;<a href="mailto:info@monak.cz">info@monak.cz</a>
-				</p>
-				<br>
-				<p>Milan&nbsp;Plíhal</p>
-				<p>-&nbsp;mobil:&nbsp;<a href="tel:+420602108155">602&nbsp;108&nbsp;155</a>
-				</p>
-				<p>Obchodní&nbsp;zástupce</p>
-				<p>-&nbsp;mobil:&nbsp;<a href="tel:+420602108156">602&nbsp;108&nbsp;156</a>
-				</p>
-
-			</div>
-		</div>
-		<img src="" alt="" class="logo" style="visibility: hidden;">
-	</div>
-</footer>{% endblock %}</body></html>
+</html>

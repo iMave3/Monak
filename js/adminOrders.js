@@ -6,7 +6,7 @@ $(document).ready(function () {
 
         // Otevřeme / zavřeme detaily u kliknuté objednávky
         $(this).next(".order-details").slideToggle();
-        
+
         // Zabráníme zavření při kliknutí na samotnou objednávku
         e.stopPropagation();
     });

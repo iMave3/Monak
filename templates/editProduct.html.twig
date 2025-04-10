@@ -1,18 +1,24 @@
 {% extends "/base.html.twig" %}
 
-{% block leftBody %}{% endblock %}
+{% block leftBody %}
+	<!-- Tento blok je prázdný, pravděpodobně pro levý panel, který je ve výchozím nastavení neaktivní -->
+{% endblock %}
 
 {% block body %}
+	<!-- Začátek formuláře pro produkt -->
 	{{ form_start(form) }}
 	{{ form_widget(form) }}
+	<!-- Vykreslení všech formulářových polí (pro produkt) -->
 
+	<!-- Tlačítko pro odeslání formuláře -->
 	<button type="submit">Uložit</button>
 
 	<div>
-	prechozi img
+		<!-- Zobrazení obrázku produktu -->
 		<img src="{{ asset(product.imageURL) }}" alt="{{ product.name }}">
+		<!-- Obrázek produktu se načte pomocí cesty uložené v `product.imageURL`, a alt text je nastaven na název produktu -->
 	</div>
 
-
+	<!-- Konec formuláře -->
 	{{ form_end(form) }}
 {% endblock %}

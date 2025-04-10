@@ -11,9 +11,7 @@ main {
     border-radius: 17px;
     padding: 7px 15px;
     width: 500px;
-    /* Maximální šířka */
 }
-
 
 .wholeProduct p {
     max-width: 200px;
@@ -59,4 +57,16 @@ main {
 
 .continueBTN:hover {
     background-color: rgb(223, 223, 223);
+}
+
+@media screen and (max-width: 600px){
+    .wholeProduct {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 450px){
+    .wholeProduct {
+        width: 350px;
+    }
 }

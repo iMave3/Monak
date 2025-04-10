@@ -1,34 +1,51 @@
-$(document).ready(function() {
-    // When clicking on the shopping cart icon, toggle the cart submenu visibility
-    $('#shopCartIcon').click(function(event) {
-        event.stopPropagation(); // Prevent the click from propagating
-        $('#cartSubmenu').toggle(); // Toggle the cart submenu visibility
-        $("#shopCartIcon").css("filter", "drop-shadow(1px 1px 3px #7e7e7e)"); // Optional shadow effect on the icon
+$(document).ready(function () {
+    // Přepnutí zobrazení košíku
+    $('#shopCartIcon').click(function (event) {
+        event.stopPropagation();
+        $('#cartSubmenu').toggle();
+        $('#submenu').hide(); // Skryje submenu uživatele
+        $('#searchBox').hide(); // Skryje vyhledávání
+    });
 
-        // If the cart submenu is open, close the user submenu
+    // Zavření košíku, když klikneme mimo
+    $(document).click(function (event) {
+        if (!$(event.target).closest('#cartSubmenu').length && !$(event.target).closest('#shopCartIcon').length) {
+            $('#cartSubmenu').hide();
+        }
+    });
+
+    // Přepnutí zobrazení uživatelského submenu
+    $('#iconAndNameDiv').click(function (e) {
+        e.stopPropagation();
+        $('#submenu').toggle();
+        $('#cartSubmenu').hide();
+        $('#searchBox').hide(); // Skryje vyhledávání
+    });
+
+    // Zavření submenu uživatele, když klikneme mimo
+    $(document).click(function (e) {
+        if (!$(e.target).closest('#iconAndNameDiv').length && !$(e.target).closest('#submenu').length) {
+            $('#submenu').hide();
+        }
+    });
+
+    // Přepnutí vyhledávacího boxu
+    $('#findIcon').click(function (e) {
+        e.stopPropagation();
+        $('#searchBox').toggle(); // Přepne viditelnost vyhledávacího boxu
+        $('#cartSubmenu').hide();
         $('#submenu').hide();
     });
 
-    // When clicking anywhere outside the cart submenu or shopping cart icon, close the cart submenu
-    $(document).click(function(event) {
-        if (!$(event.target).closest('#cartSubmenu').length && !$(event.target).closest('#shopCartIcon').length) {
-            $('#cartSubmenu').hide(); // Hide the cart submenu if clicked outside
+    // Zavření vyhledávacího boxu, když klikneme mimo
+    $(document).click(function (e) {
+        if (!$(e.target).closest('#searchBox').length && !$(e.target).closest('#findIcon').length) {
+            $('#searchBox').hide();
         }
     });
 
-    // When clicking on the iconAndNameDiv, toggle the user submenu visibility
-    $('#iconAndNameDiv').click(function(e) {
-        e.stopPropagation(); // Prevent the click event from propagating to the document
-        $('#submenu').toggle(); // Toggle the user submenu visibility
-
-        // If the user submenu is open, close the cart submenu
-        $('#cartSubmenu').hide();
-    });
-
-    // When clicking anywhere outside the iconAndNameDiv or user submenu, close the user submenu
-    $(document).click(function(e) {
-        if (!$(e.target).closest('#iconAndNameDiv').length && !$(e.target).closest('#submenu').length) {
-            $('#submenu').hide(); // Hide the user submenu if clicked outside
-        }
+    // Přesměrování na stránku s výsledky hledání
+    $('#searchButton').click(function () {
+        window.location = "{{ search_url }}" + '?name=' + $('#searchInput').val();
     });
 });

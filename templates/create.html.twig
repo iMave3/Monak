@@ -12,13 +12,16 @@
 
 		<div class="product" style="max-width: 260px">
 			{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+			<!-- Formulář pro vytvoření kategorie s možností nahrát obrázek -->
 			<div class="imageDiv">{{ form_row(form.image) }}</div>
 			<h2 class="tagName" style="margin: 0 auto; width: fit-content;">{{ form_row(form.name) }}</h2>
+			<!-- Pole pro název kategorie -->
 			<h4 class="tagDescription lastH">{{ form_row(form.description) }}</h4>
+			<!-- Pole pro popis kategorie -->
 			<button type="submit" class="lastButton productTag tagBTN">Uložit</button>
+			<!-- Tlačítko pro odeslání formuláře -->
 			{{ form_end(form) }}
 		</div>
 	</div>
 
-	</div>
 {% endblock %}

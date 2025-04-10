@@ -1,54 +1,83 @@
 {% extends "base.html.twig" %}
+{# Tento příkaz zajišťuje, že tato šablona dědí základní strukturu z šablony base.html.twig. To znamená, že vše, co je definováno v base.html.twig, bude součástí této stránky. #}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('css/contact.css') }}">
+	<link
+	rel="stylesheet" href="{{ asset('css/contact.css') }}">
+{# Tento blok přidává specifický CSS soubor (contact.css) pro tuto stránku. Tento soubor obsahuje styly specifické pro kontaktní stránku. #}
 {% endblock %}
 
 {% block body %}
-	<div id="mainRight-offer">
-		<div id="cont-div">
+	<div
+		id="mainRight-offer">
+		{# Hlavní kontejner pro obsah na pravé straně stránky. Tento blok bude obsahovat všechny kontaktní informace a formuláře. #}
+
+		<div
+			id="cont-div">
+			{# Kontejner pro jednotlivé kontaktní informace. #}
+
 			<div class="insi-div-con">
 				<p>
 					<b>Milan&nbsp;Plíhal</b>
 					-&nbsp;tel.:&nbsp;<a href="tel:+420602108155">602&nbsp;108&nbsp;155</a>
+					{# Kontaktní informace na Milana Plíhala, telefonní číslo je aktivní jako odkaz pro přímé volání. #}
 				</p>
 				<p>
 					<b>Obchodní zástupce: Radek&nbsp;Nacič</b>
 					-&nbsp;tel.:&nbsp;<a href="tel:+420602108156">602&nbsp;108&nbsp;156</a>
+					{# Kontaktní informace na obchodního zástupce Radka Naciče, telefonní číslo je aktivní jako odkaz pro přímé volání. #}
 				</p>
 			</div>
 
 			<div class="insi-div-con">
 				<p>
 					<b>E-mail:</b>&nbsp;<a href="mailto:info@monak.cz">info@monak.cz</a>
+					{# Zobrazuje e-mailovou adresu společnosti. Kliknutím na odkaz se otevře e-mailová aplikace s předvyplněnou adresou. #}
 				</p>
 			</div>
 
 			<div class="insi-div-con">
 				<p>
 					<b>Adresa&nbsp;provozovny:</b>
-					Chebská&nbsp;5, 351&nbsp;37&nbsp;Luby&nbsp;u&nbsp;Chebu</p>
+					Chebská&nbsp;5, 351&nbsp;37&nbsp;Luby&nbsp;u&nbsp;Chebu
+					{# Zobrazuje adresu provozovny společnosti. #}
+				</p>
 				<p>
 					<b>Adresa&nbsp;kontaktní:</b>
 					Na&nbsp;Nivách&nbsp;570, 351&nbsp;37&nbsp;Luby&nbsp;u&nbsp;Chebu
+					{# Zobrazuje kontaktní adresu společnosti. #}
 				</p>
 			</div>
 
 			<div class="insi-div-con">
 				<p>
 					<b>IČ:</b>&nbsp;64180174,
-					<b>DIČ:</b>&nbsp;CZ7001131808</p>
+					<b>DIČ:</b>&nbsp;CZ7001131808
+					{# Zobrazuje identifikační údaje společnosti (IČ a DIČ). #}
+				</p>
 			</div>
 		</div>
 
-		<div id="infoDiv">
+		<div
+			id="infoDiv">
+			{# Tento blok obsahuje Google mapu s umístěním provozovny na mapě. #}
 			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d637.7989487748158!2d12.406835729263095!3d50.250927356253534!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a0eedbd998bd55%3A0x7571d4ddf94a96b2!2sChebsk%C3%A1%205%2C%20351%2037%20Luby!5e0!3m2!1scs!2scz!4v1677966919604!5m2!1scs!2scz" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			{# Odkaz na obrázek budovy společnosti, který se otevře v novém okně. #}
 			<a href="../img/build-comp.jpg" target="_blank"><img src="../img/build-comp.jpg" alt="" id="build"></a>
 		</div>
 
-		{{ form_start(form) }}
-			{{ form_widget(form)}}
-			<button type="submit">odeslat</button>
-		{{ form_end(form) }}
+		<div
+			class="form-container">
+			{# Tento blok obsahuje kontaktní formulář, který je dynamicky generován pomocí Twig formu. #}
+			{{ form_start(form) }}
+			<div class="form-group">
+				{{ form_widget(form) }}
+				{# Všechny jednotlivé widgety (vstupní pole) formuláře jsou zde vykresleny. #}
+			</div>
+			<button type="submit" class="submit-btn">Odeslat</button>
+			{# Tlačítko pro odeslání formuláře. #}
+			{{ form_end(form) }}
+			{# Konec formuláře. #}
+		</div>
 	</div>
 {% endblock %}

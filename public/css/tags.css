@@ -17,9 +17,10 @@
     gap: 20px;
     width: 100%;
     align-items: stretch;
+    place-items: center center;
 }
 
-#mainRight-offer > a,
+#mainRight-offer>a,
 .product {
     min-height: 340px;
     position: relative;
@@ -30,11 +31,11 @@
     border-radius: 20px;
 }
 
-#mainRight-offer > a {
+#mainRight-offer>a {
     background-color: #dadada;
 }
 
-#mainRight-offer > a img,
+#mainRight-offer>a img,
 .product img {
     border-radius: var(--imageRadius);
     transform: scale(.83);
@@ -55,7 +56,8 @@
     margin: 10px auto;
 }
 
-.productName, .tagName {
+.productName,
+.tagName {
     display: block;
     max-width: 250px;
     padding: 0 10px;
@@ -64,12 +66,12 @@
     margin: 0 auto;
 }
 
-#mainRight-offer > a img:hover,
+#mainRight-offer>a img:hover,
 .product img:hover {
     filter: drop-shadow(5px 5px 12px var(--pictureShadowActive));
 }
 
-#mainRight-offer > a h2,
+#mainRight-offer>a h2,
 .product h2 {
     font-size: 20px;
     margin: 0;
@@ -79,9 +81,9 @@
     margin-bottom: 45px;
 }
 
-#mainRight-offer > a p,
-.product > a:last-child,
-.product > p:last-child,
+#mainRight-offer>a p,
+.product>a:last-child,
+.product>p:last-child,
 .lastButton {
     font-size: 20px;
     background-color: var(--notActivebuttonColor);
@@ -105,9 +107,9 @@
 
 .lastButton {
     position: absolute;
-    left: 0; 
-    right: 0; 
-    margin-inline: auto; 
+    left: 0;
+    right: 0;
+    margin-inline: auto;
     width: fit-content;
     bottom: 10px;
     z-index: 1000;
@@ -127,18 +129,18 @@
     cursor: not-allowed;
 }
 
-#mainRight-offer > a p:hover,
-.product > a:last-child:hover {
+#mainRight-offer>a p:hover,
+.product>a:last-child:hover {
     background-color: var(--ActivebuttonColor);
 }
 
-.product .isAvailable:hover,  
+.product .isAvailable:hover,
 .tagBTN:hover {
     background-color: rgb(0, 114, 0) !important;
 }
 
 .productBTN:hover {
-    background-color: #0091cf !important;   
+    background-color: #0091cf !important;
 }
 
 .editDelete {
@@ -162,30 +164,44 @@
     color: green;
 }
 
-#deleteObject {
+#discontinuedObject {
     top: 10px;
     right: 15px;
 }
 
+#discontinuedObject a {
+    color: red;
+}
+
+
+#deleteObject {
+    bottom: 10px;
+    right: 10px;
+}
+
 #deleteObject a {
     color: red;
+    font-size: 22px;
 }
 
 #product_form_price {
     width: 70px;
 }
 
-.isAvailableDiv, .imageDiv {
+.isAvailableDiv,
+.imageDiv {
     margin: 0 auto;
     width: fit-content;
 }
 
 .imageDiv {
-    width: 200px; /* nastaví maximální šířku obalu */
+    width: 200px;
+    /* nastaví maximální šířku obalu */
 }
 
 .imageDiv input {
-    width: 100%; /* přizpůsobí šířku obalu */
+    width: 100%;
+    /* přizpůsobí šířku obalu */
 }
 
 /* ------------------------------- RESPONSIVITY ------------------------------- */
@@ -208,7 +224,9 @@
     #mainRight-offer {
         place-items: auto center;
     }
-    .product, #mainRight-offer > a {
+
+    .product,
+    #mainRight-offer>a {
         max-width: 260px;
     }
 }
@@ -217,5 +235,129 @@
 @media (max-width: 620px) {
     #mainRight-offer {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Hlavní styl pro formulář */
+.filtr {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px; /* Zmenšení mezer mezi poli */
+    padding: 6px 15px; /* Menší padding pro kompaktnější vzhled */
+    flex-wrap: wrap; /* Aby se formulář správně přizpůsobil menším obrazovkám */
+    border-top: 2px solid grey; /* Ponechání původního borderu */
+}
+
+.filtr input,
+.filtr select,
+.filtr label,
+.filtr button {
+    width: 150px; /* Zmenšení šířky pro menší prostor */
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px; /* Zmenšení písma pro menší formulář */
+    border: 1px solid #ddd;
+    transition: border-color 0.3s, box-shadow 0.3s ease-in-out;
+}
+
+/* Styl pro inputy, selecty a tlačítka */
+.filtr input:focus,
+.filtr select:focus {
+    border-color: #3f8cb5;
+    box-shadow: 0 0 8px rgba(63, 140, 181, 0.3);
+}
+
+.filtr button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 12px;
+}
+
+.filtr button:hover {
+    background-color: #45a049;
+}
+
+/* Přidání efektu pro checkbox */
+.filtr label {
+    font-size: 12px;
+    margin: 8px 0;
+}
+
+.filtr input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+/* Responsivní styl pro různé obrazovky */
+@media (max-width: 1600px) {
+    .filtr {
+        gap: 10px;
+    }
+
+    .filtr input,
+    .filtr select,
+    .filtr label,
+    .filtr button {
+        width: 140px; /* Dále zmenšíme na širších obrazovkách */
+    }
+}
+
+/* Pro menší obrazovky */
+@media (max-width: 1230px) {
+    .filtr {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .filtr input,
+    .filtr select,
+    .filtr label,
+    .filtr button {
+        width: 100%; /* Na menších obrazovkách se rozbalí */
+    }
+}
+
+/* Pro mobilní zařízení */
+@media (max-width: 900px) {
+    .filtr {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 2px solid grey;
+    }
+    
+    .filtr input,
+    .filtr select,
+    .filtr label,
+    .filtr button {
+        width: 100%;
+        font-size: 12px; /* Zmenšení textu na menších obrazovkách */
+    }
+
+    .filtr button {
+        padding: 10px;
+    }
+}
+
+/* Velmi malé obrazovky (mobilní telefony) */
+@media (max-width: 620px) {
+    .filtr {
+        flex-direction: column;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 2px solid grey;
+    }
+
+    .filtr input,
+    .filtr select,
+    .filtr label,
+    .filtr button {
+        width: 100%;
     }
 }

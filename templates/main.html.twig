@@ -1,28 +1,40 @@
 {% extends "base.html.twig" %}
 
 {% block stylesheets %}
+	<!-- Načtení specifického CSS souboru pro tuto stránku -->
 	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 {% endblock %}
 
 {% block leftBody %}
+	<!-- Tento blok je prázdný, ale může být použit pro obsah levé části stránky v případě potřeby -->
 {% endblock %}
-{% block body %}
-		<div id="mainRight-offer">
-			<div id="oNas">
-				<h1>O NÁS</h1>
-				<p>Firma se zabývá rozvozem a zasíláním kompletního sortimentu pro kamenoprůmysl a stavebnictví.
-					                Naše firma působí na trhu od roku 1998, avšak v oboru už se pohybujeme podstatně delší dobu.
-				</p>
-			</div>
 
-			<div id="sluzby">
-				<h1>Naše služby:</h1>
+{% block body %}
+	<!-- Hlavní obsah stránky (informace o firmě a službách) -->
+	<div
+		id="mainRight-offer">
+		<!-- Sekce o firmě -->
+		<div id="oNas">
+			<h1>O NÁS</h1>
+			<p>
+				<!-- Text o společnosti -->
+				Firma se zabývá rozvozem a zasíláním kompletního sortimentu pro kamenoprůmysl a stavebnictví.
+								Naše firma působí na trhu od roku 1998, avšak v oboru už se pohybujeme podstatně delší dobu.
+			</p>
+		</div>
+
+		<!-- Sekce služeb společnosti -->
+		<div id="sluzby">
+			<h1>Naše služby:</h1>
+			<ul>
+				<!-- Výpis nabízených služeb jako seznam -->
 				<li>Prodej diamantové techniky</li>
 				<li>Restaurátorské potřeby</li>
 				<li>Chemie na kámen</li>
 				<li>Brusné kotouče</li>
 				<li>Žulové rotační výrobky</li>
 				<li>Nářadí FLEX</li>
-			</div>
+			</ul>
 		</div>
+	</div>
 {% endblock %}

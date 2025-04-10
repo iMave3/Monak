@@ -1,0 +1,184 @@
+/* Základní styl pro shrnutí objednávky */
+main {
+    display: block;
+}
+
+.summary-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.left-column {
+    width: 45%;
+}
+
+.right-column {
+    width: 45%;
+}
+
+.product-image {
+    width: 100px;
+    height: auto;
+}
+
+.summary-section {
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.summary-section h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.summary-section p {
+    font-size: 1rem;
+    color: #555;
+    margin: 0.5rem 0;
+}
+
+.summary-section p strong {
+    color: #333;
+}
+
+.product-summary {
+    margin-top: 1.5rem;
+}
+
+.product-summary .product-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-summary .product-item:last-child {
+    border-bottom: none;
+}
+
+.product-summary .product-item .product-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.product-summary .product-item .product-price {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.total-price {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+.total-price span {
+    color: #333;
+}
+
+.total-price .price {
+    color: #e74c3c;
+}
+
+.form-actions {
+    margin-top: 2rem;
+}
+
+.summary-flex {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Mobilní a tabletové rozhraní */
+@media (max-width: 768px) {
+    .summary-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .left-column, .right-column {
+        width: 100%;
+    }
+
+    .product-summary {
+        width: 100%;
+    }
+
+    .summary-section p {
+        font-size: 0.9rem;
+    }
+
+    .summary-section h3 {
+        font-size: 1.1rem;
+    }
+
+    .product-summary .product-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .product-summary .product-item .product-name {
+        font-size: 1rem;
+    }
+
+    .product-summary .product-item .product-price {
+        margin-top: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .total-price {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 1rem;
+    }
+
+    .total-price span {
+        margin-bottom: 0.5rem;
+    }
+
+    .form-actions {
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Další úpravy pro velmi malé obrazovky (např. mobilní telefony) */
+    .summary-container {
+        gap: 1rem;
+    }
+
+    .left-column, .right-column {
+        width: 100%;
+    }
+
+    .summary-section {
+        padding: 1rem;
+    }
+
+    .summary-section h3 {
+        font-size: 1rem;
+    }
+
+    .summary-section p {
+        font-size: 0.85rem;
+    }
+
+    .product-summary .product-item {
+        padding: 0.5rem 0;
+    }
+
+    .total-price {
+        font-size: 1rem;
+    }
+}

@@ -12,31 +12,41 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ContactType extends AbstractType
 {
+    // Metoda pro vytvoření formuláře
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // Přidání pole pro email uživatele
         $builder
             ->add('email', EmailType::class, [
-                
-            ])
-            ->add('subject', TextType::class, [
-                'label' => false
-            ])
-            ->add('message', TextareaType::class, [
-                'label' => false,
+                'label' => "Napište nám!", // Zobrazí se jako label nad polem
                 'attr' => [
-                    'placeholder' => 'Zadejte Vaši zprávu',
+                    'placeholder' => 'Váš email', // Placeholder pro email
+                ],
+            ])
+            // Přidání pole pro předmět zprávy
+            ->add('subject', TextType::class, [
+                'label' => false, // Není zobrazen label
+                'attr' => [
+                    'placeholder' => 'Předmět zprávy', // Placeholder pro předmět
+                ],
+            ])
+            // Přidání pole pro zprávu, které je textovým polem
+            ->add('message', TextareaType::class, [
+                'label' => false, // Není zobrazen label
+                'attr' => [
+                    'placeholder' => 'Zadejte Vaši zprávu', // Placeholder pro zprávu
                 ],
                 'constraints' => [
-                    new NotBlank()
+                    new NotBlank() // Zajišťuje, že zpráva nebude prázdná
                 ]
-            ])
-        ;
+            ]);
     }
 
+    // Metoda pro konfiguraci výchozích možností pro tento formulář
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            // Configure your form options here
+            // Zde můžete přidat další volby pro formulář, pokud je potřeba
         ]);
     }
 }

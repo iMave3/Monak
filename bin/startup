@@ -5,3 +5,4 @@ cd "$(dirname "$(which "$0")")/.."
 bin/docker configure
 bin/docker up
 bin/docker init
+bin/docker db-reset

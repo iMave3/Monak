@@ -1,18 +1,30 @@
 {% extends "/base.html.twig" %}
+
 {% block stylesheets %}
+	<!-- Zahrnutí specifického CSS souboru pro stránku kontaktu -->
 	<link rel="stylesheet" href="{{ asset('tags/contact.css') }}">
 {% endblock %}
-{% block leftBody %}{% endblock %}
+
+{% block leftBody %}
+	<!-- Tento blok je prázdný, pravděpodobně pro budoucí obsah nebo specifický levý panel -->
+{% endblock %}
 
 {% block body %}
+	<!-- Začátek formuláře -->
 	{{ form_start(form) }}
+
+	<!-- Vykreslení všech formulářových polí -->
 	{{ form_widget(form) }}
 
+	<!-- Tlačítko pro odeslání formuláře -->
 	<button type="submit">Uložit</button>
 
 	<div>
-	prechozi img
+		<!-- Zobrazení předchozího obrázku tagu, pokud je k dispozici -->
+		prechozi img
 		<img src="{{ asset(tag.imageURL) }}" alt="{{ tag.name }}">
 	</div>
+
+	<!-- Konec formuláře -->
 	{{ form_end(form) }}
 {% endblock %}

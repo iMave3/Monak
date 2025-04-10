@@ -44,13 +44,3 @@ label {
     margin: auto;
     margin-right: 0;
 }
-
-.signInBtn {
-    padding: 7px 10px;
-    border-radius: 13px;
-    border: 1px solid blue;
-}
-
-.signInBtn:hover {
-    background-color: rgb(223, 223, 223);
-}

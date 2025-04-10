@@ -17,7 +17,6 @@ main {
 
 }
 
-
 .closeTopRight {
     position: absolute;
     top: 5px;
@@ -247,6 +246,49 @@ h3 {
     top: 8px;
 }
 
+.submitCSS {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.submitCSS button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: fit-content;
+    margin: 0 auto;
+    display: block;
+}
+
+.submitCSS button:hover {
+    background-color: #0056b3;
+}
+
+.submitCSS {
+    background-color: #007bff; /* Modrá barva pozadí */
+    color: white; /* Bílý text */
+    border: none; /* Žádný okraj */
+    padding: 10px 20px; /* Vnitřní okraje */
+    font-size: 16px; /* Velikost písma */
+    width: 100%; /* Šířka tlačítka na 100% */
+    cursor: pointer; /* Změní kurzor na ukazatel */
+    border-radius: 5px; /* Zaoblení rohů */
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+    transition: background-color 0.3s ease; /* Plynulý přechod pro změnu barvy */
+}
+
+.submitCSS:hover {
+    background-color: #0056b3; /* Tmavší modrá při najetí myší */
+}
+
+
 /* ----------------------------- PC header ----------------------------- */
 #top-headerPC {
     display: flex;
@@ -279,6 +321,20 @@ h3 {
     position: relative;
     top: 2px;
     transition: .2s all ease-in-out;
+}
+
+.no-products-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 40vh;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #333;
 }
 
 #middleDiv>a:hover #location {
@@ -348,6 +404,15 @@ filter: drop-shadow(1px 1px 3px #7e7e7e);
 
 #iconAndNameDiv {
     cursor: pointer;
+}
+
+#searchBox {
+    position: absolute;
+    top: 100px;
+}
+
+#searchInput {
+    width: 100px;
 }
 
 .border {

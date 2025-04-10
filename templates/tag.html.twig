@@ -1,50 +1,33 @@
 {% extends "base.html.twig" %}
 
 {% block stylesheets %}
+	<!-- Načítání CSS souboru pro styly specifické pro tuto šablonu -->
 	<link rel="stylesheet" href="{{ asset('css/tags.css') }}">
 {% endblock %}
 
-
 {% block leftBody %}
 	{% if isOnlyRender == false %}
-		{% else %}
-			<div id="leftOffer">
-				<a href="{{ path('main')}}">HLAVNÍ NABÍDKA</a>
-				{% for menuTags in mainTags %}
-					<a href="{{ path('tag', {'id': menuTags.id}) }}" class="m1 {% if currentTagId == menuTags.id %}currentPage{% endif %}">{{menuTags.name}}</a>
-				{% endfor %}
-			</div>
+		<!-- Pokud není nastavena proměnná isOnlyRender na false, nezobrazí se levý sloupec -->
+	{% else %}
+		<div
+			id="leftOffer">
+			<!-- Odkaz na hlavní nabídku -->
+			<a href="{{ path('main')}}">HLAVNÍ NABÍDKA</a>
+			{% for menuTags in mainTags %}
+				<!-- Cyklus pro zobrazení kategorií, každá kategorie je odkaz -->
+				<a href="{{ path('tag', {'id': menuTags.id}) }}" class="m1 {% if currentTagId == menuTags.id %}currentPage{% endif %}">{{menuTags.name}}</a>
+			{% endfor %}
+		</div>
 	{% endif %}
 {% endblock %}
 
 {% block body %}
 	<div id="right-offer">
 
-	{% if tag is not null %}
-		<form method="get">
-			<input type="text" name="name" placeholder="Search..." value="{{ app.request.get('name') }}">
-
-			<select name="order">
-				<option value="name" {{ app.request.get('order') == 'name' ? 'selected' }}>Abecedně</option>
-				<option value="price" {{ app.request.get('order') == 'price' ? 'selected' }}>Cena</option>
-			</select>
-
-			<select name="direction">
-				<option value="ASC" {{ app.request.get('direction') == 'ASC' ? 'selected' }}>Vzestupně</option>
-				<option value="DESC" {{ app.request.get('direction') == 'DESC' ? 'selected' }}>Sestupně</option>
-			</select>
-
-			<label>
-				<input type="checkbox" name="in_stock" value="1" {{ app.request.get('in_stock') ? 'checked' }}>Pouze skladem
-			</label>
-
-			<button type="submit">Aplikovat filtry</button>
-		</form>
-	{% endif %}
-
-		<div id="mainRight-offer" {% if tag and tag.childrenTags is not empty or is_granted('IS_AUTHENTICATED_FULLY') %} style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid grey" {% endif %}>
+		<div id="mainRight-offer">
 
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<!-- Pokud je uživatel přihlášen, umožní se přidání nové kategorie -->
 				<a href="{{ path('create_tag', {'parentId': currentTagId }) }}" class="createTags">
 					<img src="/img/addTagIcon.png" alt="">
 					<h2 class="tagName">Kategorie</h2>
@@ -52,21 +35,23 @@
 				</a>
 			{% endif %}
 
-
 			{% if tag and tag.childrenTags is not empty %}
+				<!-- Pokud existují podkategorie, nastaví se proměnná pro jejich zobrazení -->
 				{% set childrenTags = tag.childrenTags %}
 			{% elseif tags is defined %}
 				{% set childrenTags = tags %}
 			{% endif %}
 
 			{% if childrenTags is defined and childrenTags is not null %}
+				<!-- Zobrazení všech podkategorií -->
 				{% for childrenTag in childrenTags %}
 					<a href="{{ path('tag', {'id': childrenTag.id}) }}">
 						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+							<!-- Pokud je uživatel přihlášen, zobrazení možností pro úpravu a smazání -->
 							<object class="editDelete" id="editObject">
 								<a href="{{ path('edit_tag', {'id': childrenTag.id}) }}">Upravit</a>
 							</object>
-							<object class="editDelete" id="deleteObject">
+							<object class="editDelete" id="discontinuedObject">
 								<a href="{{ path('remove_tag', {'id': childrenTag.id}) }}">Smazat</a>
 							</object>
 						{% endif %}
@@ -79,9 +64,59 @@
 				{% endfor %}
 			{% endif %}
 		</div>
+
+		{% set break = false %}
+		{% set hasActiveProducts = false %}
+		{% if tag is not null and products is not null %}
+			{% for product in products %}
+				{%  if not product.discontinued %}
+					{% set hasActiveProducts = true %}
+					{% set break = true %}
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+
+		{% set noMessageShow = false %}
+		{% set dontShowFiltr = false %}
+		{% if products is defined and products is not empty %}
+			{% for product in products %}
+				{% if product.discontinued %}
+					{% set dontShowFiltr = true %}
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+
+		{% if tag is not null and products is not null and not dontShowFiltr and products|length > 0 or tag is not null and products is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+			<!-- Formulář pro filtraci produktů (hledání, řazení, dostupnost) -->
+			<form method="get" class="filtr" {% if tag and tag.childrenTags is not empty or is_granted('IS_AUTHENTICATED_FULLY') %} style="margin-top: 20px; padding-top: 20px; border-top: 2px solid grey" {% endif %}>
+				<input type="text" name="name" placeholder="Search..." value="{{ app.request.get('name') }}">
+
+				<select name="order">
+					<option value="name" {{ app.request.get('order') == 'name' ? 'selected' }}>Abecedně</option>
+					<option value="price" {{ app.request.get('order') == 'price' ? 'selected' }}>Cena</option>
+				</select>
+
+				<select name="direction">
+					<option value="ASC" {{ app.request.get('direction') == 'ASC' ? 'selected' }}>Vzestupně</option>
+					<option value="DESC" {{ app.request.get('direction') == 'DESC' ? 'selected' }}>Sestupně</option>
+				</select>
+
+				<label>
+					<input type="checkbox" name="in_stock" value="1" {{ app.request.get('in_stock') ? 'checked' }}>Pouze skladem
+				</label>
+
+				<button type="submit">Aplikovat filtry</button>
+			</form>
+		{% elseif tag is not null and not noMessageShow %}
+			<!-- Zobrazení zprávy pokud nejsou žádné produkty -->
+			<h1 class="no-products-message">Zatím zde není žádný produkt</h1>
+			{% set noMessageShow = true %}
+		{% endif %}
+
 		<div id="mainRight-offer">
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				{% if currentTagId != null %}
+					<!-- Pokud je uživatel přihlášen a existuje aktuální kategorie, umožní se přidání nového produktu -->
 					<a href="{{ path('create_product', {'tagId': currentTagId }) }}" class="createProducts">
 						<img src="/img/addProductIcon.png" alt="">
 						<h2 class="tagName">Produkt</h2>
@@ -91,51 +126,70 @@
 			{% endif %}
 
 			{% if products is defined and products is not empty %}
+				<!-- Cyklus pro zobrazení produktů -->
 				{% for product in products %}
 					{% if is_granted('IS_AUTHENTICATED_FULLY') or not product.discontinued %}
-						<object class="product">
+						<object class="product" {% if product.discontinued %} style="background-color: rgb(255, 162, 162); box-shadow: none" {% endif %}>
 							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								<!-- Zobrazení možností pro úpravu a smazání produktu pro přihlášené uživatele -->
 								<object class="editDelete" id="editObject">
 									<a href="{{ path('edit_product', {'id': product.id}) }}">Upravit</a>
 								</object>
+								<object class="editDelete" id="deleteObject">
+									<a href="{{ path('remove_product', {'id': product.id}) }}">🗑</a>
+								</object>
 								{% if product.discontinued %}
-									<object class="editDelete" id="deleteObject">
+									<!-- Možnost obnovit vyřazený produkt -->
+									<object class="editDelete" id="discontinuedObject">
 										<a href="{{ path('set_discontinue_product', {'id': product.id, 'state': false})}}">Obnovit</a>
 									</object>
 								{% else %}
-									<object class="editDelete" id="deleteObject">
+									<!-- Možnost vyřadit produkt -->
+									<object class="editDelete" id="discontinuedObject">
 										<a href="{{ path('set_discontinue_product', {'id': product.id, 'state': true}) }}">Vyřadit</a>
 									</object>
 								{% endif %}
 							{% endif %}
 							<img src="{{ asset(product.imageURL) }}" alt="{{ product.name }}">
-							{% if product.isAvailable %}
-								<a href="{{ path('set_stock_product', {'id': product.id, 'state': false}) }}"><h4 style="color:green">Skladem</h4></a>
-							{% else %}
-								<a href="{{ path('set_stock_product', {'id': product.id, 'state': true}) }}"><h4 style="color:red">Není skladem</h4></a>
+							{% if product.isAvailable and not product.discontinued %}
+								<!-- Pokud je produkt skladem -->
+								{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+									<a href="{{ path('set_stock_product', {'id': product.id, 'state': false}) }}">
+										<h4 style="color:green">Skladem</h4>
+									</a>
+								{% else %}
+									<h4 style="color:green">Skladem</h4>
+								{% endif %}
+							{% elseif not product.discontinued %}
+								<!-- Pokud produkt není skladem -->
+								{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+									<a href="{{ path('set_stock_product', {'id': product.id, 'state': true}) }}">
+										<h4 style="color:red">Není skladem</h4>
+									</a>
+								{% elseif product %}
+									<h4 style="color:red">Není skladem</h4>
+								{% endif %}
 							{% endif %}
 
-							<h2 class="productName">{{product.name}}</h2>
-							<h3 class="productPrice lastH">{{ product.price }},- /ks</h3>
-							{% if product.isAvailable %}
+							<h2 class="productName">{{ product.name }}</h2>
+							<h3 class="productPrice lastH">{{ product.price |number_format(0, '.', ',')}},- /ks</h3>
+							{% if product.isAvailable and not product.discontinued %}
+								<!-- Možnost přidat produkt do košíku -->
 								<a href="{{ path('add_cart', {'id': product.id}) }}" class="isAvailable lastButton">Přidat do košíku</a>
+							{% elseif product.discontinued %}
+								<p class="lastButton" style="background-color: red;">Vyřazeno</p>
 							{% else %}
 								<p class="isNotAvailable lastButton">Nelze přidat</p>
 							{% endif %}
 						</object>
+
 					{% endif %}
 				{% endfor %}
 			{% else %}
-				{% if currentTagId is not null %}
-
+				<!-- Pokud nejsou produkty k zobrazení, zobrazí se zpráva -->
+				{% if currentTagId is not null and not noMessageShow %}
 					<h1 class="no-products-message">Zatím zde není žádný produkt</h1>
-					<style>
-						.no-products-message {
-							grid-column: 1 / -1;
-							text-align: center;
-							align-self: center;
-						}
-					</style>
+					{% set noMessageShow = true %}
 				{% endif %}
 			{% endif %}
 		</div>

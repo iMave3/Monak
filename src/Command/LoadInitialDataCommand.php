@@ -17,7 +17,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsCommand(
     name: 'LoadInitialData',
-    description: 'Nahraje uvodni data do db',
+    description: 'Nahraje uvodní data do DB',
 )]
 class LoadInitialDataCommand extends Command
 {
@@ -34,10 +34,6 @@ class LoadInitialDataCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        // zde se muzou nahrat puvodni data kdyby nejake byli potreba, napriklad administrator atd.
-
-        // priklad:
-
         $io = new SymfonyStyle($input, $output);
 
         if ($this->entityManager->getRepository(User::class)->findOneBy(['email' => 'plihal.marek@seznam.cz']) !== null) {
@@ -51,6 +47,7 @@ class LoadInitialDataCommand extends Command
             'Plíhal'
         );
 
+        $user->setRoles(['ROLE_ADMIN']);
         $user->setVerified(true);
         $user->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
         $user->setCreatedAt(new DateTime('now', new DateTimeZone('Europe/Prague')));

@@ -1,45 +1,55 @@
 {% extends "base.html.twig" %}
 
+{# Tato sekce načítá externí CSS soubor pro styly stránky specifické pro administraci objednávek #}
 {% block stylesheets %}
 	<link rel="stylesheet" href="{{ asset('css/adminOrders.css') }}">
 {% endblock %}
+
+{# Tato sekce načítá externí JavaScript soubor pro skripty specifické pro administraci objednávek #}
 {% block javascripts %}
 	<script src="{{ asset('js/adminOrders.js') }}"></script>
 {% endblock %}
 
 {% block body %}
-	<form method="get" style="margin-bottom: 20px;">
+	{# Formulář pro hledání objednávky podle ID #}
+	<div style="text-align: center; margin-bottom: 20px;">
+		<form method="get" style="display: inline-block;">
 			<input type="text" name="id" placeholder="Hledat objednávku..." value="{{ app.request.get('id') }}">
 			<button type="submit">Hledat</button>
 		</form>
+	</div>
 
+	{# Pokud nejsou žádné objednávky, zobrazí se tato zpráva #}
 	{% if orderSummaries is empty %}
-		<h1>Žádné objednávky</h1>
+		<h1 class="no-products-message">Žádné objednávky</h1>
 	{% else %}
-		
-
+		{# Pokud existují objednávky, zobrazí se seznam objednávek #}
 		<div class="orders-container">
 			{% for order in orderSummaries %}
-				<div class="order">
+				<div
+					class="order">
+					{# Shrnutí objednávky, kliknutím se zobrazí detaily #}
 					<div class="order-summary" onclick="toggleOrderDetails({{ order.id }})">
-						<p>
+						<p style="margin: 0 17px 0 0">
 							<strong>Objednávka:</strong>
 							{{ order.id }}</p>
-						<p style="margin: 0 17px">
+						<p style="margin: 0 17px 0 0">
 							<strong>Datum:</strong>
 							{{ order.createdAt|date("d.m.Y H:i") }}</p>
 						<p style="margin: 0 17px 0 0">
 							<strong>Cena:</strong>
 							{{ order.totalPrice }},-</p>
 						<p style="margin: 0 17px 0 0">
-							<span>Bez DPH</span>
+							<strong>Bez DPH</strong>
 							{{ (order.totalPrice / 1.21) |number_format(2, '.', ',') }},-</p>
 						<p>
 							<strong>Stav objednávky:</strong>
-							{{ order.status }}</p>
-						<a href="{{ path('remove_order', {'id': order.id}) }}" style="margin-left: 17px; color:red; font-size: 18px; text-decoration: none; position: relative; top: -2px">&nbsp;🗑</a>
+							<span class="status-label {{ order.status }}">{{ order.translatedStatus }}</span>
+						</p>
+						<a href="{{ path('remove_order', {'id': order.id}) }}">&nbsp;🗑</a>
 					</div>
 
+					{# Detaily objednávky, které se zobrazí po kliknutí na shrnutí objednávky #}
 					<div class="order-details" id="details-{{ order.id }}">
 						<p>
 							<strong>Jméno:</strong>
@@ -53,20 +63,13 @@
 							{{ order.userInformation.phoneNumber }}</p>
 						<p>
 							<strong>Adresa:</strong>
-							{{ order.userInformation.street }},
+							{{ order.userInformation.street }}
+							{{ order.userInformation.houseNumber }},
 							{{ order.userInformation.town }},
 							{{ order.userInformation.postcode }}</p>
 
-						<p>
-							<strong>Produkty:</strong>
-						</p>
-						<ul>
-							{% for orderSet in order.orderSets %}
-								<li>{{ orderSet.product.name }}
-									({{ orderSet.quantity }}x)</li>
-							{% endfor %}
-						</ul>
-
+						<br>
+						{# Pokud má objednávka informaci o firmě, zobrazí se tyto údaje #}
 						{% if order.companyInformation %}
 							<p>
 								<strong>Firma:</strong>
@@ -78,16 +81,45 @@
 								<strong>DIČ:</strong>
 								{{ order.companyInformation.dic }}</p>
 						{% endif %}
+						<br>
 
-						<a href="{{ path('set_state_order', {'id': order.id, 'state': 'pending'}) }}">Nastavit na probíhající</a>
-						<a href="{{ path('set_state_order', {'id': order.id, 'state': 'delivered'}) }}">Nastavit na doručena</a>
-						<a href="{{ path('set_state_order', {'id': order.id, 'state': 'taken'}) }}">Nastavit na převzata</a>
-						<a href="{{ path('set_state_order', {'id': order.id, 'state': 'returned'}) }}">Nastavit na vrácena</a>
+						{# Zobrazení produktů v objednávce #}
+						<p>
+							<strong>Produkty:</strong>
+						</p>
+						<ul>
+							{% for orderSet in order.orderSets %}
+								<li>{{ orderSet.product.name }}
+									({{ orderSet.quantity }}x)</li>
+								<li>{{orderSet.product.price |number_format(2, '.', ',')}},- /ks</li>
+								<li>{{(orderSet.product.price / 1.21) |number_format(2, '.', ',')}},- /ks bez DPH</li>
+								<br>
+							{% endfor %}
+
+							{# Zobrazení ceny poštovného a celkové částky #}
+							<p>+ poštovné 79,-</p>
+							<p style="font-weight: 600 !important;">{{(order.totalPrice + 79) |number_format(2, '.', ',')}},- celkem</p>
+							<p style="font-weight: 600 !important;">{{ ((order.totalPrice + 79) / 1.21) |number_format(2, '.', ',') }},- celkem bez DPH</p>
+						</ul>
+
+						{# Tlačítka pro změnu stavu objednávky #}
+						<div class="order-actions">
+							<a class="status-btn pending" href="{{ path('set_state_order', {'id': order.id, 'state': 'pending'}) }}">Probíhá</a>
+							<a class="status-btn delivered" href="{{ path('set_state_order', {'id': order.id, 'state': 'delivered'}) }}">Zasláno</a>
+							<a class="status-btn taken" href="{{ path('set_state_order', {'id': order.id, 'state': 'taken'}) }}">Převzato</a>
+							<a class="status-btn returned" href="{{ path('set_state_order', {'id': order.id, 'state': 'returned'}) }}">Vráceno</a>
+						</div>
 					</div>
 				</div>
 			{% endfor %}
 		</div>
 	{% endif %}
 
+	{# CSS styly pro zajištění správného zobrazení stránky #}
+	<style>
+		main {
+			display: block;
+		}
+	</style>
 
 {% endblock %}

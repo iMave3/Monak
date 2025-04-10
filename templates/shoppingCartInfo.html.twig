@@ -1,8 +1,40 @@
 {% extends "/base.html.twig" %}
+
 {% block stylesheets %}
+	<!-- Načítání specifického CSS souboru pro tuto stránku -->
+	<link rel="stylesheet" href="{{ asset('css/shoppingCartInfo.css') }}">
 {% endblock %}
+
 {% block leftBody %}{% endblock %}
 
 {% block body %}
-	{{form(form)}}
+	<!-- Titulek pro sekci objednávky -->
+	<h2 style="text-align: center; margin-bottom: 20px;">Doplňte své údaje pro dokončení objednávky</h2>
+
+	<!-- Začátek formuláře pro doplnění údajů -->
+	{{ form_start(form) }}
+
+	<!-- Flexbox pro rozložení formulářových polí -->
+	<div class="form-flex">
+		<div
+			class="form-column">
+			<!-- Zobrazení formulářového pole pro osobní informace uživatele -->
+			{{ form_row(form.userInformation) }}
+			<!-- Informace pro uživatele, že některé položky jsou povinné -->
+			<p style="font-size: 14px;">* Položky označené hvězdičkou jsou povinné.</p>
+		</div>
+		<div
+			class="form-column">
+			<!-- Zobrazení formulářového pole pro informace o společnosti -->
+			{{ form_row(form.companyInformation) }}
+		</div>
+	</div>
+
+	<!-- Tlačítko pro odeslání formuláře (pro dokončení objednávky) -->
+	<div class="submitCSS" style="text-align: center; margin-top: 1rem;">
+		{{ form_row(form.submit) }}
+	</div>
+
+	<!-- Konec formuláře -->
+	{{ form_end(form) }}
 {% endblock %}

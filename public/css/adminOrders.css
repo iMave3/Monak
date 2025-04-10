@@ -15,6 +15,7 @@
 
 .order-summary {
     display: flex;
+    position: relative;
     justify-content: space-between;
     padding: 10px;
     background: #f8f8f8;
@@ -36,4 +37,196 @@
 .order-details ul {
     margin: 0;
     padding-left: 20px;
+}
+
+.order-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.status-btn {
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.status-btn.pending {
+    background-color: #f0ad4e;
+}
+
+.status-btn.pending:hover {
+    background-color: #ec971f;
+}
+
+.status-btn.delivered {
+    background-color: #5cb85c;
+}
+
+.status-btn.delivered:hover {
+    background-color: #449d44;
+}
+
+.status-btn.taken {
+    background-color: #5bc0de;
+}
+
+.status-btn.taken:hover {
+    background-color: #31b0d5;
+}
+
+.status-btn.returned {
+    background-color: #d9534f;
+}
+
+.status-btn.returned:hover {
+    background-color: #c9302c;
+}
+
+.status-label {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+}
+
+/* Barvy podle statusu */
+.status-label.pending {
+    background-color: #f0ad4e;
+}
+
+.status-label.delivered {
+    background-color: #5cb85c;
+}
+
+.status-label.taken {
+    background-color: #5bc0de;
+}
+
+.status-label.returned {
+    background-color: #d9534f;
+}
+
+.order-summary a {
+    font-size: 24px;
+    margin-left: 17px;
+    position: relative;
+    top: -2px;
+    text-decoration: none;
+    color: red;
+}
+
+.order-summary a:hover {
+    transform: scale(1.1);
+}
+
+
+.order-summary strong {
+    font-weight: 600;
+}    
+
+
+@media (max-width: 768px) {
+
+    .order-summary a {
+        position: absolute;
+        top: 4px;
+        right: 10px;
+    }
+    
+    .order-summary a:hover {
+        transform: scale(1.1);
+    }    
+
+    .order-summary {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 15px;
+    }
+
+    .order-summary p {
+        text-align: start;
+        margin: 0;
+        width: 100%;
+        word-wrap: break-word;
+    }
+
+    .order-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .status-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .orders-container {
+        padding: 0 10px;
+    }
+
+    .order-details {
+        padding: 10px 10px;
+    }
+
+    .order-details p, .order-details li {
+        font-size: 14px;
+    }
+
+    .order-details ul {
+        padding-left: 10px;
+    }
+
+    .status-label {
+        display: inline-block;
+        margin-top: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .status-btn {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+
+    .order-summary {
+        font-size: 14px;
+    }
+
+    .order-details p, .order-details li {
+        font-size: 13px;
+    }
+
+    input[type="text"], button[type="submit"] {
+        font-size: 14px;
+        padding: 6px;
+    }
+}
+
+
+@media (max-width: 600px) {
+    form {
+        display: flex !important;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    button[type="submit"] {
+        width: 100%;
+        max-width: 150px;
+    }
 }

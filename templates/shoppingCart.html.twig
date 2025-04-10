@@ -1,6 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block stylesheets %}
+	<!-- Načtení CSS souboru specifického pro tuto stránku -->
 	<link rel="stylesheet" href="{{ asset('css/shoppingCart.css') }}">
 {% endblock %}
 
@@ -8,32 +9,46 @@
 	{% set allAvailable = true %}
 	{% set hasProducts = false %}
 
+	<!-- Smyčka pro zobrazení produktů v košíku -->
 	{% for productInfo in cart.products %}
 		{% if productInfo.product.isAvailable %}
+			<!-- Pokud je produkt dostupný -->
 			<div class="wholeProduct">
-				<p>{{ productInfo.product.name }}</p>
+				<div
+					style="display: flex; align-items: center;">
+					<!-- Zobrazení obrázku produktu -->
+					<img src="{{ asset(productInfo.product.imageURL) }}" alt="{{ productInfo.product.name }}" style="height: 48px; margin-right: 20px;">
+					<p>{{ productInfo.product.name }}</p>
+				</div>
 				<div class="productInformation">
-					<div class="numberDiv">
+					<div
+						class="numberDiv">
+						<!-- Odkazy pro změnu množství produktu v košíku -->
 						<a href="{{ path('add_cart', {'id': productInfo.product.id, 'toCart': true }) }}">⇑&nbsp;&nbsp;</a>
 						<a href="{{ path('remove_cart', {'id': productInfo.product.id}) }}">&nbsp;&nbsp;⇓</a>
 						<a href="{{ path('complete_remove_cart', {'id': productInfo.product.id}) }}" style="color:red; margin-left: 10px; border-left: 1px solid grey">&nbsp;🗑</a>
 					</div>
+					<!-- Zobrazení množství a ceny produktu -->
 					<div style="display:flex; justify-content: space-between;">
 						<p style="color:grey; margin-right: 8px">{{ productInfo.quantity }}x</p>
-						<p style="color:red">{{ productInfo.product.price }},-</p>
+						<p style="color:red">{{ productInfo.product.price |number_format(0)}},-</p>
 					</div>
 				</div>
 			</div>
 			<p style="margin-bottom: 20px; text-align: end;">Celková cena produktu je
-				{{ (productInfo.quantity * productInfo.product.price)}},- s DPH.</p>
+				{{ (productInfo.quantity * productInfo.product.price) |number_format(0)}},- s DPH.</p>
 			{% set hasProducts = true %}
 		{% else %}
+			<!-- Pokud produkt není dostupný -->
 			<div class="wholeProduct">
-				<p>{{ productInfo.product.name }}</p>
+				<div style="display: flex; align-items: center;">
+					<img src="{{ asset(productInfo.product.imageURL) }}" alt="{{ productInfo.product.name }}" style="height: 48px; margin-right: 20px;">
+					<p>{{ productInfo.product.name }}</p>
+				</div>
 				<div class="productInformation">
 					<div style="display:flex; justify-content: space-between;">
 						<p style="color:rgb(161, 161, 161); margin-right: 8px">{{ productInfo.quantity }}x</p>
-						<p style="color:rgb(255, 154, 154)">{{ productInfo.product.price }},-</p>
+						<p style="color:rgb(255, 154, 154)">{{ productInfo.product.price |number_format(2)}},-</p>
 					</div>
 					<div style="display:flex;">
 						<a href="{{ path('complete_remove_cart', {'id': productInfo.product.id}) }}" style="color:red;">Odstranit</a>
@@ -46,11 +61,14 @@
 		<br>
 	{% endfor %}
 
+	<!-- Pokud je košík prázdný nebo pokud celková cena je 0, zobrazí se zpráva -->
 	{% if cart.products == null and cart.total <= 0 %}
 		<h1 style="text-align: center; display: flex; justify-content: center; align-items: center; height: 35vh;">Máte prázdný košík, prosím vraťte se zpět.</h1>
 	{% endif %}
 
+	<!-- Pokud jsou všechny produkty dostupné a košík není prázdný, umožní se pokračování -->
 	{% if allAvailable and hasProducts %}
-		<a class="continueBTN" href="{{ path('shoppingcart_info') }}">Pokračovat</a>
+		<p style="font-size: 14px; text-align:center; margin-bottom:5px;">K ceně je automaticky přičtena cena 79,- za poštovné!</p>
+		<a class="submitCSS" href="{{ path('shoppingcart_info') }}">Pokračovat</a>
 	{% endif %}
 {% endblock %}
