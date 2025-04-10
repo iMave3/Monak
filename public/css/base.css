@@ -771,6 +771,12 @@ footer a:hover {
         display: block;
     }
 
+#userOptionsRightDiv {
+    width: fit-content;
+    margin: auto;
+    margin-top: 20px;
+}
+
     main {
         display: block;
     }
