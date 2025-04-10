@@ -1,24 +1,47 @@
 {% extends "/base.html.twig" %}
 
+{% block stylesheets %}
+	<!-- Zahrnutí specifického CSS souboru pro tagy -->
+	<link rel="stylesheet" href="{{ asset('css/tags.css') }}">
+{% endblock %}
+
 {% block leftBody %}
-	<!-- Tento blok je prázdný, pravděpodobně pro levý panel, který je ve výchozím nastavení neaktivní -->
+	<!-- Tento blok je prázdný, případně pro budoucí použití -->
 {% endblock %}
 
 {% block body %}
-	<!-- Začátek formuláře pro produkt -->
-	{{ form_start(form) }}
-	{{ form_widget(form) }}
-	<!-- Vykreslení všech formulářových polí (pro produkt) -->
-
-	<!-- Tlačítko pro odeslání formuláře -->
-	<button type="submit">Uložit</button>
-
 	<div>
-		<!-- Zobrazení obrázku produktu -->
-		<img src="{{ asset(product.imageURL) }}" alt="{{ product.name }}">
-		<!-- Obrázek produktu se načte pomocí cesty uložené v `product.imageURL`, a alt text je nastaven na název produktu -->
-	</div>
+		<h1 style="margin: 0 auto 30px auto; width: fit-content;">
+			Upravit kategorii
+		</h1>
 
-	<!-- Konec formuláře -->
-	{{ form_end(form) }}
+		<div class="product" style="max-width: 260px">
+			{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+			<!-- Původní obrázek, pokud existuje -->
+			{% if tag.imageURL %}
+				<div class="imageDiv">
+					<img src="{{ asset(tag.imageURL) }}" alt="{{ tag.name }}" style="max-width: 100%; margin-bottom: 15px;">
+				</div>
+			{% endif %}
+
+			<!-- Pole pro nahrání nového obrázku -->
+			<div class="imageDiv">{{ form_row(form.image) }}</div>
+
+			<!-- Název kategorie -->
+			<h2 class="tagName" style="margin: 0 auto; width: fit-content;">
+				{{ form_row(form.name) }}
+			</h2>
+
+			<!-- Popis kategorie -->
+			<h4 class="tagDescription lastH">
+				{{ form_row(form.description) }}
+			</h4>
+
+			<!-- Tlačítko pro odeslání formuláře -->
+			<button type="submit" class="lastButton productTag tagBTN">Uložit</button>
+
+			{{ form_end(form) }}
+		</div>
+	</div>
 {% endblock %}

@@ -39,6 +39,9 @@ class TagController extends AbstractController
     #[Route("/tag/create/{parentId}", name: "create_tag", defaults: ["parentId" => null])]
     public function createTag(?string $parentId = null, Request $request): Response
     {
+        if (!$this->authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->flashRedirect('error', 'Nemáte na tuto akci oprávnění.', 'main');
+        }
         $parentTag = null;
         if ($parentId !== null) {
             // Pokud je zadán parentId, načteme rodičovský tag
@@ -147,6 +150,9 @@ class TagController extends AbstractController
     #[Route("/tag/remove/{id}", name: "remove_tag")]
     public function removeTag(string $id): Response
     {
+        if (!$this->authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->flashRedirect('error', 'Nemáte na tuto akci oprávnění.', 'main');
+        }
         // Načítání tagu podle ID
         $tag = $this->entityManager->find(Tag::class, $id);
 
@@ -174,6 +180,9 @@ class TagController extends AbstractController
     #[Route("/tag/edit/{id}", name: "edit_tag")]
     public function editTag(string $id, Request $request, ValidatorInterface $validator): Response
     {
+        if (!$this->authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->flashRedirect('error', 'Nemáte na tuto akci oprávnění.', 'main');
+        }
         // Načítání tagu podle ID
         $tag = $this->entityManager->find(Tag::class, $id);
         $form = $this->createForm(TagFormType::class, $tag, ['imageRequired' => false]);

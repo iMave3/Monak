@@ -1,8 +1,8 @@
 {% extends "/base.html.twig" %}
 
 {% block stylesheets %}
-	<!-- Zahrnutí specifického CSS souboru pro stránku kontaktu -->
-	<link rel="stylesheet" href="{{ asset('tags/contact.css') }}">
+	<!-- Zahrnutí specifického CSS souboru -->
+	<link rel="stylesheet" href="{{ asset('css/tags.css') }}">
 {% endblock %}
 
 {% block leftBody %}
@@ -10,21 +10,37 @@
 {% endblock %}
 
 {% block body %}
-	<!-- Začátek formuláře -->
-	{{ form_start(form) }}
-
-	<!-- Vykreslení všech formulářových polí -->
-	{{ form_widget(form) }}
-
-	<!-- Tlačítko pro odeslání formuláře -->
-	<button type="submit">Uložit</button>
-
 	<div>
-		<!-- Zobrazení předchozího obrázku tagu, pokud je k dispozici -->
-		prechozi img
-		<img src="{{ asset(tag.imageURL) }}" alt="{{ tag.name }}">
-	</div>
+		<h1 style="margin: 0 auto 30px auto; width: fit-content;">
+			Upravit kategorii
+		</h1>
 
-	<!-- Konec formuláře -->
-	{{ form_end(form) }}
+		<div class="product" style="max-width: 260px">
+			{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+			{% if tag.imageURL %}
+				<div class="imageDiv">
+					<img src="{{ asset(tag.imageURL) }}" alt="{{ tag.name }}" style="max-width: 100%; margin-bottom: 15px;">
+				</div>
+			{% endif %}
+
+			<!-- Nový obrázek -->
+			<div class="imageDiv">{{ form_row(form.image) }}</div>
+
+			<!-- Název kategorie -->
+			<h2 class="tagName" style="margin: 0 auto; width: fit-content;">
+				{{ form_row(form.name) }}
+			</h2>
+
+			<!-- Popis kategorie -->
+			<h4 class="tagDescription lastH">
+				{{ form_row(form.description) }}
+			</h4>
+
+			<!-- Tlačítko pro odeslání -->
+			<button type="submit" class="lastButton productTag tagBTN">Uložit</button>
+
+			{{ form_end(form) }}
+		</div>
+	</div>
 {% endblock %}

@@ -8,19 +8,23 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class AbstractController extends AbstractControllerBase
 {
     // EntityManager a RequestStack jsou injektovány prostřednictvím konstruktoru
     protected EntityManagerInterface $entityManager;
     protected RequestStack $requestStack;
+    protected AuthorizationCheckerInterface $authChecker;
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        AuthorizationCheckerInterface $authChecker
     ) {
         $this->entityManager = $entityManager;
         $this->requestStack = $requestStack;
+        $this->authChecker = $authChecker;
         date_default_timezone_set("Europe/Prague"); // Nastavení výchozího časového pásma
     }
 

@@ -73,20 +73,36 @@ class MainController extends AbstractController
     #[Route("/search", name:"search")]
     public function search(Request $request): Response
     {
-        // Získání hledaného názvu z query parametru
+        // Načítáme parametry pro filtrování produktů
         $name = $request->query->get('name');
+        $order = $request->query->get('order', 'name');
+        $direction = strtoupper($request->query->get('direction', 'ASC'));
+        $inStock = $request->query->getBoolean('in_stock');
 
-        // Vytvoření dotazu pro hledání produktů v databázi
-        $queryBuilder = $this->entityManager->createQueryBuilder();
-        $query = $queryBuilder
-            ->select('p') // Výběr produktů
-            ->from(Product::class, 'p') // Z tabulky produktů
-            ->where('p.name LIKE :name') // Podmínka pro hledání názvu produktu
-            ->setParameter('name', '%' . $name . '%') // Nastavení parametru pro hledání
-            ->getQuery();
-    
-        // Získání výsledků dotazu
-        $products = $query->getResult();
+        // Vytváříme dotaz na produkty spojené s tímto tagem
+        $qb = $this->entityManager->createQueryBuilder()
+            ->select('p')
+            ->from(Product::class, 'p');
+
+        // Filtrování podle názvu
+        if ($name) {
+            $qb->andWhere('p.name LIKE :name')
+                ->setParameter('name', '%' . $name . '%');
+        }
+
+        // Filtrování podle dostupnosti produktu
+        if ($inStock) {
+            $qb->andWhere('p.isAvailable = true');
+        }
+
+        // Seznam povolených polí pro seřazení
+        $allowedOrderFields = ['name', 'price'];
+        if (in_array($order, $allowedOrderFields)) {
+            $qb->orderBy('p.' . $order, $direction);
+        }
+
+        // Získání filtrů produktů
+        $products = $qb->getQuery()->getResult();
 
         // Vykreslení šablony pro zobrazení produktů
         return $this->render('search.html.twig', [

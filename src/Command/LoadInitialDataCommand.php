@@ -47,6 +47,17 @@ class LoadInitialDataCommand extends Command
             'Plíhal'
         );
 
+        $user1 = new User(
+            'testermonak@gmail.com',
+            'Tester',
+            'Testerovič'
+        );
+
+        $user1->setRoles(['ROLE_ADMIN']);
+        $user1->setVerified(true);
+        $user1->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
+        $user1->setCreatedAt(new DateTime('now', new DateTimeZone('Europe/Prague')));
+
         $user->setRoles(['ROLE_ADMIN']);
         $user->setVerified(true);
         $user->setPassword('$2y$13$vqVJHSfRebzyXWx7tan9F.Gzx/33By3qF3lS4cqd5ux4uvw7yv85u');
@@ -119,7 +130,7 @@ class LoadInitialDataCommand extends Command
         */
         
         $this->entityManager->persist($user);
-
+        $this->entityManager->persist($user1);
 
         $this->entityManager->flush();
 

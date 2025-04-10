@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Entity\Tag;
+use App\Entity\User;
 use App\Form\ProductFormType;
 use Symfony\Bundle\MakerBundle\Validator;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -21,6 +22,9 @@ class ProductController extends AbstractController
     #[Route("/product/create/{tagId}", name: "create_product")]
     public function createProduct(?string $tagId = null, Request $request): Response
     {
+        if (!$this->authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->flashRedirect('error', 'Nemáte na tuto akci oprávnění.', 'main');
+        }
         // Získání tagu podle ID, pokud není nalezen, vrátí chybu
         $tag = $this->entityManager->find(Tag::class, $tagId);
         if ($tag === null) {
@@ -79,6 +83,9 @@ class ProductController extends AbstractController
     #[Route("/product/set-discontinue/{id}", name: "set_discontinue_product")]
     public function setDiscontinueProduct(string $id, Request $request): Response
     {
+        if (!$this->authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->flashRedirect('error', 'Nemáte na tuto akci oprávnění.', 'main');
+        }
         // Získání produktu podle ID
         $product = $this->entityManager->find(Product::class, $id);
 
@@ -109,6 +116,9 @@ class ProductController extends AbstractController
     #[Route("/product/set-stock/{id}", name: "set_stock_product")]
     public function setStockProduct(string $id, Request $request): Response
     {
+        if (!$this->authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->flashRedirect('error', 'Nemáte na tuto akci oprávnění.', 'main');
+        }
         // Získání produktu podle ID
         $product = $this->entityManager->find(Product::class, $id);
 
@@ -138,6 +148,10 @@ class ProductController extends AbstractController
     #[Route("/product/remove/{id}", name: "remove_product")]
     public function removeProduct(string $id): Response
     {
+        if (!$this->authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->flashRedirect('error', 'Nemáte na tuto akci oprávnění.', 'main');
+        }
+
         // Získání produktu podle ID
         $product = $this->entityManager->find(Product::class, $id);
 
@@ -159,6 +173,9 @@ class ProductController extends AbstractController
     #[Route("/product/edit/{id}", name: "edit_product")]
     public function editProduct(string $id, Request $request, ValidatorInterface $validator): Response
     {
+        if (!$this->authChecker->isGranted('ROLE_ADMIN')) {
+            return $this->flashRedirect('error', 'Nemáte na tuto akci oprávnění.', 'main');
+        }
         // Získání produktu podle ID
         $product = $this->entityManager->find(Product::class, $id);
         if ($product === null) {
